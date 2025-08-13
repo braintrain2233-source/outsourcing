@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ・よくある失敗事例と対策集 - 外注化で失敗しないために</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .nav-breadcrumb {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 30px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .faq-section {
+            margin-bottom: 30px;
+        }
+
+        .faq-category {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            background: #f8f9fa;
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e3f2fd;
+        }
+
+        .faq-question .icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .failure-case {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .failure-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .failure-title::before {
+            content: "⚠️";
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .solution-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .solution-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .checklist {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .cost-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .cost-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .cost-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .tab-container { flex-direction: column; }
+            .cost-breakdown { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-breadcrumb">
+            <a href="index.html">ホーム</a> > <a href="navigation.html">ナビゲーション</a> > FAQ・失敗事例集
+        </div>
+
+        <div class="header">
+            <h1>❓ FAQ・よくある失敗事例と対策集</h1>
+            <p>7年間の実践で遭遇した問題と解決策を完全網羅</p>
+            <p>失敗を事前に回避し、外注化を成功に導きます</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 キーワードで検索（例：外注先の選び方、品質管理、コミュニケーション）" onkeyup="searchFAQ()">
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-button active" onclick="switchTab('faq')">よくある質問</button>
+            <button class="tab-button" onclick="switchTab('failures')">失敗事例と対策</button>
+            <button class="tab-button" onclick="switchTab('checklist')">成功チェックリスト</button>
+        </div>
+
+        <!-- FAQ タブ -->
+        <div id="faq-tab" class="tab-content active">
+            <div class="faq-section">
+                <div class="faq-category">
+                    <div class="category-title">🎯 外注化の基本</div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>外注化はどのくらいの売上から始めるべきですか？</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>推奨売上：月20万円以上</strong></p>
+                            <p>外注費用を考慮すると、最低でも月20万円の売上があると安心です。ただし、以下の条件が揃えばより早期の導入も可能です：</p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>作業時間が月80時間を超えている</li>
+                                <li>単純作業の割合が60%以上</li>
+                                <li>成長トレンドが明確に見える</li>
+                            </ul>
+                            <div class="cost-breakdown">
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥3-5万</div>
+                                    <div class="cost-label">初期外注費用目安</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">15-25%</div>
+                                    <div class="cost-label">売上に対する外注費率</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>外注先はどこで見つければいいですか？</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>おすすめ外注先プラットフォーム：</strong></p>
+                            <div class="cost-breakdown">
+                                <div class="cost-item">
+                                    <div class="cost-amount">クラウドワークス</div>
+                                    <div class="cost-label">案件数豊富・初心者向け</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">ランサーズ</div>
+                                    <div class="cost-label">高品質・中級者以上</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">ココナラ</div>
+                                    <div class="cost-label">専門スキル・単発依頼</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">直接募集</div>
+                                    <div class="cost-label">SNS・地域コミュニティ</div>
+                                </div>
+                            </div>
+                            <div class="warning-box">
+                                <strong>⚠️ 選定のポイント：</strong>
+                                <ul style="margin: 10px 0 0 20px;">
+                                    <li>評価・実績を必ず確認</li>
+                                    <li>コミュニケーション能力を重視</li>
+                                    <li>小さな案件からテスト開始</li>
+                                    <li>複数候補を確保してリスク分散</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>外注費用の相場はどのくらいですか？</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>業務別費用相場（2025年基準）：</strong></p>
+                            <div class="cost-breakdown">
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥800-1,200</div>
+                                    <div class="cost-label">データ入力（時給）</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥200-500</div>
+                                    <div class="cost-label">写真撮影（1商品）</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥300-800</div>
+                                    <div class="cost-label">商品説明文（1件）</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥1,500-3,000</div>
+                                    <div class="cost-label">Webデザイン（時給）</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥100-300</div>
+                                    <div class="cost-label">梱包・発送（1件）</div>
+                                </div>
+                                <div class="cost-item">
+                                    <div class="cost-amount">¥5-15万</div>
+                                    <div class="cost-label">月額固定契約</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-category">
+                    <div class="category-title">🔧 実践・運用関連</div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>外注先とのコミュニケーションがうまくいきません</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>コミュニケーション改善の3ステップ：</strong></p>
+                            <ol style="margin: 15px 0 15px 20px;">
+                                <li><strong>指示の明確化：</strong>5W1Hを意識した具体的な指示書を作成</li>
+                                <li><strong>レスポンス時間の設定：</strong>返信期限を明確に設定（24時間以内など）</li>
+                                <li><strong>定期的な進捗確認：</strong>週1回の定期ミーティングを実施</li>
+                            </ol>
+                            <div class="solution-box">
+                                <div class="solution-title">✅ 解決テンプレート例：</div>
+                                <p>「〇〇さん、いつもお疲れ様です。今回の案件について、以下の点を確認させてください：<br>
+                                ①進捗状況 ②困っている点 ③完成予定日<br>
+                                明日の17時までにご返信いただけますでしょうか。」</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>品質が安定しない場合の対処法は？</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>品質安定化の4つの施策：</strong></p>
+                            <div class="checklist">
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="quality1">
+                                    <label for="quality1"><strong>詳細マニュアルの作成：</strong>OK例・NG例を写真付きで明示</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="quality2">
+                                    <label for="quality2"><strong>チェックシートの導入：</strong>完了前に必ず確認する項目リスト</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="quality3">
+                                    <label for="quality3"><strong>段階的フィードバック：</strong>完成前の中間確認プロセス</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="quality4">
+                                    <label for="quality4"><strong>品質評価制度：</strong>評価に応じた報酬調整システム</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 失敗事例タブ -->
+        <div id="failures-tab" class="tab-content">
+            <div class="failure-case">
+                <div class="failure-title">失敗事例1：外注先への丸投げで大失敗</div>
+                <p><strong>状況：</strong>「よろしくお願いします」だけで商品撮影を依頼</p>
+                <p><strong>結果：</strong>使えない写真が大量納品、修正に2週間、機会損失30万円</p>
+                <div class="solution-box">
+                    <div class="solution-title">💡 解決策：</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>撮影角度、背景、ライティングの指定</li>
+                        <li>参考画像の添付（最低3例）</li>
+                        <li>NGパターンの明示</li>
+                        <li>1商品まずテスト撮影で品質確認</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="failure-case">
+                <div class="failure-title">失敗事例2：安さ重視で選んだ外注先が音信不通</div>
+                <p><strong>状況：</strong>最安値の外注先に100件まとめて依頼</p>
+                <p><strong>結果：</strong>納期2日前に連絡が取れなくなり、緊急で別の外注先を探す羽目に</p>
+                <div class="solution-box">
+                    <div class="solution-title">💡 解決策：</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>評価・実績を最重視（価格は二の次）</li>
+                        <li>大きな案件は分割して複数の外注先に分散</li>
+                        <li>緊急時の代替案を必ず準備</li>
+                        <li>契約書面での責任範囲明確化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="failure-case">
+                <div class="failure-title">失敗事例3：外注管理に時間を取られ逆効果</div>
+                <p><strong>状況：</strong>10人の外注先を同時管理、連絡や確認作業で1日5時間消費</p>
+                <p><strong>結果：</strong>外注前より作業時間が増加、ストレス倍増</p>
+                <div class="solution-box">
+                    <div class="solution-title">💡 解決策：</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>管理ツールの活用（Chatwork、Slack等）</li>
+                        <li>定期レポートの自動化</li>
+                        <li>外注先の段階的増員（一度に3人まで）</li>
+                        <li>リーダー外注者の設定（チームリーダー制）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="failure-case">
+                <div class="failure-title">失敗事例4：外注費用が利益を圧迫</div>
+                <p><strong>状況：</strong>売上30万円に対し外注費25万円、手元に5万円しか残らない</p>
+                <p><strong>結果：</strong>時給換算で300円、外注化の意味を失う</p>
+                <div class="solution-box">
+                    <div class="solution-title">💡 解決策：</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>外注費率は売上の15-20%以内に抑制</li>
+                        <li>固定費と変動費のバランス調整</li>
+                        <li>外注化による売上向上も同時進行</li>
+                        <li>段階的導入で費用対効果を確認</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="failure-case">
+                <div class="failure-title">失敗事例5：機密情報の漏洩リスク</div>
+                <p><strong>状況：</strong>顧客情報を含むデータを外注先に無制限に提供</p>
+                <p><strong>結果：</strong>競合他社への情報流出、顧客からのクレーム</p>
+                <div class="solution-box">
+                    <div class="solution-title">💡 解決策：</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>機密保持契約（NDA）の締結</li>
+                        <li>必要最小限の情報のみ提供</li>
+                        <li>アクセス権限の段階的設定</li>
+                        <li>定期的なセキュリティ教育の実施</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 失敗事例タブ -->
+        <div id="checklist-tab" class="tab-content">
+            <div class="faq-category">
+                <div class="category-title">✅ 外注化成功チェックリスト</div>
+                
+                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">📋 開始前チェック</h3>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="prep1">
+                        <label for="prep1">現在の業務を詳細に棚卸しした</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="prep2">
+                        <label for="prep2">外注化の目的と期待効果を明確にした</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="prep3">
+                        <label for="prep3">外注化予算を売上の20%以内に設定した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="prep4">
+                        <label for="prep4">最初の外注業務を1つに絞り込んだ</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="prep5">
+                        <label for="prep5">詳細なマニュアルを作成した</label>
+                    </div>
+                </div>
+
+                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">🎯 外注先選定チェック</h3>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="select1">
+                        <label for="select1">評価・実績を確認した（評価4.5以上推奨）</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="select2">
+                        <label for="select2">過去の作品・ポートフォリオを確認した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="select3">
+                        <label for="select3">コミュニケーションのレスポンス速度を確認した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="select4">
+                        <label for="select4">小規模テストで品質を確認した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="select5">
+                        <label for="select5">複数の候補者を比較検討した</label>
+                    </div>
+                </div>
+
+                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">🔄 運用・管理チェック</h3>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="manage1">
+                        <label for="manage1">定期的な進捗確認の仕組みを構築した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="manage2">
+                        <label for="manage2">品質チェックの基準を設定した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="manage3">
+                        <label for="manage3">緊急時の連絡体制を整備した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="manage4">
+                        <label for="manage4">支払い条件と納期を明確に設定した</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="manage5">
+                        <label for="manage5">機密保持契約（NDA）を締結した</label>
+                    </div>
+                </div>
+
+                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">📈 効果測定チェック</h3>
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="measure1">
+                        <label for="measure1">外注化前後の作業時間を記録している</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="measure2">
+                        <label for="measure2">ROIを月次で計算している</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="measure3">
+                        <label for="measure3">品質レベルを定期的に評価している</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="measure4">
+                        <label for="measure4">外注先との関係性を定期的に見直している</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="measure5">
+                        <label for="measure5">次の外注化対象を検討している</label>
+                    </div>
+                </div>
+
+                <div class="warning-box" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">🎯 チェックリスト活用法</h3>
+                    <p><strong>80%以上チェック：</strong>外注化の準備が整っています。自信を持って開始しましょう。</p>
+                    <p><strong>60-79%チェック：</strong>基本的な準備はできています。不足項目を補完してから開始しましょう。</p>
+                    <p><strong>60%未満：</strong>準備不足です。基礎から見直すことをお勧めします。</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="worksheets.html" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 10px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">ワークシートで実践開始</a>
+            <a href="roi-calculator.html" style="background: linear-gradient(135deg, #27ae60, #229954); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 10px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">ROI計算に戻る</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // タブボタンの状態更新
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // タブコンテンツの表示切替
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.icon');
+            
+            // 他のFAQを閉じる
+            document.querySelectorAll('.faq-question').forEach(q => {
+                if (q !== element) {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                    q.querySelector('.icon').textContent = '▼';
+                }
+            });
+            
+            // クリックされたFAQの状態を切り替え
+            element.classList.toggle('active');
+            answer.classList.toggle('active');
+            icon.textContent = element.classList.contains('active') ? '▲' : '▼';
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item, .failure-case');
+            
+            faqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // チェックリストの進捗表示
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            const progress = Math.round((checked.length / checkboxes.length) * 100);
+            
+            // 進捗表示を更新（実装可能であれば）
+            console.log(`チェックリスト進捗: ${progress}%`);
+        }
+
+        // チェックボックスの変更を監視
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox') {
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>
