@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビジネス外注化革命 - 完全攻略ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'Noto Sans JP', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: -5rem auto 0;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .nav-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .card-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .card-features li {
+            padding: 0.3rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .card-features li::before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .card-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .features-section {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #2d3748;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+                margin-top: -3rem;
+            }
+            
+            .nav-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">🚀 ビジネス外注化革命</h1>
+            <p class="hero-subtitle">月収100万円を「寝ながら稼ぐ」完全攻略ガイド</p>
+            <p class="hero-description">
+                7年間の実践で構築した外注化システムを完全公開。<br>
+                パソコン販売から始まり、あらゆるビジネスに適用可能な汎用的な外注化戦略をマスターしましょう。
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-grid">
+            <div class="nav-card">
+                <span class="card-icon">📚</span>
+                <h3 class="card-title">基礎理論編</h3>
+                <p class="card-description">外注化の思考法と戦略的アプローチを学ぶ</p>
+                <ul class="card-features">
+                    <li>外注化マインドセット</li>
+                    <li>3つのコアスキル</li>
+                    <li>業務設計の基本</li>
+                    <li>ROI計算方法</li>
+                </ul>
+                <a href="./index.html" class="card-button">基礎理論を学ぶ</a>
+            </div>
+
+            <div class="nav-card">
+                <span class="card-icon">⚙️</span>
+                <h3 class="card-title">システム構築編</h3>
+                <p class="card-description">実践的なシステム化とAI活用手法</p>
+                <ul class="card-features">
+                    <li>定型化・マニュアル化</li>
+                    <li>AIツール活用法</li>
+                    <li>自動化システム構築</li>
+                    <li>品質管理システム</li>
+                </ul>
+                <a href="./page2.html" class="card-button">システム構築を学ぶ</a>
+            </div>
+
+            <div class="nav-card">
+                <span class="card-icon">📊</span>
+                <h3 class="card-title">実践管理編</h3>
+                <p class="card-description">運用・管理・改善の実践ノウハウ</p>
+                <ul class="card-features">
+                    <li>人材採用・育成</li>
+                    <li>進捗管理システム</li>
+                    <li>KPI設計・分析</li>
+                    <li>トラブル対応法</li>
+                </ul>
+                <a href="./summary.html" class="card-button">実践管理を学ぶ</a>
+            </div>
+
+            <div class="nav-card">
+                <span class="card-icon">📝</span>
+                <h3 class="card-title">ワークシート集</h3>
+                <p class="card-description">すぐに使える実践テンプレート</p>
+                <ul class="card-features">
+                    <li>業務棚卸しシート</li>
+                    <li>外注化計画書</li>
+                    <li>マニュアルテンプレート</li>
+                    <li>進捗管理ダッシュボード</li>
+                </ul>
+                <a href="./worksheets.html" class="card-button">ワークシートを取得</a>
+            </div>
+
+            <div class="nav-card">
+                <span class="card-icon">🎯</span>
+                <h3 class="card-title">業界別事例集</h3>
+                <p class="card-description">様々なビジネスへの応用事例</p>
+                <ul class="card-features">
+                    <li>EC・物販ビジネス</li>
+                    <li>コンサルティング</li>
+                    <li>コンテンツ制作</li>
+                    <li>サービス業</li>
+                </ul>
+                <a href="./case-studies.html" class="card-button">事例を確認</a>
+            </div>
+
+            <div class="nav-card">
+                <span class="card-icon">🤖</span>
+                <h3 class="card-title">AI革命シリーズ</h3>
+                <p class="card-description">次世代AI活用による完全自動化</p>
+                <ul class="card-features">
+                    <li>AI自動判断システム</li>
+                    <li>予測型ビジネス運営</li>
+                    <li>AI顧客対応システム</li>
+                    <li>完全自動化の実現</li>
+                </ul>
+                <a href="./ai-revolution.html" class="card-button">Coming Soon</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">7年間</span>
+                    <p class="stat-label">外注化実践期間</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">85%</span>
+                    <p class="stat-label">作業時間削減率</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">30-80万</span>
+                    <p class="stat-label">月収レンジ（円）</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <p class="stat-label">導入支援実績</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="container">
+            <h2 class="section-title">なぜこのコンテンツが選ばれるのか</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">💡</span>
+                    <h4>実践ベース</h4>
+                    <p>理論だけでなく、7年間の実体験に基づいた実践的なノウハウ</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <h4>すぐ使える</h4>
+                    <p>明日から使えるテンプレートとワークシートを多数収録</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🌐</span>
+                    <h4>汎用性</h4>
+                    <p>パソコン販売以外のあらゆるビジネスに適用可能</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📈</span>
+                    <h4>段階的学習</h4>
+                    <p>初心者から上級者まで、レベルに合わせて学習可能</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2024 ビジネス外注化革命. All rights reserved. | <a href="#" style="color: #667eea;">プライバシーポリシー</a></p>
+        </div>
+    </div>
+
+    <script>
+        // スムーススクロール効果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // カードホバーエフェクト
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 統計数値のカウントアップアニメーション
+        function countUp(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start);
+                }
+            }, 16);
+        }
+
+        // スクロール時のアニメーション
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        const number = parseInt(text.replace(/[^0-9]/g, ''));
+                        if (number && !stat.classList.contains('counted')) {
+                            stat.classList.add('counted');
+                            countUp(stat, number);
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.querySelector('.stats-section'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【衝撃の事実】外注化戦略で人生が激変 - ティーザー動画</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #000;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .scene.active {
+            opacity: 1;
+        }
+
+        /* 共通テキストスタイル */
+        .impact-text {
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        /* Scene 1: 問題提起 */
+        .scene1 {
+            background: radial-gradient(circle, #1a1a2e, #16213e, #000);
+        }
+
+        .scene1 .impact-text {
+            font-size: 48px;
+            color: #ff4757;
+            margin-bottom: 30px;
+            animation: shakeText 0.8s ease-in-out infinite;
+        }
+
+        .scene1 .subtitle {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        /* Scene 2: 現実の痛み */
+        .scene2 {
+            background: linear-gradient(45deg, #2d3436, #636e72, #2d3436);
+        }
+
+        .scene2 .impact-text {
+            font-size: 42px;
+            color: #fdcb6e;
+            line-height: 1.2;
+        }
+
+        .scene2 .subtitle {
+            font-size: 22px;
+            color: #ddd;
+            margin-top: 25px;
+        }
+
+        /* Scene 3: 秘密の暴露 */
+        .scene3 {
+            background: linear-gradient(135deg, #00b894, #00cec9, #74b9ff);
+        }
+
+        .scene3 .impact-text {
+            font-size: 50px;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(0, 184, 148, 0.8);
+        }
+
+        .scene3 .subtitle {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Scene 4: コンテンツチラ見せ */
+        .scene4 {
+            background: linear-gradient(45deg, #2d3436, #74b9ff, #6c5ce7);
+            padding: 20px;
+        }
+
+        .content-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid #74b9ff;
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            max-width: 900px;
+            width: 100%;
+            animation: contentFloat 3s ease-in-out infinite;
+        }
+
+        .preview-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #74b9ff;
+        }
+
+        .preview-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-item {
+            background: rgba(116, 185, 255, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #74b9ff;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ff6b6b;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #ddd;
+            margin-top: 5px;
+        }
+
+        .feature-highlight {
+            font-size: 18px;
+            color: #fdcb6e;
+            font-weight: 700;
+            margin: 15px 0;
+            animation: highlight 2s ease-in-out infinite;
+        }
+
+        /* Scene 5: 感情的訴求 */
+        .scene5 {
+            background: radial-gradient(circle, #6c5ce7, #a29bfe, #2d3436);
+        }
+
+        .scene5 .impact-text {
+            font-size: 44px;
+            color: #ff6b6b;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .scene5 .subtitle {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Scene 6: CTA */
+        .scene6 {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24, #2d3436);
+        }
+
+        .final-cta {
+            text-align: center;
+        }
+
+        .final-cta .impact-text {
+            font-size: 38px;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+            padding: 25px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 900;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            animation: ctaPulse 2s ease-in-out infinite;
+            text-shadow: none;
+            box-shadow: 0 0 30px rgba(0, 184, 148, 0.5);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 184, 148, 0.8);
+        }
+
+        .urgency-text {
+            font-size: 16px;
+            color: #fdcb6e;
+            font-weight: 700;
+            animation: urgencyBlink 1.5s ease-in-out infinite;
+        }
+
+        /* コントロールボタン */
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* プログレスバー */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #00b894, #74b9ff);
+            width: 0%;
+            transition: width 0.1s linear;
+            z-index: 100;
+        }
+
+        /* アニメーション */
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+            100% { text-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
+        }
+
+        @keyframes shakeText {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        @keyframes contentFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes highlight {
+            0%, 100% { color: #fdcb6e; }
+            50% { color: #fff; }
+        }
+
+        @keyframes ctaPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @keyframes urgencyBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .scene1 .impact-text { font-size: 32px; }
+            .scene2 .impact-text { font-size: 28px; }
+            .scene3 .impact-text { font-size: 34px; }
+            .scene5 .impact-text { font-size: 30px; }
+            .scene6 .impact-text { font-size: 26px; }
+            
+            .preview-stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .cta-button {
+                padding: 20px 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar"></div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="control-btn" onclick="playVideo()">▶ 再生</button>
+            <button class="control-btn" onclick="pauseVideo()">⏸ 停止</button>
+            <button class="control-btn" onclick="resetVideo()">🔄 最初から</button>
+        </div>
+
+        <!-- Scene 1: 衝撃的な問題提起 (0-8秒) -->
+        <div class="scene scene1 active" id="scene1">
+            <div class="impact-text">なぜ月50万稼いでも<br>幸せじゃないのか？</div>
+            <div class="subtitle">深夜2時...また一人でパソコンと向き合うあなたへ</div>
+        </div>
+
+        <!-- Scene 2: 現実の痛み (8-16秒) -->
+        <div class="scene scene2" id="scene2">
+            <div class="impact-text">「稼ぐ = 自分が頑張る」<br>この勘違いが<br>あなたを地獄に落とす</div>
+            <div class="subtitle">労働集約型の呪縛から抜け出せないサラリーマンたち</div>
+        </div>
+
+        <!-- Scene 3: 秘密の暴露 (16-25秒) -->
+        <div class="scene scene3" id="scene3">
+            <div class="impact-text">業界の95%が知らない<br>「寝ながら稼ぐ」秘密</div>
+            <div class="subtitle">パソコン転売上級者の99%が使っている外注化戦略</div>
+        </div>
+
+        <!-- Scene 4: コンテンツチラ見せ (25-40秒) -->
+        <div class="scene scene4" id="scene4">
+            <div class="content-preview">
+                <div class="preview-title">【完全体系化】激務サラリーマンの外注化戦略</div>
+                
+                <div class="preview-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">全12章</span>
+                        <div class="stat-label">200ページ超</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">月60万</span>
+                        <div class="stat-label">実証済み収益</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">30日</span>
+                        <div class="stat-label">実装プラン</div>
+                    </div>
+                </div>
+
+                <div class="feature-highlight">
+                    ✓ パソコン転売→汎用ビジネス戦略に昇華<br>
+                    ✓ Google Workspace + Slack完全活用術<br>
+                    ✓ AI自動化の最新手法まで網羅<br>
+                    ✓ 外注さん採用から育成まで完全マニュアル
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 5: 感情的訴求 (40-50秒) -->
+        <div class="scene scene5" id="scene5">
+            <div class="impact-text">もう一人で<br>苦しまないで</div>
+            <div class="subtitle">あなたの「分身」が24時間働く世界へ</div>
+        </div>
+
+        <!-- Scene 6: 最終CTA (50-60秒) -->
+        <div class="scene scene6" id="scene6">
+            <div class="final-cta">
+                <div class="impact-text">次元上昇する<br>準備はできたか？</div>
+                <a href="https://braintrain2233-source.github.io/index.html" class="cta-button" target="_blank">
+                    🚀 外注化戦略を今すぐ入手
+                </a>
+                <div class="urgency-text">労働集約型人生からの完全脱出</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSceneIndex = 0;
+        let isPlaying = false;
+        let animationId;
+        let startTime;
+        let pausedTime = 0;
+        const totalDuration = 60000; // 60秒
+
+        const scenes = [
+            { id: 'scene1', duration: 8000 },   // 0-8秒
+            { id: 'scene2', duration: 8000 },   // 8-16秒  
+            { id: 'scene3', duration: 9000 },   // 16-25秒
+            { id: 'scene4', duration: 15000 },  // 25-40秒
+            { id: 'scene5', duration: 10000 },  // 40-50秒
+            { id: 'scene6', duration: 10000 }   // 50-60秒
+        ];
+
+        function showScene(sceneId) {
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+            document.getElementById(sceneId).classList.add('active');
+        }
+
+        function updateProgressBar(elapsed) {
+            const progress = (elapsed / totalDuration) * 100;
+            document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+        }
+
+        function getCurrentSceneIndex(elapsed) {
+            let totalTime = 0;
+            for (let i = 0; i < scenes.length; i++) {
+                totalTime += scenes[i].duration;
+                if (elapsed < totalTime) {
+                    return i;
+                }
+            }
+            return scenes.length - 1;
+        }
+
+        function playVideo() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            startTime = Date.now() - pausedTime;
+            
+            function animate() {
+                if (!isPlaying) return;
+                
+                const elapsed = Date.now() - startTime;
+                updateProgressBar(elapsed);
+                
+                const newSceneIndex = getCurrentSceneIndex(elapsed);
+                if (newSceneIndex !== currentSceneIndex) {
+                    currentSceneIndex = newSceneIndex;
+                    showScene(scenes[currentSceneIndex].id);
+                }
+                
+                if (elapsed >= totalDuration) {
+                    isPlaying = false;
+                    return;
+                }
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+
+        function pauseVideo() {
+            isPlaying = false;
+            pausedTime = Date.now() - startTime;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        function resetVideo() {
+            isPlaying = false;
+            pausedTime = 0;
+            currentSceneIndex = 0;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            showScene('scene1');
+            updateProgressBar(0);
+        }
+
+        // 自動再生開始
+        setTimeout(() => {
+            playVideo();
+        }, 1500);
+
+        // キーボードショートカット
+        document.addEventListener('keydown', function(e) {
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    if (isPlaying) {
+                        pauseVideo();
+                    } else {
+                        playVideo();
+                    }
+                    break;
+                case 'KeyR':
+                    e.preventDefault();
+                    resetVideo();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

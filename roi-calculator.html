@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外注化ROI計算ツール - 投資対効果を可視化</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .nav-breadcrumb {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .input-section, .results-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-unit {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .result-card {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .result-card.positive {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            border: 2px solid #27ae60;
+        }
+
+        .result-card.negative {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border: 2px solid #e67e22;
+        }
+
+        .result-card.warning {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border: 2px solid #e74c3c;
+        }
+
+        .result-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .comparison-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: end;
+            height: 200px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .chart-bar {
+            width: 80px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chart-bar:hover {
+            transform: scale(1.05);
+        }
+
+        .chart-label {
+            color: #2c3e50;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .scenario-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .scenario-tab {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-tab.active {
+            background: white;
+            color: #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .recommendations {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .recommendations h3 {
+            margin-bottom: 15px;
+        }
+
+        .recommendations ul {
+            list-style: none;
+        }
+
+        .recommendations li {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid white;
+        }
+
+        .timeline-visualization {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .timeline-month {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-month:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .month-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3498db;
+            min-width: 80px;
+        }
+
+        .month-data {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .alert-box {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #27ae60;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #f39c12;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            border-color: #e74c3c;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .comparison-chart {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+            }
+            .chart-bar {
+                width: 100%;
+                height: 60px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-breadcrumb">
+            <a href="index.html">ホーム</a> > <a href="navigation.html">ナビゲーション</a> > ROI計算ツール
+        </div>
+
+        <div class="header">
+            <h1>📊 外注化ROI計算ツール</h1>
+            <p>外注化の投資対効果を正確に計算し、意思決定をサポートします</p>
+        </div>
+
+        <div class="scenario-tabs">
+            <button class="scenario-tab active" onclick="switchScenario('conservative')">保守的シナリオ</button>
+            <button class="scenario-tab" onclick="switchScenario('realistic')">現実的シナリオ</button>
+            <button class="scenario-tab" onclick="switchScenario('optimistic')">楽観的シナリオ</button>
+        </div>
+
+        <div class="calculator-grid">
+            <div class="input-section">
+                <div class="section-title">💼 現在の状況を入力</div>
+
+                <div class="input-group">
+                    <label class="input-label">現在の月間売上</label>
+                    <input type="number" id="currentRevenue" class="input-field" placeholder="500000" value="500000">
+                    <div class="input-unit">円/月</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">現在の月間作業時間</label>
+                    <input type="number" id="currentWorkHours" class="input-field" placeholder="120" value="120">
+                    <div class="input-unit">時間/月</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">あなたの時給価値</label>
+                    <input type="number" id="hourlyValue" class="input-field" placeholder="3000" value="3000">
+                    <div class="input-unit">円/時間（あなたが他の仕事で稼げる時給）</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">現在の月間経費</label>
+                    <input type="number" id="currentExpenses" class="input-field" placeholder="100000" value="100000">
+                    <div class="input-unit">円/月</div>
+                </div>
+
+                <div class="section-title" style="margin-top: 30px;">🎯 外注化計画を入力</div>
+
+                <div class="input-group">
+                    <label class="input-label">外注予定作業時間</label>
+                    <input type="number" id="outsourcedHours" class="input-field" placeholder="80" value="80">
+                    <div class="input-unit">時間/月（外注で削減したい作業時間）</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">外注費用（固定費）</label>
+                    <input type="number" id="outsourcingCostFixed" class="input-field" placeholder="100000" value="100000">
+                    <div class="input-unit">円/月</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">外注費用（変動費）</label>
+                    <input type="number" id="outsourcingCostVariable" class="input-field" placeholder="50000" value="50000">
+                    <div class="input-unit">円/月</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">外注化による売上向上予想</label>
+                    <input type="number" id="revenueIncrease" class="input-field" placeholder="200000" value="200000">
+                    <div class="input-unit">円/月（空いた時間で新規開拓等）</div>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateROI()">📊 ROIを計算する</button>
+            </div>
+
+            <div class="results-section">
+                <div class="section-title">📈 計算結果</div>
+                
+                <div id="results-content">
+                    <div class="alert-box alert-warning">
+                        <strong>左側の入力欄に数値を入力して「ROIを計算する」ボタンを押してください。</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container" id="chart-container" style="display: none;">
+            <div class="section-title">📊 Before/After比較</div>
+            <div class="comparison-chart" id="comparison-chart">
+                <!-- チャートがここに動的生成されます -->
+            </div>
+        </div>
+
+        <div class="timeline-visualization" id="timeline-container" style="display: none;">
+            <div class="section-title">⏰ 12ヶ月間の収益予測</div>
+            <div id="timeline-content">
+                <!-- タイムラインがここに動的生成されます -->
+            </div>
+        </div>
+
+        <div class="recommendations" id="recommendations" style="display: none;">
+            <h3>💡 あなたへのおすすめアクション</h3>
+            <ul id="recommendation-list">
+                <!-- 推奨事項がここに動的生成されます -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let currentScenario = 'realistic';
+
+        const scenarios = {
+            conservative: {
+                revenueMultiplier: 0.8,
+                efficiencyMultiplier: 0.7,
+                riskBuffer: 1.3
+            },
+            realistic: {
+                revenueMultiplier: 1.0,
+                efficiencyMultiplier: 1.0,
+                riskBuffer: 1.0
+            },
+            optimistic: {
+                revenueMultiplier: 1.3,
+                efficiencyMultiplier: 1.4,
+                riskBuffer: 0.8
+            }
+        };
+
+        function switchScenario(scenario) {
+            currentScenario = scenario;
+            document.querySelectorAll('.scenario-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (document.getElementById('results-content').children.length > 1) {
+                calculateROI();
+            }
+        }
+
+        function calculateROI() {
+            // 入力値の取得
+            const currentRevenue = parseFloat(document.getElementById('currentRevenue').value) || 0;
+            const currentWorkHours = parseFloat(document.getElementById('currentWorkHours').value) || 0;
+            const hourlyValue = parseFloat(document.getElementById('hourlyValue').value) || 0;
+            const currentExpenses = parseFloat(document.getElementById('currentExpenses').value) || 0;
+            const outsourcedHours = parseFloat(document.getElementById('outsourcedHours').value) || 0;
+            const outsourcingCostFixed = parseFloat(document.getElementById('outsourcingCostFixed').value) || 0;
+            const outsourcingCostVariable = parseFloat(document.getElementById('outsourcingCostVariable').value) || 0;
+            const revenueIncrease = parseFloat(document.getElementById('revenueIncrease').value) || 0;
+
+            // シナリオ設定の適用
+            const scenario = scenarios[currentScenario];
+            const adjustedRevenueIncrease = revenueIncrease * scenario.revenueMultiplier;
+            const adjustedOutsourcedHours = outsourcedHours * scenario.efficiencyMultiplier;
+            const adjustedOutsourcingCost = (outsourcingCostFixed + outsourcingCostVariable) * scenario.riskBuffer;
+
+            // 計算
+            const currentProfit = currentRevenue - currentExpenses;
+            const currentTimeValue = currentWorkHours * hourlyValue;
+            
+            const newRevenue = currentRevenue + adjustedRevenueIncrease;
+            const newExpenses = currentExpenses + adjustedOutsourcingCost;
+            const newProfit = newRevenue - newExpenses;
+            const timeValueSaved = adjustedOutsourcedHours * hourlyValue;
+            const remainingWorkHours = currentWorkHours - adjustedOutsourcedHours;
+            const newTimeValue = remainingWorkHours * hourlyValue;
+
+            const totalBenefit = (newProfit - currentProfit) + timeValueSaved;
+            const totalInvestment = adjustedOutsourcingCost;
+            const roi = totalInvestment > 0 ? ((totalBenefit / totalInvestment) * 100) : 0;
+            const paybackPeriod = totalBenefit > 0 ? totalInvestment / totalBenefit : 999;
+            const newHourlyRate = newProfit > 0 && remainingWorkHours > 0 ? newProfit / remainingWorkHours : 0;
+
+            // 結果の表示
+            displayResults({
+                currentProfit,
+                newProfit,
+                profitIncrease: newProfit - currentProfit,
+                timeValueSaved,
+                totalBenefit,
+                totalInvestment,
+                roi,
+                paybackPeriod,
+                currentHourlyRate: currentWorkHours > 0 ? currentProfit / currentWorkHours : 0,
+                newHourlyRate,
+                efficiencyImprovement: currentWorkHours > 0 ? ((adjustedOutsourcedHours / currentWorkHours) * 100) : 0,
+                remainingWorkHours,
+                currentWorkHours,
+                currentRevenue,
+                newRevenue
+            });
+
+            generateChart({
+                currentProfit,
+                newProfit,
+                currentWorkHours,
+                remainingWorkHours,
+                currentRevenue,
+                newRevenue
+            });
+
+            generateTimeline({
+                monthlyProfit: newProfit - currentProfit,
+                monthlyInvestment: adjustedOutsourcingCost,
+                paybackPeriod
+            });
+
+            generateRecommendations({
+                roi,
+                paybackPeriod,
+                efficiencyImprovement: ((adjustedOutsourcedHours / currentWorkHours) * 100),
+                profitIncrease: newProfit - currentProfit
+            });
+        }
+
+        function displayResults(data) {
+            const resultsContent = document.getElementById('results-content');
+            
+            let roiClass = 'positive';
+            if (data.roi < 50) roiClass = 'warning';
+            if (data.roi < 0) roiClass = 'negative';
+            
+            let paybackClass = 'positive';
+            if (data.paybackPeriod > 12) paybackClass = 'warning';
+            if (data.paybackPeriod > 24) paybackClass = 'negative';
+
+            resultsContent.innerHTML = `
+                <div class="results-grid">
+                    <div class="result-card ${roiClass}">
+                        <div class="result-number">${data.roi.toFixed(1)}%</div>
+                        <div class="result-label">投資収益率（ROI）</div>
+                    </div>
+                    <div class="result-card ${paybackClass}">
+                        <div class="result-number">${data.paybackPeriod < 999 ? data.paybackPeriod.toFixed(1) : '∞'}</div>
+                        <div class="result-label">回収期間（ヶ月）</div>
+                    </div>
+                    <div class="result-card positive">
+                        <div class="result-number">¥${data.profitIncrease.toLocaleString()}</div>
+                        <div class="result-label">月間利益向上</div>
+                    </div>
+                    <div class="result-card positive">
+                        <div class="result-number">${data.efficiencyImprovement.toFixed(0)}%</div>
+                        <div class="result-label">作業効率化率</div>
+                    </div>
+                    <div class="result-card positive">
+                        <div class="result-number">¥${data.timeValueSaved.toLocaleString()}</div>
+                        <div class="result-label">時間価値創出</div>
+                    </div>
+                    <div class="result-card positive">
+                        <div class="result-number">¥${data.newHourlyRate.toFixed(0)}</div>
+                        <div class="result-label">新しい時給効率</div>
+                    </div>
+                </div>
+                
+                ${data.roi >= 100 ? `
+                    <div class="alert-box alert-success">
+                        <strong>✅ 外注化推奨！</strong><br>
+                        ROI ${data.roi.toFixed(1)}% は非常に優秀な投資です。すぐに外注化を開始することをお勧めします。
+                    </div>
+                ` : data.roi >= 50 ? `
+                    <div class="alert-box alert-warning">
+                        <strong>⚠️ 慎重に検討</strong><br>
+                        ROI ${data.roi.toFixed(1)}% は悪くありませんが、リスク要因も考慮して段階的に進めることをお勧めします。
+                    </div>
+                ` : `
+                    <div class="alert-box alert-danger">
+                        <strong>❌ 条件見直し推奨</strong><br>
+                        現在の条件では投資効果が低いです。外注費用の削減や売上向上策を再検討してください。
+                    </div>
+                `}
+            `;
+        }
+
+        function generateChart(data) {
+            const chartContainer = document.getElementById('chart-container');
+            const comparisonChart = document.getElementById('comparison-chart');
+            
+            chartContainer.style.display = 'block';
+            
+            const maxValue = Math.max(data.currentRevenue, data.newRevenue, data.currentProfit, data.newProfit, data.currentWorkHours * 1000, data.remainingWorkHours * 1000);
+            
+            comparisonChart.innerHTML = `
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.currentRevenue / maxValue) * 150}px; background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                        ¥${(data.currentRevenue / 10000).toFixed(0)}万
+                    </div>
+                    <div class="chart-label">現在の売上</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.newRevenue / maxValue) * 150}px; background: linear-gradient(135deg, #27ae60, #229954);">
+                        ¥${(data.newRevenue / 10000).toFixed(0)}万
+                    </div>
+                    <div class="chart-label">外注化後売上</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.currentProfit / maxValue) * 150}px; background: linear-gradient(135deg, #f39c12, #d68910);">
+                        ¥${(data.currentProfit / 10000).toFixed(0)}万
+                    </div>
+                    <div class="chart-label">現在の利益</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.newProfit / maxValue) * 150}px; background: linear-gradient(135deg, #3498db, #2980b9);">
+                        ¥${(data.newProfit / 10000).toFixed(0)}万
+                    </div>
+                    <div class="chart-label">外注化後利益</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.currentWorkHours / (maxValue/1000)) * 150}px; background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                        ${data.currentWorkHours}h
+                    </div>
+                    <div class="chart-label">現在の作業時間</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="chart-bar" style="height: ${(data.remainingWorkHours / (maxValue/1000)) * 150}px; background: linear-gradient(135deg, #1abc9c, #16a085);">
+                        ${data.remainingWorkHours}h
+                    </div>
+                    <div class="chart-label">外注化後作業時間</div>
+                </div>
+            `;
+        }
+
+        function generateTimeline(data) {
+            const timelineContainer = document.getElementById('timeline-container');
+            const timelineContent = document.getElementById('timeline-content');
+            
+            timelineContainer.style.display = 'block';
+            
+            let cumulativeProfit = 0;
+            let timelineHTML = '';
+            
+            for (let month = 1; month <= 12; month++) {
+                cumulativeProfit += data.monthlyProfit - data.monthlyInvestment;
+                const breakeven = cumulativeProfit >= 0;
+                
+                timelineHTML += `
+                    <div class="timeline-month" style="border-left-color: ${breakeven ? '#27ae60' : '#e74c3c'}">
+                        <div class="month-number">${month}ヶ月目</div>
+                        <div class="month-data">
+                            <div><strong>月間収益：</strong>¥${(data.monthlyProfit - data.monthlyInvestment).toLocaleString()}</div>
+                            <div><strong>累計収益：</strong>¥${cumulativeProfit.toLocaleString()}</div>
+                            <div><strong>状況：</strong>${breakeven ? '✅ 黒字化' : '⏳ 投資回収中'}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            timelineContent.innerHTML = timelineHTML;
+        }
+
+        function generateRecommendations(data) {
+            const recommendations = document.getElementById('recommendations');
+            const recommendationList = document.getElementById('recommendation-list');
+            
+            recommendations.style.display = 'block';
+            
+            let recommendationsHTML = '';
+            
+            if (data.roi > 100) {
+                recommendationsHTML += '<li>🚀 <strong>即座に外注化開始：</strong>ROIが100%超のため、すぐに実行に移しましょう</li>';
+                recommendationsHTML += '<li>📈 <strong>段階的拡大：</strong>成功したら他の業務も外注化範囲を広げてみましょう</li>';
+            } else if (data.roi > 50) {
+                recommendationsHTML += '<li>⚠️ <strong>テスト運用から開始：</strong>小規模でテストしてから本格導入しましょう</li>';
+                recommendationsHTML += '<li>🔍 <strong>コスト最適化：</strong>外注費用をさらに削減できる余地がないか検討しましょう</li>';
+            } else {
+                recommendationsHTML += '<li>❌ <strong>条件見直し：</strong>外注費用の削減や業務効率化を再検討しましょう</li>';
+                recommendationsHTML += '<li>💡 <strong>売上向上策：</strong>外注化と同時に売上を上げる施策を強化しましょう</li>';
+            }
+            
+            if (data.paybackPeriod > 12) {
+                recommendationsHTML += '<li>⏰ <strong>回収期間短縮：</strong>初期投資を抑え、段階的な外注化を検討しましょう</li>';
+            }
+            
+            if (data.efficiencyImprovement > 70) {
+                recommendationsHTML += '<li>🎯 <strong>時間活用計画：</strong>空いた時間の有効活用策を具体的に計画しましょう</li>';
+            }
+            
+            recommendationList.innerHTML = recommendationsHTML;
+        }
+
+        // 初期表示用のサンプル計算
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateROI();
+        });
+    </script>
+</body>
+</html>
