@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外注化実践ワークシート集 - すぐに使えるテンプレートと記入例</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .nav-breadcrumb {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .worksheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .worksheet-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid;
+        }
+
+        .worksheet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .worksheet-card.analysis { border-top-color: #3498db; }
+        .worksheet-card.planning { border-top-color: #e74c3c; }
+        .worksheet-card.management { border-top-color: #27ae60; }
+        .worksheet-card.evaluation { border-top-color: #f39c12; }
+        .worksheet-card.ai-tools { border-top-color: #9b59b6; }
+
+        .worksheet-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .worksheet-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .worksheet-template {
+            background: #f8f9fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .template-header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: -20px -20px 15px -20px;
+            font-weight: bold;
+        }
+
+        .fillable-field {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            margin: 5px 0;
+            min-height: 30px;
+            position: relative;
+        }
+
+        .fillable-field:focus-within {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #34495e;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .field-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .example-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .calculation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .calculation-table th,
+        .calculation-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .calculation-table th {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+
+        .calculation-table input {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .auto-calculate {
+            background: #e8f6f3;
+            font-weight: bold;
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            margin: 0 5px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.completed {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ecf0f1;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .checklist-item.completed {
+            background: #d5f4e6;
+            text-decoration: line-through;
+        }
+
+        .ai-prompt-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .prompt-box {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-left: 4px solid white;
+        }
+
+        .copy-prompt-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-prompt-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .save-progress {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .worksheet-grid { grid-template-columns: 1fr; }
+            .progress-steps { flex-direction: column; gap: 10px; }
+            .save-progress { bottom: 10px; right: 10px; }
+        }
+
+        @media print {
+            .download-btn, .print-btn, .copy-prompt-btn, .save-progress { display: none; }
+            .container { background: white; }
+            .worksheet-card { break-inside: avoid; }
+        }
+
+        .download-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .download-status.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-breadcrumb">
+            <a href="index.html">ホーム</a> > <a href="navigation.html">ナビゲーション</a> > ワークシート集
+        </div>
+
+        <div class="header">
+            <h1>📋 外注化実践ワークシート集</h1>
+            <p>すぐに使えるテンプレートと記入例付き</p>
+            <p>入力・保存・印刷・共有が可能な実用的ツール集</p>
+        </div>
+
+        <div class="progress-tracker">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">🎯 あなたの外注化進捗</h3>
+            <div class="progress-steps">
+                <div class="progress-step completed" onclick="updateProgress(this, 'analysis')">
+                    <div style="font-weight: bold;">STEP 1</div>
+                    <div>現状分析</div>
+                </div>
+                <div class="progress-step active" onclick="updateProgress(this, 'planning')">
+                    <div style="font-weight: bold;">STEP 2</div>
+                    <div>計画立案</div>
+                </div>
+                <div class="progress-step" onclick="updateProgress(this, 'execution')">
+                    <div style="font-weight: bold;">STEP 3</div>
+                    <div>実行開始</div>
+                </div>
+                <div class="progress-step" onclick="updateProgress(this, 'optimization')">
+                    <div style="font-weight: bold;">STEP 4</div>
+                    <div>最適化</div>
+                </div>
+                <div class="progress-step" onclick="updateProgress(this, 'scaling')">
+                    <div style="font-weight: bold;">STEP 5</div>
+                    <div>スケール拡大</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="worksheet-grid">
+            <!-- 業務分析ワークシート -->
+            <div class="worksheet-card analysis">
+                <div class="worksheet-title">📊 業務分析ワークシート</div>
+                <div class="worksheet-subtitle">現在の業務を詳細に分析し、外注化対象を特定</div>
+
+                <div class="worksheet-template">
+                    <div class="template-header">📋 業務棚卸しテンプレート</div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">業務名：</label>
+                        <input class="field-input" type="text" id="task-name" placeholder="例：商品撮影作業">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">月間作業時間：</label>
+                        <input class="field-input" type="number" id="monthly-hours" placeholder="例：40"> 時間/月
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">作業頻度：</label>
+                        <select class="field-input" id="task-frequency">
+                            <option value="">選択してください</option>
+                            <option value="毎日">毎日</option>
+                            <option value="週3-4回">週3-4回</option>
+                            <option value="週1-2回">週1-2回</option>
+                            <option value="月数回">月数回</option>
+                        </select>
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">難易度（1-5）：<span id="difficulty-value">3</span></label>
+                        <input class="field-input" type="range" min="1" max="5" value="3" id="difficulty-level" onchange="updateRangeValue('difficulty-level', 'difficulty-value')">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">外注化の難しさ（1-5）：<span id="outsource-difficulty-value">3</span></label>
+                        <input class="field-input" type="range" min="1" max="5" value="3" id="outsource-difficulty" onchange="updateRangeValue('outsource-difficulty', 'outsource-difficulty-value')">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">外注化の期待効果：</label>
+                        <textarea class="field-input" rows="3" id="expected-effect" placeholder="例：月20時間の時間創出、品質の標準化"></textarea>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <div class="example-title">📝 記入例（パソコン販売業）</div>
+                    <strong>業務名：</strong>商品クリーニング<br>
+                    <strong>月間作業時間：</strong>60時間<br>
+                    <strong>作業頻度：</strong>毎日<br>
+                    <strong>難易度：</strong>2/5（単純作業）<br>
+                    <strong>外注化の難しさ：</strong>2/5（マニュアル化容易）<br>
+                    <strong>期待効果：</strong>月50時間創出、品質の均一化、作業者の体力負担軽減
+                </div>
+
+                <button class="download-btn" onclick="downloadBusinessAnalysis()">📥 入力内容をExcelでダウンロード</button>
+                <button class="print-btn" onclick="printWorksheet('analysis')">🖨️ 印刷用に表示</button>
+            </div>
+
+            <!-- ROI計算ワークシート -->
+            <div class="worksheet-card planning">
+                <div class="worksheet-title">💰 ROI計算ワークシート</div>
+                <div class="worksheet-subtitle">外注化の投資対効果を正確に算出</div>
+
+                <div class="worksheet-template">
+                    <div class="template-header">🧮 ROI自動計算表</div>
+                    
+                    <table class="calculation-table">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>現在</th>
+                                <th>外注化後</th>
+                                <th>差額</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>月間作業時間</strong></td>
+                                <td><input type="number" id="current-hours" placeholder="120" onchange="calculateROI()"> 時間</td>
+                                <td><input type="number" id="new-hours" placeholder="40" onchange="calculateROI()"> 時間</td>
+                                <td class="auto-calculate" id="hours-diff">0 時間</td>
+                            </tr>
+                            <tr>
+                                <td><strong>月間売上</strong></td>
+                                <td><input type="number" id="current-revenue" placeholder="500000" onchange="calculateROI()"> 円</td>
+                                <td><input type="number" id="new-revenue" placeholder="700000" onchange="calculateROI()"> 円</td>
+                                <td class="auto-calculate" id="revenue-diff">0 円</td>
+                            </tr>
+                            <tr>
+                                <td><strong>月間経費</strong></td>
+                                <td><input type="number" id="current-cost" placeholder="100000" onchange="calculateROI()"> 円</td>
+                                <td><input type="number" id="new-cost" placeholder="250000" onchange="calculateROI()"> 円</td>
+                                <td class="auto-calculate" id="cost-diff">0 円</td>
+                            </tr>
+                            <tr style="background: #f1c40f; color: white;">
+                                <td><strong>ROI</strong></td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="auto-calculate" id="roi-result">0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-section">
+                    <div class="example-title">💡 ROI判定基準</div>
+                    <strong>ROI 50%以上：</strong>優秀な投資、積極的に実行<br>
+                    <strong>ROI 20-50%：</strong>良好な投資、条件を整えて実行<br>
+                    <strong>ROI 20%未満：</strong>慎重な検討が必要、条件見直し推奨
+                </div>
+
+                <button class="download-btn" onclick="downloadROICalculation()">📥 ROI計算結果をExcelでダウンロード</button>
+                <button class="print-btn" onclick="printWorksheet('planning')">🖨️ 計算結果を印刷</button>
+            </div>
+
+            <!-- 外注先選定ワークシート -->
+            <div class="worksheet-card management">
+                <div class="worksheet-title">🎯 外注先選定ワークシート</div>
+                <div class="worksheet-subtitle">最適な外注パートナーを見つけるための評価シート</div>
+
+                <div class="worksheet-template">
+                    <div class="template-header">✅ 外注先評価チェックリスト</div>
+                    
+                    <div style="margin: 15px 0;">
+                        <strong>外注先候補名：</strong>
+                        <input type="text" id="vendor-name" style="width: 200px; margin-left: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;" placeholder="例：○○ワークス">
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval1" onchange="updateEvaluation()">
+                        <label for="eval1">評価・レビュー 4.5以上</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval2" onchange="updateEvaluation()">
+                        <label for="eval2">実績・ポートフォリオ充実</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval3" onchange="updateEvaluation()">
+                        <label for="eval3">レスポンス24時間以内</label>
+                    </div>
+                    
+                    <div class="checklisåt-item">
+                        <input type="checkbox" id="eval4" onchange="updateEvaluation()">
+                        <label for="eval4">料金が予算範囲内</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval5" onchange="updateEvaluation()">
+                        <label for="eval5">専門スキル保有</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval6" onchange="updateEvaluation()">
+                        <label for="eval6">継続取引の意向あり</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eval7" onchange="updateEvaluation()">
+                        <label for="eval7">機密保持契約対応可能</label>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #e8f6f3; border-radius: 8px;">
+                        <strong>総合評価：<span id="total-score">0</span>/7 点</strong>
+                        <div id="evaluation-result" style="margin-top: 10px; font-weight: bold;"></div>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <div class="example-title">🏆 評価基準</div>
+                    <strong>6-7点：</strong>優秀な外注先候補です！<br>
+                    <strong>4-5点：</strong>条件付きで検討可能<br>
+                    <strong>3点以下：</strong>リスクが高い、他候補を探すことを推奨
+                </div>
+
+                <button class="download-btn" onclick="downloadVendorSelection()">📥 評価結果をExcelでダウンロード</button>
+                <button class="print-btn" onclick="printWorksheet('management')">🖨️ 評価結果を印刷</button>
+            </div>
+
+            <!-- 指示書テンプレート -->
+            <div class="worksheet-card evaluation">
+                <div class="worksheet-title">📝 外注指示書テンプレート</div>
+                <div class="worksheet-subtitle">明確で効果的な指示書を作成するためのフォーマット</div>
+
+                <div class="worksheet-template">
+                    <div class="template-header">📋 標準指示書フォーマット</div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【件名】</label>
+                        <input class="field-input" type="text" id="instruction-subject" placeholder="例：商品撮影業務依頼">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【業務概要】</label>
+                        <textarea class="field-input" rows="3" id="instruction-overview" placeholder="何をする業務なのか、簡潔に説明"></textarea>
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【納期】</label>
+                        <input class="field-input" type="datetime-local" id="instruction-deadline">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【数量・規模】</label>
+                        <input class="field-input" type="text" id="instruction-quantity" placeholder="例：商品50点、写真1点につき8枚撮影">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【品質基準】</label>
+                        <textarea class="field-input" rows="4" id="instruction-quality" placeholder="期待する品質レベル、NG基準を明記"></textarea>
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【提供物】</label>
+                        <textarea class="field-input" rows="3" id="instruction-materials" placeholder="こちらから提供する資料、材料等"></textarea>
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【報酬】</label>
+                        <input class="field-input" type="text" id="instruction-payment" placeholder="例：1点あたり500円、総額25,000円">
+                    </div>
+                    
+                    <div class="fillable-field">
+                        <label class="field-label">【連絡方法】</label>
+                        <input class="field-input" type="text" id="instruction-contact" placeholder="例：Chatwork、毎日18時に進捗報告">
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <div class="example-title">✅ 指示書作成のポイント</div>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>5W1H（いつ、どこで、だれが、なにを、なぜ、どのように）を明記</li>
+                        <li>参考画像や資料を必ず添付</li>
+                        <li>NG例も具体的に示す</li>
+                        <li>緊急時の連絡先を記載</li>
+                    </ul>
+                </div>
+
+                <button class="download-btn" onclick="downloadInstructionTemplate()">📥 指示書をWordでダウンロード</button>
+                <button class="print-btn" onclick="printWorksheet('evaluation')">🖨️ 指示書を印刷</button>
+            </div>
+
+            <!-- AIプロンプト集 -->
+            <div class="worksheet-card ai-tools">
+                <div class="worksheet-title">🤖 AI活用プロンプト集</div>
+                <div class="worksheet-subtitle">ChatGPT・Copilot・Claudeで外注効率を10倍にする実用プロンプト</div>
+
+                <div class="ai-prompt-section">
+                    <h4 style="margin-bottom: 15px;">🎯 業務分析プロンプト</h4>
+                    <div class="prompt-box">
+以下のビジネス業務を分析し、外注化に最適な業務を3つ選んで理由と共に教えてください。
+
+【現在の業務】
+- 商品仕入れ（週10時間）
+- 商品撮影（週15時間）  
+- 商品説明文作成（週8時間）
+- 出品作業（週5時間）
+- 在庫管理（週3時間）
+- 顧客対応（週7時間）
+- 発送作業（週10時間）
+
+【評価基準】
+- 時間短縮効果
+- 外注化の容易さ
+- 品質の安定性
+- コスト効率
+                    </div>
+                    <button class="copy-prompt-btn" onclick="copyPrompt(this)">📋 プロンプトをコピー</button>
+                </div>
+
+                <div class="ai-prompt-section">
+                    <h4 style="margin-bottom: 15px;">📝 指示書生成プロンプト</h4>
+                    <div class="prompt-box">
+以下の条件で外注先への指示書を作成してください。
+
+【業務内容】[ここに業務内容を入力]
+【対象物・規模】[ここに対象と規模を入力]
+【品質要求】[ここに品質基準を
