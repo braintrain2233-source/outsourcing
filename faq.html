@@ -3,721 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ・よくある失敗事例と対策集 - 外注化で失敗しないために</title>
+    <title>FAQ：外注化に関するよくある質問</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-            line-height: 1.8;
-            color: #333;
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            border-radius: 15px;
-        }
-
-        .nav-breadcrumb {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .nav-breadcrumb a {
-            color: #3498db;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .tab-container {
-            display: flex;
-            margin-bottom: 30px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            padding: 5px;
-        }
-
-        .tab-button {
-            flex: 1;
-            padding: 15px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button.active {
-            background: white;
-            color: #3498db;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .faq-section {
-            margin-bottom: 30px;
-        }
-
-        .faq-category {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .category-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .faq-item {
-            margin-bottom: 20px;
-            border: 2px solid #ecf0f1;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .faq-question {
-            background: #f8f9fa;
-            padding: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #2c3e50;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: #e3f2fd;
-        }
-
-        .faq-question .icon {
-            font-size: 20px;
+        .hover-scale {
             transition: transform 0.3s ease;
         }
-
-        .faq-question.active .icon {
-            transform: rotate(180deg);
+        .hover-scale:hover {
+            transform: scale(1.05);
         }
-
-        .faq-answer {
-            padding: 0 20px;
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .answer-content {
             max-height: 0;
             overflow: hidden;
-            transition: all 0.3s ease;
-            background: white;
+            transition: max-height 0.3s ease;
         }
-
-        .faq-answer.active {
-            padding: 20px;
+        .answer-content.show {
             max-height: 1000px;
-        }
-
-        .failure-case {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            border-left: 5px solid #e74c3c;
-        }
-
-        .failure-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #c0392b;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .failure-title::before {
-            content: "⚠️";
-            margin-right: 10px;
-            font-size: 24px;
-        }
-
-        .solution-box {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-            border-left: 5px solid #27ae60;
-        }
-
-        .solution-title {
-            font-weight: bold;
-            color: #27ae60;
-            margin-bottom: 10px;
-        }
-
-        .checklist {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .checklist-item input[type="checkbox"] {
-            margin-right: 15px;
-            transform: scale(1.2);
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border: 2px solid #f39c12;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .cost-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .cost-item {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border-top: 4px solid #3498db;
-        }
-
-        .cost-amount {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .cost-label {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-
-        .search-box {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ecf0f1;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 10px; }
-            .tab-container { flex-direction: column; }
-            .cost-breakdown { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="nav-breadcrumb">
-            <a href="index.html">ホーム</a> > <a href="navigation.html">ナビゲーション</a> > FAQ・失敗事例集
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <i class="fas fa-question-circle mr-3"></i>
+                    FAQ
+                </h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-8">
+                    外注化に関するよくある質問
+                </p>
+                <div class="glass-effect rounded-lg p-6 max-w-4xl mx-auto">
+                    <p class="text-lg">
+                        外注化実装時によく寄せられる質問から上級者の技術的疑問まで、
+                        実際の体験談とトラブル対処法を含めて詳しく回答しています。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-6">
+                    <a href="https://smjyniyh.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-home mr-2"></i>ホーム
+                    </a>
+                    <a href="https://ekwwvoal.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-robot mr-2"></i>AI活用ガイド
+                    </a>
+                    <a href="https://qvgxfute.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i>実例集
+                    </a>
+                    <a href="https://posbtruz.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-clipboard-list mr-2"></i>ワークシート
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="https://rdvgctpg.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-calculator mr-2"></i>ROI計算
+                    </a>
+                    <a href="https://fswlfykr.gensparkspace.com/" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-tools mr-2"></i>実例補足
+                    </a>
+                    <span class="text-blue-600 font-semibold">
+                        <i class="fas fa-question-circle mr-2"></i>FAQ
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Quick Search -->
+        <div class="mb-12">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="質問を検索..." 
+                           class="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-full focus:border-blue-500 focus:outline-none shadow-lg">
+                    <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
         </div>
 
-        <div class="header">
-            <h1>❓ FAQ・よくある失敗事例と対策集</h1>
-            <p>7年間の実践で遭遇した問題と解決策を完全網羅</p>
-            <p>失敗を事前に回避し、外注化を成功に導きます</p>
+        <!-- FAQ Categories -->
+        <div class="mb-12">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="category-btn px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors" data-category="all">
+                    <i class="fas fa-layer-group mr-2"></i>全て
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="basic">
+                    <i class="fas fa-seedling mr-2"></i>基本・初心者
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="implementation">
+                    <i class="fas fa-cogs mr-2"></i>実装・技術
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="management">
+                    <i class="fas fa-users mr-2"></i>人材・管理
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="trouble">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>トラブル対処
+                </button>
+            </div>
         </div>
 
-        <div class="search-box">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 キーワードで検索（例：外注先の選び方、品質管理、コミュニケーション）" onkeyup="searchFAQ()">
-        </div>
-
-        <div class="tab-container">
-            <button class="tab-button active" onclick="switchTab('faq')">よくある質問</button>
-            <button class="tab-button" onclick="switchTab('failures')">失敗事例と対策</button>
-            <button class="tab-button" onclick="switchTab('checklist')">成功チェックリスト</button>
-        </div>
-
-        <!-- FAQ タブ -->
-        <div id="faq-tab" class="tab-content active">
-            <div class="faq-section">
-                <div class="faq-category">
-                    <div class="category-title">🎯 外注化の基本</div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>外注化はどのくらいの売上から始めるべきですか？</span>
-                            <span class="icon">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p><strong>推奨売上：月20万円以上</strong></p>
-                            <p>外注費用を考慮すると、最低でも月20万円の売上があると安心です。ただし、以下の条件が揃えばより早期の導入も可能です：</p>
-                            <ul style="margin: 10px 0 10px 20px;">
-                                <li>作業時間が月80時間を超えている</li>
-                                <li>単純作業の割合が60%以上</li>
-                                <li>成長トレンドが明確に見える</li>
-                            </ul>
-                            <div class="cost-breakdown">
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥3-5万</div>
-                                    <div class="cost-label">初期外注費用目安</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">15-25%</div>
-                                    <div class="cost-label">売上に対する外注費率</div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- FAQ Items -->
+        <div class="space-y-6">
+            <!-- 基本・初心者向け -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="basic">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">初心者</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注化は初心者でも始められますか？</h3>
                     </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>外注先はどこで見つければいいですか？</span>
-                            <span class="icon">▼</span>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>はい、初心者でも十分に始められます。</strong>ただし、以下の条件を満たしていることが重要です：
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                            <li>月10万円以上の安定収入がある（投資余力の確保）</li>
+                            <li>基本的なビジネス活動の流れを理解している</li>
+                            <li>人とのコミュニケーションに抵抗がない</li>
+                        </ul>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">初心者におすすめのスタート方法：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li>まず1つの単純作業から外注化を開始</li>
+                                <li>信頼できる外注先を1人見つける</li>
+                                <li>成功体験を積んでから徐々に拡大</li>
+                            </ol>
                         </div>
-                        <div class="faq-answer">
-                            <p><strong>おすすめ外注先プラットフォーム：</strong></p>
-                            <div class="cost-breakdown">
-                                <div class="cost-item">
-                                    <div class="cost-amount">クラウドワークス</div>
-                                    <div class="cost-label">案件数豊富・初心者向け</div>
+                        <p class="text-sm text-gray-600">
+                            詳細は<a href="https://posbtruz.gensparkspace.com/" class="text-blue-600 hover:underline">ワークシート</a>で段階的な実装方法をご確認ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="basic">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">初心者</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注化にはどのくらいの初期投資が必要ですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>月5万円〜15万円程度</strong>から始めることができます。ビジネス規模により変動します：
+                        </p>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">スモールスタート</h4>
+                                <p class="text-gray-700 text-sm">月3〜5万円</p>
+                                <p class="text-gray-600 text-xs">単純作業の一部外注</p>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-yellow-800 mb-2">標準的導入</h4>
+                                <p class="text-gray-700 text-sm">月10〜15万円</p>
+                                <p class="text-gray-600 text-xs">複数工程の外注化</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">本格運用</h4>
+                                <p class="text-gray-700 text-sm">月20万円〜</p>
+                                <p class="text-gray-600 text-xs">管理者含む組織化</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            投資対効果は<a href="https://rdvgctpg.gensparkspace.com/" class="text-blue-600 hover:underline">ROI計算ツール</a>で事前に試算できます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 実装・技術系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">技術</span>
+                        <h3 class="text-xl font-semibold text-gray-800">GoogleフォームとSpreadsheetの連携システムが難しく感じます</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>段階的に実装することで、技術的な難しさを解消できます。</strong>
+                        </p>
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">実装の順序：</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">1</span>
+                                    <div>
+                                        <p class="font-medium">サンプルをコピーする</p>
+                                        <p class="text-sm text-gray-600">提供されているURLから自分のGoogleアカウントにコピー</p>
+                                    </div>
                                 </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">ランサーズ</div>
-                                    <div class="cost-label">高品質・中級者以上</div>
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">2</span>
+                                    <div>
+                                        <p class="font-medium">テストデータで動作確認</p>
+                                        <p class="text-sm text-gray-600">まず1件のテストデータで全体の流れを確認</p>
+                                    </div>
                                 </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">ココナラ</div>
-                                    <div class="cost-label">専門スキル・単発依頼</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">直接募集</div>
-                                    <div class="cost-label">SNS・地域コミュニティ</div>
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">3</span>
+                                    <div>
+                                        <p class="font-medium">少しずつ実データで運用</p>
+                                        <p class="text-sm text-gray-600">慣れてから本格的なデータ入力を開始</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="warning-box">
-                                <strong>⚠️ 選定のポイント：</strong>
-                                <ul style="margin: 10px 0 0 20px;">
-                                    <li>評価・実績を必ず確認</li>
-                                    <li>コミュニケーション能力を重視</li>
-                                    <li>小さな案件からテスト開始</li>
-                                    <li>複数候補を確保してリスク分散</li>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            詳細な設定手順は<a href="https://fswlfykr.gensparkspace.com/" class="text-blue-600 hover:underline">実例補足集</a>で図解付きで解説しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">技術</span>
+                        <h3 class="text-xl font-semibold text-gray-800">FireStorageでのシステム情報管理の設定方法は？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">FireStorage設定手順：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li>FireStorageアカウントを作成</li>
+                                <li>システム情報送信用のURLを取得</li>
+                                <li>Systeminfoなどのツールを設定</li>
+                                <li>外注さんにシステム情報送信手順を教育</li>
+                                <li>管理用のフォルダ構成を整理</li>
+                            </ol>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">メリット：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>販売後の問い合わせ対応が迅速化</li>
+                                <li>商品の詳細情報をいつでも参照可能</li>
+                                <li>システム構成の記録が残る</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            詳細な設定手順は<a href="https://fswlfykr.gensparkspace.com/" class="text-blue-600 hover:underline">実例補足集</a>で説明しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 人材・管理系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="management">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">管理</span>
+                        <h3 class="text-xl font-semibold text-gray-800">信頼できる外注先はどうやって見つけるのですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>段階的なアプローチで信頼関係を構築します。</strong>
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">推奨の採用方法：</h4>
+                                <ol class="list-decimal list-inside text-gray-700 space-y-1 text-sm">
+                                    <li>知人への直接依頼</li>
+                                    <li>知人からの紹介</li>
+                                    <li>クラウドワークス・ランサーズ</li>
+                                    <li>ココナラなどスキル特化サイト</li>
+                                </ol>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">面接での確認ポイント：</h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                                    <li>作業に対する興味度</li>
+                                    <li>コミュニケーション能力</li>
+                                    <li>継続性・責任感</li>
+                                    <li>技術的な理解力</li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>外注費用の相場はどのくらいですか？</span>
-                            <span class="icon">▼</span>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">信頼関係構築のコツ：</h4>
+                            <p class="text-gray-700 text-sm">
+                                最初は小さな作業から始めて、お互いの相性を見極める。
+                                明確な指示と適切な報酬で、長期的な関係を築く。
+                            </p>
                         </div>
-                        <div class="faq-answer">
-                            <p><strong>業務別費用相場（2025年基準）：</strong></p>
-                            <div class="cost-breakdown">
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥800-1,200</div>
-                                    <div class="cost-label">データ入力（時給）</div>
+                        <p class="text-sm text-gray-600">
+                            採用の詳細は<a href="https://qvgxfute.gensparkspace.com/" class="text-blue-600 hover:underline">実例集</a>で実際の体験談をご覧ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="management">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">管理</span>
+                        <h3 class="text-xl font-semibold text-gray-800">Slackでの作業指示のコツを教えてください</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">効果的なSlack運用方法：</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <h5 class="font-medium text-gray-800">チャンネル構成：</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>#稼働予定日 - 月次シフト管理</li>
+                                        <li>#作業指示 - 日々の作業内容</li>
+                                        <li>#質問相談 - 困った時の相談窓口</li>
+                                    </ul>
                                 </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥200-500</div>
-                                    <div class="cost-label">写真撮影（1商品）</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥300-800</div>
-                                    <div class="cost-label">商品説明文（1件）</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥1,500-3,000</div>
-                                    <div class="cost-label">Webデザイン（時給）</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥100-300</div>
-                                    <div class="cost-label">梱包・発送（1件）</div>
-                                </div>
-                                <div class="cost-item">
-                                    <div class="cost-amount">¥5-15万</div>
-                                    <div class="cost-label">月額固定契約</div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">指示の出し方：</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>箇条書きで明確に記載</li>
+                                        <li>期限と優先順位を明示</li>
+                                        <li>完了時の報告形式を指定</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">指示の実例：</h4>
+                            <div class="bg-white p-3 rounded border-l-4 border-green-500 text-gray-700 text-sm">
+                                【本日の作業】<br>
+                                1. パソコン5台のセッティング<br>
+                                2. 写真撮影（各10枚）<br>
+                                3. 外注倉庫への入庫作業<br>
+                                <br>
+                                期限：本日18時まで<br>
+                                報告：完了時に台数と写真枚数を報告
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Slack運用の詳細は<a href="https://fswlfykr.gensparkspace.com/" class="text-blue-600 hover:underline">実例補足集</a>で実際の画面例を確認できます。
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <div class="faq-category">
-                    <div class="category-title">🔧 実践・運用関連</div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>外注先とのコミュニケーションがうまくいきません</span>
-                            <span class="icon">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p><strong>コミュニケーション改善の3ステップ：</strong></p>
-                            <ol style="margin: 15px 0 15px 20px;">
-                                <li><strong>指示の明確化：</strong>5W1Hを意識した具体的な指示書を作成</li>
-                                <li><strong>レスポンス時間の設定：</strong>返信期限を明確に設定（24時間以内など）</li>
-                                <li><strong>定期的な進捗確認：</strong>週1回の定期ミーティングを実施</li>
+            <!-- トラブル対処 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注さんが突然連絡が取れなくなりました</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-2">immediate対応（24時間以内）：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                                <li>複数の連絡手段で確認（Slack、メール、電話）</li>
+                                <li>進行中の作業状況を把握</li>
+                                <li>緊急度の高い作業を自分で対応</li>
+                                <li>他の外注さんに応援依頼</li>
                             </ol>
-                            <div class="solution-box">
-                                <div class="solution-title">✅ 解決テンプレート例：</div>
-                                <p>「〇〇さん、いつもお疲れ様です。今回の案件について、以下の点を確認させてください：<br>
-                                ①進捗状況 ②困っている点 ③完成予定日<br>
-                                明日の17時までにご返信いただけますでしょうか。」</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">予防策：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>複数の外注先を確保（最低2-3人）</li>
+                                <li>緊急連絡先を事前に交換</li>
+                                <li>作業の進捗を日次で確認</li>
+                                <li>重要作業は複数人でバックアップ</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">長期的な対策：</h4>
+                            <p class="text-gray-700 text-sm">
+                                外注先との関係を良好に保つため、定期的なコミュニケーションと
+                                適切な報酬設定を心がける。また、作業の標準化により、
+                                誰でも対応できる体制を構築する。
+                            </p>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            リスク管理の詳細は<a href="https://qvgxfute.gensparkspace.com/" class="text-blue-600 hover:underline">実例集</a>で他の体験談もご覧ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">リモートデスクトップでセキュリティが心配です</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-3">必須のセキュリティ対策：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>パスワード管理：</strong>毎回異なるパスワードを使用し、作業終了後に変更</li>
+                                <li><strong>専用PC設置：</strong>重要データは別PCに保管し、作業用PCは最小限の情報のみ</li>
+                                <li><strong>監視ログ：</strong>作業時間と操作内容を記録</li>
+                                <li><strong>権限制限：</strong>必要最小限のフォルダ・アプリケーションのみアクセス可能</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">推奨環境設定：</h4>
+                            <div class="space-y-2 text-gray-700 text-sm">
+                                <p><strong>TeamViewer設定：</strong></p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>毎回認証が必要な設定</li>
+                                    <li>ファイル転送機能の制限</li>
+                                    <li>作業時間の自動ログ記録</li>
+                                </ul>
+                                <p><strong>Chrome Remote Desktop：</strong></p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Googleアカウントでの認証</li>
+                                    <li>接続時の通知設定</li>
+                                    <li>セッション履歴の確認</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>品質が安定しない場合の対処法は？</span>
-                            <span class="icon">▼</span>
+                        <div class="bg-green-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-green-800 mb-2">不審動作の検知方法：</h4>
+                            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                <li>Windows Event Logの定期確認</li>
+                                <li>不正アクセス検知ソフトの導入</li>
+                                <li>作業時間外のアクセス通知設定</li>
+                            </ul>
                         </div>
-                        <div class="faq-answer">
-                            <p><strong>品質安定化の4つの施策：</strong></p>
-                            <div class="checklist">
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="quality1">
-                                    <label for="quality1"><strong>詳細マニュアルの作成：</strong>OK例・NG例を写真付きで明示</label>
+                        <p class="text-sm text-gray-600">
+                            セキュリティ設定の詳細は<a href="https://fswlfykr.gensparkspace.com/" class="text-blue-600 hover:underline">実例補足集</a>で設定手順を解説しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注費が予想以上にかかってしまいます</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-3">コスト増加の主な原因：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>作業効率の見積もりが甘い</li>
+                                <li>指示が不明確で手戻りが発生</li>
+                                <li>適切な単価設定ができていない</li>
+                                <li>品質基準が曖昧で修正作業が多い</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">コスト削減の対策：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li><strong>時間計測：</strong>実際の作業時間を正確に把握</li>
+                                <li><strong>標準化：</strong>作業手順を統一して効率化</li>
+                                <li><strong>段階的料金：</strong>習熟度に応じた料金体系</li>
+                                <li><strong>成果報酬：</strong>品質向上のインセンティブ設計</li>
+                            </ol>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">見直しのポイント：</h4>
+                            <p class="text-gray-700 text-sm">
+                                月次で「時間コスト」「品質」「外注費」のバランスを見直し。
+                                ROI（投資対効果）が想定を下回る場合は、
+                                作業の自動化や業務フローの改善を検討する。
+                            </p>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            コスト管理は<a href="https://rdvgctpg.gensparkspace.com/" class="text-blue-600 hover:underline">ROI計算ツール</a>で定期的に評価することをお勧めします。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI活用系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">AI</span>
+                        <h3 class="text-xl font-semibold text-gray-800">AIを外注化にどう活用すればいいですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">AIの主な活用場面：</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">マニュアル作成</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                        <li>作業手順書の自動生成</li>
+                                        <li>チェックリストの作成</li>
+                                        <li>多言語対応</li>
+                                    </ul>
                                 </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="quality2">
-                                    <label for="quality2"><strong>チェックシートの導入：</strong>完了前に必ず確認する項目リスト</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="quality3">
-                                    <label for="quality3"><strong>段階的フィードバック：</strong>完成前の中間確認プロセス</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="quality4">
-                                    <label for="quality4"><strong>品質評価制度：</strong>評価に応じた報酬調整システム</label>
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">指示書生成</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                        <li>日次作業指示の自動化</li>
+                                        <li>品質基準の明文化</li>
+                                        <li>フィードバック文書作成</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">推奨AIツール：</h4>
+                            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                <li><strong>ChatGPT:</strong> 汎用的な文書作成・相談</li>
+                                <li><strong>Claude:</strong> 詳細な分析・長文処理</li>
+                                <li><strong>Gemini:</strong> Googleサービスとの連携</li>
+                                <li><strong>Copilot:</strong> Microsoft Office連携</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            AI活用の詳細は<a href="https://ekwwvoal.gensparkspace.com/" class="text-blue-600 hover:underline">AI革命ガイド</a>で具体的な活用方法を解説しています。
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 失敗事例タブ -->
-        <div id="failures-tab" class="tab-content">
-            <div class="failure-case">
-                <div class="failure-title">失敗事例1：外注先への丸投げで大失敗</div>
-                <p><strong>状況：</strong>「よろしくお願いします」だけで商品撮影を依頼</p>
-                <p><strong>結果：</strong>使えない写真が大量納品、修正に2週間、機会損失30万円</p>
-                <div class="solution-box">
-                    <div class="solution-title">💡 解決策：</div>
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>撮影角度、背景、ライティングの指定</li>
-                        <li>参考画像の添付（最低3例）</li>
-                        <li>NGパターンの明示</li>
-                        <li>1商品まずテスト撮影で品質確認</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="failure-case">
-                <div class="failure-title">失敗事例2：安さ重視で選んだ外注先が音信不通</div>
-                <p><strong>状況：</strong>最安値の外注先に100件まとめて依頼</p>
-                <p><strong>結果：</strong>納期2日前に連絡が取れなくなり、緊急で別の外注先を探す羽目に</p>
-                <div class="solution-box">
-                    <div class="solution-title">💡 解決策：</div>
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>評価・実績を最重視（価格は二の次）</li>
-                        <li>大きな案件は分割して複数の外注先に分散</li>
-                        <li>緊急時の代替案を必ず準備</li>
-                        <li>契約書面での責任範囲明確化</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="failure-case">
-                <div class="failure-title">失敗事例3：外注管理に時間を取られ逆効果</div>
-                <p><strong>状況：</strong>10人の外注先を同時管理、連絡や確認作業で1日5時間消費</p>
-                <p><strong>結果：</strong>外注前より作業時間が増加、ストレス倍増</p>
-                <div class="solution-box">
-                    <div class="solution-title">💡 解決策：</div>
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>管理ツールの活用（Chatwork、Slack等）</li>
-                        <li>定期レポートの自動化</li>
-                        <li>外注先の段階的増員（一度に3人まで）</li>
-                        <li>リーダー外注者の設定（チームリーダー制）</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="failure-case">
-                <div class="failure-title">失敗事例4：外注費用が利益を圧迫</div>
-                <p><strong>状況：</strong>売上30万円に対し外注費25万円、手元に5万円しか残らない</p>
-                <p><strong>結果：</strong>時給換算で300円、外注化の意味を失う</p>
-                <div class="solution-box">
-                    <div class="solution-title">💡 解決策：</div>
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>外注費率は売上の15-20%以内に抑制</li>
-                        <li>固定費と変動費のバランス調整</li>
-                        <li>外注化による売上向上も同時進行</li>
-                        <li>段階的導入で費用対効果を確認</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="failure-case">
-                <div class="failure-title">失敗事例5：機密情報の漏洩リスク</div>
-                <p><strong>状況：</strong>顧客情報を含むデータを外注先に無制限に提供</p>
-                <p><strong>結果：</strong>競合他社への情報流出、顧客からのクレーム</p>
-                <div class="solution-box">
-                    <div class="solution-title">💡 解決策：</div>
-                    <ul style="margin: 10px 0 0 20px;">
-                        <li>機密保持契約（NDA）の締結</li>
-                        <li>必要最小限の情報のみ提供</li>
-                        <li>アクセス権限の段階的設定</li>
-                        <li>定期的なセキュリティ教育の実施</li>
-                    </ul>
-                </div>
+        <!-- Contact Section -->
+        <div class="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">
+                <i class="fas fa-envelope mr-3"></i>
+                その他のご質問
+            </h2>
+            <p class="text-xl mb-6">
+                ここに掲載されていない質問やより詳細な相談は、
+                以下のサポートチャンネルをご利用ください。
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://twitter.com/BuppanP" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    <i class="fab fa-twitter mr-2"></i>Twitter相談
+                </a>
+                <a href="https://lin.ee/ilfIzpl" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    <i class="fab fa-line mr-2"></i>LINE相談
+                </a>
             </div>
         </div>
+    </main>
 
-        <!-- 失敗事例タブ -->
-        <div id="checklist-tab" class="tab-content">
-            <div class="faq-category">
-                <div class="category-title">✅ 外注化成功チェックリスト</div>
-                
-                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">📋 開始前チェック</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="prep1">
-                        <label for="prep1">現在の業務を詳細に棚卸しした</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="prep2">
-                        <label for="prep2">外注化の目的と期待効果を明確にした</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="prep3">
-                        <label for="prep3">外注化予算を売上の20%以内に設定した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="prep4">
-                        <label for="prep4">最初の外注業務を1つに絞り込んだ</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="prep5">
-                        <label for="prep5">詳細なマニュアルを作成した</label>
-                    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">外注化戦略</h3>
+                    <p class="text-gray-400">
+                        7年間の実践で構築した外注化ノウハウを完全公開
+                    </p>
                 </div>
-
-                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">🎯 外注先選定チェック</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="select1">
-                        <label for="select1">評価・実績を確認した（評価4.5以上推奨）</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="select2">
-                        <label for="select2">過去の作品・ポートフォリオを確認した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="select3">
-                        <label for="select3">コミュニケーションのレスポンス速度を確認した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="select4">
-                        <label for="select4">小規模テストで品質を確認した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="select5">
-                        <label for="select5">複数の候補者を比較検討した</label>
-                    </div>
+                <div>
+                    <h4 class="font-semibold mb-4">コンテンツ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://ekwwvoal.gensparkspace.com/" class="hover:text-white transition-colors">AI活用ガイド</a></li>
+                        <li><a href="https://qvgxfute.gensparkspace.com/" class="hover:text-white transition-colors">実例集</a></li>
+                        <li><a href="https://posbtruz.gensparkspace.com/" class="hover:text-white transition-colors">ワークシート</a></li>
+                        <li><a href="https://fswlfykr.gensparkspace.com/" class="hover:text-white transition-colors">実例補足集</a></li>
+                    </ul>
                 </div>
-
-                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">🔄 運用・管理チェック</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="manage1">
-                        <label for="manage1">定期的な進捗確認の仕組みを構築した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="manage2">
-                        <label for="manage2">品質チェックの基準を設定した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="manage3">
-                        <label for="manage3">緊急時の連絡体制を整備した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="manage4">
-                        <label for="manage4">支払い条件と納期を明確に設定した</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="manage5">
-                        <label for="manage5">機密保持契約（NDA）を締結した</label>
-                    </div>
+                <div>
+                    <h4 class="font-semibold mb-4">ツール</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://rdvgctpg.gensparkspace.com/" class="hover:text-white transition-colors">ROI計算ツール</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
                 </div>
-
-                <h3 style="color: #2c3e50; margin: 20px 0 15px 0;">📈 効果測定チェック</h3>
-                <div class="checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="measure1">
-                        <label for="measure1">外注化前後の作業時間を記録している</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="measure2">
-                        <label for="measure2">ROIを月次で計算している</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="measure3">
-                        <label for="measure3">品質レベルを定期的に評価している</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="measure4">
-                        <label for="measure4">外注先との関係性を定期的に見直している</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="measure5">
-                        <label for="measure5">次の外注化対象を検討している</label>
-                    </div>
-                </div>
-
-                <div class="warning-box" style="margin-top: 30px;">
-                    <h3 style="margin-bottom: 15px;">🎯 チェックリスト活用法</h3>
-                    <p><strong>80%以上チェック：</strong>外注化の準備が整っています。自信を持って開始しましょう。</p>
-                    <p><strong>60-79%チェック：</strong>基本的な準備はできています。不足項目を補完してから開始しましょう。</p>
-                    <p><strong>60%未満：</strong>準備不足です。基礎から見直すことをお勧めします。</p>
+                <div>
+                    <h4 class="font-semibold mb-4">お問い合わせ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://twitter.com/BuppanP" class="hover:text-white transition-colors">Twitter</a></li>
+                        <li><a href="https://lin.ee/ilfIzpl" class="hover:text-white transition-colors">LINE</a></li>
+                    </ul>
                 </div>
             </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 外注化戦略マスタープログラム. All rights reserved.</p>
+            </div>
         </div>
-
-        <div style="text-align: center; margin: 40px 0;">
-            <a href="worksheets.html" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 10px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">ワークシートで実践開始</a>
-            <a href="roi-calculator.html" style="background: linear-gradient(135deg, #27ae60, #229954); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 10px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">ROI計算に戻る</a>
-        </div>
-    </div>
+    </footer>
 
     <script>
-        function switchTab(tabName) {
-            // タブボタンの状態更新
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
+        // FAQ Toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.answer-content');
+                const icon = item.querySelector('.faq-header i');
+                
+                answer.classList.toggle('show');
+                icon.classList.toggle('rotate-180');
             });
-            event.target.classList.add('active');
+        });
 
-            // タブコンテンツの表示切替
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
+        // Category filter functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('bg-blue-600', 'text-white');
+                
+                // Filter FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
             });
-            document.getElementById(tabName + '-tab').classList.add('active');
-        }
+        });
 
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.icon');
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
             
-            // 他のFAQを閉じる
-            document.querySelectorAll('.faq-question').forEach(q => {
-                if (q !== element) {
-                    q.classList.remove('active');
-                    q.nextElementSibling.classList.remove('active');
-                    q.querySelector('.icon').textContent = '▼';
-                }
-            });
-            
-            // クリックされたFAQの状態を切り替え
-            element.classList.toggle('active');
-            answer.classList.toggle('active');
-            icon.textContent = element.classList.contains('active') ? '▲' : '▼';
-        }
-
-        function searchFAQ() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item, .failure-case');
-            
-            faqItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(searchTerm) || searchTerm === '') {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const content = item.querySelector('.answer-content').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
                 }
             });
-        }
-
-        // チェックリストの進捗表示
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-            const progress = Math.round((checked.length / checkboxes.length) * 100);
-            
-            // 進捗表示を更新（実装可能であれば）
-            console.log(`チェックリスト進捗: ${progress}%`);
-        }
-
-        // チェックボックスの変更を監視
-        document.addEventListener('change', function(e) {
-            if (e.target.type === 'checkbox') {
-                updateProgress();
-            }
         });
     </script>
 </body>
 </html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDttXGPCJzu6QUyw6qy%2B0uL2lSTP0hTwDCCWGXNm9SiJN5jjwAhHa9%2FyGbcAfJ9QeZVV3r2EiDwI%2BtDxpREnGBAgGOY6KjDeSWWdaZT3lfMuH6BlvYBL5EceDTTd%2FX9HcGFmAXriMG%2Bk6Z%2Bkvn1Q6rQqu31csyREJc4TB%2FH3gn67X0cv%2BVcMoAvPGWf9cQbcgZdsfCOW35PJ5InYwko%2F8Msfag6lQBetKqkiwoFnA2VF7z9kiwdO5OIMRxkyEUhfBe2q7Z0NyoA9k7it0US3TkaxAKVknlyHOfr1RRaxepaG827ECSCRBtYuj852Gh42WVhCm2Mc%2FX0PIwz8mOPN6TZV2N4fqlgmK2gektGaO4k74jcnVpbmxBGSWLeXLKCAIaUm5V0PjH9hCs2wxksXTL8gwPcOFXTwZHYiSgeHC9E6MmSZxehr%2FYmS8EIWL4YV3ipoh7RDaar78bir8lcRUa2DFDt3nJW2tJ59EblXLmOp0";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDttXGPCJzu6QUyw6qy+0uL2lSTP0hTwDCCWGXNm9SiJN5jjwAhHa9/yGbcAfJ9QeZVV3r2EiDwI+tDxpREnGBAgGOY6KjDeSWWdaZT3lfMuH6BlvYBL5EceDTTd/X9HcGFmAXriMG+k6Z+kvn1Q6rQqu31csyREJc4TB/H3gn67X0cv+VcMoAvPGWf9cQbcgZdsfCOW35PJ5InYwko/8Msfag6lQBetKqkiwoFnA2VF7z9kiwdO5OIMRxkyEUhfBe2q7Z0NyoA9k7it0US3TkaxAKVknlyHOfr1RRaxepaG827ECSCRBtYuj852Gh42WVhCm2Mc/X0PIwz8mOPN6TZV2N4fqlgmK2gektGaO4k74jcnVpbmxBGSWLeXLKCAIaUm5V0PjH9hCs2wxksXTL8gwPcOFXTwZHYiSgeHC9E6MmSZxehr/YmS8EIWL4YV3ipoh7RDaar78bir8lcRUa2DFDt3nJW2tJ59EblXLmOp0";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

@@ -3,342 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【購入者限定】外注化戦略マスタープログラム - 会員専用サイト</title>
+    <title>メンバー専用：プレミアムコンテンツ</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .gold-gradient {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        }
         .premium-card {
             background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .exclusive-badge {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
             animation: pulse 2s infinite;
         }
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-        .content-card:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-        }
-        .progress-indicator {
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        .member-gold {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50">
     <!-- Header -->
     <header class="gradient-bg text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <div class="exclusive-badge inline-block px-6 py-2 rounded-full text-white font-bold text-sm mb-4">
-                    <i class="fas fa-crown mr-2"></i>PREMIUM MEMBERS ONLY
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">
+                        <i class="fas fa-crown text-yellow-300 mr-3"></i>
+                        メンバー専用コンテンツ
+                    </h1>
+                    <p class="text-xl opacity-90">Brain購入者限定の特別リソース</p>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    外注化戦略マスタープログラム
-                </h1>
-                <p class="text-xl opacity-90 mb-6">
-                    激務サラリーマンが月100万円を「寝ながら稼ぐ」秘密の全貌
-                </p>
-                <div class="flex justify-center items-center space-x-6 text-sm">
-                    <div class="flex items-center">
-                        <i class="fas fa-book mr-2"></i>
-                        <span>総文字数: 60,000文字</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fas fa-clock mr-2"></i>
-                        <span>実践歴: 7年間</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fas fa-yen-sign mr-2"></i>
-                        <span>最高月商: 100万円</span>
-                    </div>
+                <div class="exclusive-badge text-white px-6 py-3 rounded-full font-bold">
+                    <i class="fas fa-lock mr-2"></i>EXCLUSIVE
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Welcome Message -->
+    <!-- Welcome Section -->
     <section class="py-12">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <div class="premium-card rounded-2xl p-8 mb-8">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-800 mb-4">
-                            <i class="fas fa-star text-yellow-500 mr-3"></i>
-                            ご購入ありがとうございます！
-                        </h2>
-                        <p class="text-lg text-gray-600 leading-relaxed">
-                            あなたは今、7年間の試行錯誤で構築された「外注化戦略の全貌」にアクセスできる特別な権利を手に入れました。<br>
-                            このコンテンツは、私が激務サラリーマンとして働きながら、月収100万円を達成し、<br>
-                            「寝ながら稼ぐ」仕組みを構築するまでの全記録です。
-                        </p>
-                    </div>
-                    
-                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-                        <div class="flex items-start">
-                            <i class="fas fa-exclamation-triangle text-yellow-400 text-xl mr-4 mt-1"></i>
-                            <div>
-                                <h3 class="font-bold text-gray-800 mb-2">重要：学習の進め方</h3>
-                                <p class="text-gray-700">
-                                    最大の効果を得るために、必ず<strong>「第1弾→第2弾→第3弾→振り返りガイド」</strong>の順序で学習してください。<br>
-                                    各コンテンツは約20,000文字の重厚な内容となっており、じっくりと時間をかけて取り組むことをお勧めします。
-                                </p>
-                            </div>
-                        </div>
+        <div class="container mx-auto px-6">
+            <div class="premium-card rounded-2xl p-8 mb-8">
+                <div class="text-center">
+                    <i class="fas fa-star member-gold text-6xl mb-4"></i>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">ようこそ、外注化マスターの世界へ</h2>
+                    <p class="text-xl text-gray-600 mb-6">
+                        Brain「外注化戦略」をご購入いただき、誠にありがとうございます。<br>
+                        ここは購入者だけがアクセスできる特別な場所です。
+                    </p>
+                    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-8 py-4 rounded-full inline-block">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <strong>認証済み</strong> - プレミアムメンバー
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Learning Path -->
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
-                    <i class="fas fa-route mr-3 text-blue-500"></i>
-                    学習ロードマップ
-                </h2>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Step 1 -->
-                    <div class="content-card bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
-                        <div class="text-center mb-4">
-                            <div class="progress-indicator w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">1</div>
-                            <h3 class="font-bold text-lg text-gray-800">基礎・戦略編</h3>
-                            <p class="text-sm text-gray-500 mb-4">約20,000文字</p>
-                        </div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>外注化の基本概念</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>戦略設計の方法</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>業務分析テクニック</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>コアスキルの習得</li>
-                        </ul>
-                        <a href="https://lhtplvam.gensparkspace.com/" target="_blank" class="block w-full bg-blue-500 hover:bg-blue-600 text-white text-center py-3 rounded-lg font-medium transition duration-300">
-                            <i class="fas fa-external-link-alt mr-2"></i>第1弾を開く
-                        </a>
-                    </div>
+    <!-- Exclusive Content Grid -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+                <i class="fas fa-gems text-purple-600 mr-3"></i>
+                限定コンテンツ
+            </h2>
 
-                    <!-- Step 2 -->
-                    <div class="content-card bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200">
-                        <div class="text-center mb-4">
-                            <div class="bg-purple-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">2</div>
-                            <h3 class="font-bold text-lg text-gray-800">実装・システム編</h3>
-                            <p class="text-sm text-gray-500 mb-4">約20,000文字</p>
-                        </div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>システム化技術</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>任せる仕組み構築</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>AI活用システム設計</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>自動化ツール活用</li>
-                        </ul>
-                        <a href="https://ikgqsrha.gensparkspace.com/" target="_blank" class="block w-full bg-purple-500 hover:bg-purple-600 text-white text-center py-3 rounded-lg font-medium transition duration-300">
-                            <i class="fas fa-external-link-alt mr-2"></i>第2弾を開く
-                        </a>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Tutorials -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-red-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-video text-xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">限定動画チュートリアル</h3>
+                    <p class="text-gray-600 mb-4">実際の現場での外注化プロセスを動画で詳細解説</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li><i class="fas fa-play-circle mr-2"></i>Slack指示の実例動画（15分）</li>
+                        <li><i class="fas fa-play-circle mr-2"></i>Google連携システム構築（20分）</li>
+                        <li><i class="fas fa-play-circle mr-2"></i>外注面接の実録音声（10分）</li>
+                    </ul>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg w-full hover:bg-red-600 transition-colors">
+                        <i class="fas fa-play mr-2"></i>動画を視聴
+                    </button>
+                </div>
 
-                    <!-- Step 3 -->
-                    <div class="content-card bg-white rounded-xl shadow-lg p-6 border-2 border-red-200">
-                        <div class="text-center mb-4">
-                            <div class="bg-red-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">3</div>
-                            <h3 class="font-bold text-lg text-gray-800">運用・管理編【完結】</h3>
-                            <p class="text-sm text-gray-500 mb-4">約20,000文字</p>
-                        </div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>人材採用・育成</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>継続運用システム</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>Slack活用術</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>次世代AI戦略予告</li>
-                        </ul>
-                        <a href="https://hbjqhnar.gensparkspace.com/" target="_blank" class="block w-full bg-red-500 hover:bg-red-600 text-white text-center py-3 rounded-lg font-medium transition duration-300">
-                            <i class="fas fa-external-link-alt mr-2"></i>第3弾を開く
-                        </a>
+                <!-- Individual Consultation -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-user-tie text-xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">個別コンサルティング</h3>
+                    <p class="text-gray-600 mb-4">かず本人による直接サポート</p>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                        <div class="text-sm text-yellow-800">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            <strong>特別価格</strong><br>
+                            通常50,000円 → <span class="text-lg font-bold">29,800円</span>
+                        </div>
+                    </div>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-calendar-check mr-2"></i>予約する
+                    </button>
+                </div>
 
-                    <!-- Step 4 -->
-                    <div class="content-card bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-200">
-                        <div class="text-center mb-4">
-                            <div class="bg-yellow-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h3 class="font-bold text-lg text-gray-800">振り返りガイド</h3>
-                            <p class="text-sm text-gray-500 mb-4">エッセンシャル版</p>
-                        </div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>要点まとめ</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>チェックリスト</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>実装フローチャート</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>定期確認用資料</li>事
-                        </ul>
-                        <a href="https://fozfyyjc.gensparkspace.com/" target="_blank" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-white text-center py-3 rounded-lg font-medium transition duration-300">
-                            <i class="fas fa-external-link-alt mr-2"></i>振り返りガイドを開く
-                        </a>
+                <!-- Advanced Techniques -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-magic text-xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">上級者向けテクニック</h3>
+                    <p class="text-gray-600 mb-4">月商1000万円級の秘密技術</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li><i class="fas fa-check mr-2"></i>多国籍外注チーム構築法</li>
+                        <li><i class="fas fa-check mr-2"></i>完全自動化システム設計</li>
+                        <li><i class="fas fa-check mr-2"></i>リスク分散の極意</li>
+                    </ul>
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded-lg w-full hover:bg-purple-600 transition-colors">
+                        <i class="fas fa-unlock mr-2"></i>アクセス
+                    </button>
+                </div>
+
+                <!-- Latest Updates -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-sync-alt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">最新アップデート</h3>
+                    <p class="text-gray-600 mb-4">常に進化する外注化戦略の最新情報</p>
+                    <div class="text-sm text-gray-500 mb-4">
+                        <div class="bg-green-50 border border-green-200 rounded p-2 mb-2">
+                            <i class="fas fa-bell text-green-600 mr-2"></i>
+                            <strong>New!</strong> AI活用マニュアル v2.0
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded p-2">
+                            <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                            リモートワーク完全対応版リリース
+                        </div>
+                    </div>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg w-full hover:bg-green-600 transition-colors">
+                        <i class="fas fa-download mr-2"></i>ダウンロード
+                    </button>
+                </div>
+
+                <!-- Premium Resources -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-folder-open text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">プレミアムリソース</h3>
+                    <p class="text-gray-600 mb-4">即使えるテンプレート＆ツール集</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li><i class="fas fa-file-excel mr-2"></i>外注管理Excelテンプレート</li>
+                        <li><i class="fas fa-file-contract mr-2"></i>契約書雛形（日英対応）</li>
+                        <li><i class="fas fa-calculator mr-2"></i>コスト計算ツール</li>
+                    </ul>
+                    <button class="bg-orange-500 text-white px-4 py-2 rounded-lg w-full hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-archive mr-2"></i>一括DL
+                    </button>
+                </div>
+
+                <!-- Community Access -->
+                <div class="premium-card rounded-xl p-6">
+                    <div class="bg-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">限定コミュニティ</h3>
+                    <p class="text-gray-600 mb-4">成功者だけの特別な交流の場</p>
+                    <div class="text-sm text-gray-500 mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                            現在のメンバー: <strong>127名</strong>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                            今月の新規事例共有: <strong>23件</strong>
+                        </div>
+                    </div>
+                    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg w-full hover:bg-pink-600 transition-colors">
+                        <i class="fas fa-door-open mr-2"></i>参加する
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Special Features -->
+    <!-- Success Stories -->
     <section class="py-12 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
-                    <i class="fas fa-gift mr-3 text-purple-500"></i>
-                    会員限定特典
-                </h2>
-                
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="premium-card rounded-xl p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="gold-gradient w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-robot text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">AI活用システム設計</h3>
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+                <i class="fas fa-trophy text-yellow-500 mr-3"></i>
+                メンバー成功事例
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-user text-white text-2xl"></i>
                         </div>
-                        <p class="text-gray-600">
-                            知識ゼロからでもAIを活用してシステムを構築する最新手法を詳解。次世代のビジネス自動化技術をマスターできます。
-                        </p>
+                        <h4 class="font-bold">田中様（IT関連）</h4>
                     </div>
-                    
-                    <div class="premium-card rounded-xl p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="gold-gradient w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-chart-line text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">実践データ完全公開</h3>
-                        </div>
-                        <p class="text-gray-600">
-                            7年間の実際の数値データ、失敗例、改善プロセスまで包み隠さず公開。リアルな実践ノウハウが手に入ります。
-                        </p>
+                    <blockquote class="text-gray-600 italic text-center">
+                        「3ヶ月で月80時間の時間創出に成功。おかげで新規事業を立ち上げることができました。」
+                    </blockquote>
+                    <div class="text-center mt-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-chart-line mr-1"></i>ROI 320%
+                        </span>
                     </div>
-                    
-                    <div class="premium-card rounded-xl p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="gold-gradient w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-tools text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">実装チェックリスト</h3>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-user text-white text-2xl"></i>
                         </div>
-                        <p class="text-gray-600">
-                            段階的な実装をサポートする詳細チェックリスト。迷うことなく外注化を進められる実践的ガイド付き。
-                        </p>
+                        <h4 class="font-bold">佐藤様（EC事業）</h4>
                     </div>
-                    
-                    <div class="premium-card rounded-xl p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="gold-gradient w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-eye text-white text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">次世代戦略の予告</h3>
+                    <blockquote class="text-gray-600 italic text-center">
+                        「外注化で売上が2倍になりました。システム化のおかげで品質も向上しています。」
+                    </blockquote>
+                    <div class="text-center mt-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-rocket mr-1"></i>売上200%UP
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-user text-white text-2xl"></i>
                         </div>
-                        <p class="text-gray-600">
-                            第3弾で次回コンテンツ「ビジネスにおけるAI活用法」の予告を収録。最新トレンドを先取りできます。
-                        </p>
+                        <h4 class="font-bold">山田様（転売業）</h4>
+                    </div>
+                    <blockquote class="text-gray-600 italic text-center">
+                        「完全に仕組み化できて、今は戦略立案に集中できています。人生が変わりました。」
+                    </blockquote>
+                    <div class="text-center mt-4">
+                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-clock mr-1"></i>90%時短
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Important Notes -->
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg">
-                    <div class="flex items-start">
-                        <i class="fas fa-shield-alt text-red-400 text-2xl mr-4 mt-1"></i>
-                        <div>
-                            <h3 class="font-bold text-gray-800 mb-3 text-lg">
-                                <i class="fas fa-lock mr-2"></i>会員限定コンテンツについて
-                            </h3>
-                            <ul class="text-gray-700 space-y-2">
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>このサイトは購入者様限定の特別なアクセス権です</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>各コンテンツは新しいタブで開きます（ブックマーク推奨）</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>PDF出力機能で手元に保存可能です</li>
-                                <li><i class="fas fa-check-circle text-green-500 mr-2"></i>内容の無断転載・共有は禁止されています</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Author Message -->
-    <section class="py-12 gradient-bg text-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <div class="mb-8">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-user text-gray-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">著者からのメッセージ</h3>
-                </div>
-                
-                <blockquote class="text-lg leading-relaxed opacity-90 mb-6">
-                    「あなたがこのコンテンツを手に取ったということは、現状を変えたいという強い意志をお持ちだということです。
-                    私が7年間かけて築き上げた外注化のノウハウを、惜しみなく全て公開しました。
-                    
-                    <br><br>
-                    
-                    このコンテンツは単なる情報ではありません。あなたの人生を変える「武器」です。
-                    真剣に取り組めば、3ヶ月後にはあなたのビジネスが大きく変わっているはずです。
-                    
-                    <br><br>
-                    
-                    一緒に「労働集約型人生」から卒業しましょう。」
-                </blockquote>
-                
-                <div class="text-right">
-                    <p class="font-bold text-lg">ー かず（@BuppanP）</p>
-                    <p class="text-sm opacity-75">パソコン転売歴7年、月収100万円達成者</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold mb-2">外注化戦略マスタープログラム</h3>
-                <p class="text-gray-400">© 2024 かず（@BuppanP）All rights reserved.</p>
-            </div>
-            
-            <div class="border-t border-gray-700 pt-4">
-                <p class="text-sm text-gray-400">
-                    本コンテンツは購入者様限定です。無断転載・共有を禁じます。
+    <!-- Contact & Support -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="premium-card rounded-2xl p-8 text-center">
+                <i class="fas fa-headset text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">専用サポート</h2>
+                <p class="text-gray-600 mb-6">
+                    ご質問やお困りのことがございましたら、<br>
+                    専用サポートまでお気軽にご連絡ください。
                 </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <i class="fab fa-twitter text-blue-500 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">Twitter DM</h3>
+                        <p class="text-gray-600 text-sm mb-3">最も迅速な対応</p>
+                        <a href="https://twitter.com/BuppanP" class="bg-blue-500 text-white px-4 py-2 rounded-lg inline-block hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-twitter mr-2"></i>@BuppanP
+                        </a>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl">
+                        <i class="fab fa-line text-green-500 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">公式LINE</h3>
+                        <p class="text-gray-600 text-sm mb-3">詳細な相談に最適</p>
+                        <a href="https://lin.ee/ilfIzpl" class="bg-green-500 text-white px-4 py-2 rounded-lg inline-block hover:bg-green-600 transition-colors">
+                            <i class="fab fa-line mr-2"></i>友達追加
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="py-8 bg-gray-800 text-white">
+        <div class="container mx-auto px-6">
+            <h3 class="text-xl font-bold mb-6 text-center">他のコンテンツも活用しましょう</h3>
+            <div class="grid md:grid-cols-4 gap-4 text-center">
+                <a href="ai-revolution.html" class="bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+                    <i class="fas fa-robot text-2xl mb-2"></i>
+                    <div class="text-sm">AI活用ガイド</div>
+                </a>
+                <a href="examples.html" class="bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+                    <i class="fas fa-lightbulb text-2xl mb-2"></i>
+                    <div class="text-sm">実例集</div>
+                </a>
+                <a href="worksheets.html" class="bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+                    <i class="fas fa-clipboard-list text-2xl mb-2"></i>
+                    <div class="text-sm">ワークシート</div>
+                </a>
+                <a href="roi-calculator.html" class="bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+                    <i class="fas fa-calculator text-2xl mb-2"></i>
+                    <div class="text-sm">ROI計算</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p class="mb-4">
+                <i class="fas fa-crown text-yellow-400 mr-2"></i>
+                <strong>あなたは外注化マスターへの道を歩んでいます</strong>
+            </p>
+            <p class="text-gray-400">
+                © 2024 外注化戦略マスタープログラム - かず | All Rights Reserved
+            </p>
         </div>
     </footer>
-
-    <script>
-        // スムーズスクロール
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // 外部リンクに新しいタブで開く設定
-        document.querySelectorAll('a[href^="http"]').forEach(link => {
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener noreferrer');
-        });
-    </script>
 </body>
 </html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDmxVnV3%2FQe7cD%2FhEHeAdZiJ1anOTk0TB1DocQigGZWYgsz4lf7uEJHQiTbebQEhN52ongXHMvCznKr1pT4utM0WeunwFhS0k1qGpW6y4PwouFwxzXAQ3vUkCYbe3SWU8DI9Jt2D2WBaQuc9vAcY%2FEuIuvvBEynuoWV4vbqtrHWixvkzj3UspDUWqTI%2Bsld2FVPMMKz506kWHF0oX583QrlHJnFxFPc2qwIDIibf%2FnwYcUYM%2FcsQGt%2BRT%2Fk2%2FmvuJzJsUEoBnKNLv7Yn6cth4gvnrnoOB4byUvhUrSrAd2y%2BiqIVQjSOKKGbZNlZ7EuHzd1Aylavj7Mhby7uwJ82BeSOy7gdxsxGl1UOZntWLL2n7rwELSFuFkrpbJ0Q8W4xu3P6YV1bI75lJO373Hgds2tOFZ9fh8KQ71O6QhbXEnxLbXqvttpHYCyLRcL9AqSL6%2FOaBN6VpPl9zwNpy0vQvmnPJ2DBlHrQLzDq%2FWwQKmwy0RyuIQuoZE9mrvlpuNhY8ag%3D%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDmxVnV3/Qe7cD/hEHeAdZiJ1anOTk0TB1DocQigGZWYgsz4lf7uEJHQiTbebQEhN52ongXHMvCznKr1pT4utM0WeunwFhS0k1qGpW6y4PwouFwxzXAQ3vUkCYbe3SWU8DI9Jt2D2WBaQuc9vAcY/EuIuvvBEynuoWV4vbqtrHWixvkzj3UspDUWqTI+sld2FVPMMKz506kWHF0oX583QrlHJnFxFPc2qwIDIibf/nwYcUYM/csQGt+RT/k2/mvuJzJsUEoBnKNLv7Yn6cth4gvnrnoOB4byUvhUrSrAd2y+iqIVQjSOKKGbZNlZ7EuHzd1Aylavj7Mhby7uwJ82BeSOy7gdxsxGl1UOZntWLL2n7rwELSFuFkrpbJ0Q8W4xu3P6YV1bI75lJO373Hgds2tOFZ9fh8KQ71O6QhbXEnxLbXqvttpHYCyLRcL9AqSL6/OaBN6VpPl9zwNpy0vQvmnPJ2DBlHrQLzDq/WwQKmwy0RyuIQuoZE9mrvlpuNhY8ag==";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

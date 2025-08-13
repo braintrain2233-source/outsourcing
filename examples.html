@@ -3,609 +3,487 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>業界別外注化実例集 - 具体的な事例で学ぶ外注化戦略</title>
+    <title>外注化実例集：成功事例とベストプラクティス</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            border-radius: 15px;
-        }
-
-        .nav-breadcrumb {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .nav-breadcrumb a {
-            color: #3498db;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .industry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .industry-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border-top: 5px solid;
-        }
-
-        .industry-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-        }
-
-        .industry-card.ecommerce { border-top-color: #e74c3c; }
-        .industry-card.service { border-top-color: #3498db; }
-        .industry-card.consulting { border-top-color: #27ae60; }
-        .industry-card.content { border-top-color: #f39c12; }
-        .industry-card.education { border-top-color: #9b59b6; }
-        .industry-card.saas { border-top-color: #1abc9c; }
-
-        .industry-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-
-        .industry-subtitle {
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-
-        .case-study {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-        }
-
-        .case-title {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .metric {
-            text-align: center;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .metric-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e74c3c;
-        }
-
-        .metric-label {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-
-        .process-flow {
-            margin: 20px 0;
-        }
-
-        .process-step {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .step-number {
-            background: #3498db;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-        }
-
-        .tools-used {
-            margin: 20px 0;
-        }
-
-        .tool-tag {
-            display: inline-block;
-            background: #ecf0f1;
-            color: #2c3e50;
-            padding: 5px 10px;
-            border-radius: 15px;
-            margin: 5px 5px 5px 0;
-            font-size: 12px;
-        }
-
-        .roi-breakdown {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .roi-title {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 15px;
-        }
-
-        .roi-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .roi-table th,
-        .roi-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .roi-table th {
-            background: rgba(255,255,255,0.2);
-            font-weight: bold;
-        }
-
-        .success-factor {
-            background: #d5f4e6;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #27ae60;
-        }
-
-        .challenge {
-            background: #fde2e4;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #e74c3c;
-        }
-
-        .expansion-example {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 10px; }
-            .industry-grid { grid-template-columns: 1fr; }
-            .metrics { grid-template-columns: repeat(2, 1fr); }
-        }
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); }
+        .success-gradient { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .warning-gradient { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .info-gradient { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="nav-breadcrumb">
-            <a href="index.html">ホーム</a> > <a href="navigation.html">ナビゲーション</a> > 業界別外注化実例集
+<body class="bg-gray-50">
+    <!-- ヘッダー -->
+    <header class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">外注化実例集</h1>
+                    <p class="text-xl opacity-90">成功事例とベストプラクティス</p>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="glass-effect px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-home mr-2"></i>ホーム
+                    </a>
+                    <a href="ai-revolution.html" class="glass-effect px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-robot mr-2"></i>AI活用
+                    </a>
+                </div>
+            </div>
         </div>
+    </header>
 
-        <div class="header">
-            <h1>🏢 業界別外注化実例集</h1>
-            <p>実際の成功事例から学ぶ、業界特化の外注化戦略</p>
-            <p>具体的な数値とプロセスで、あなたのビジネスに応用可能</p>
-        </div>
+    <!-- メインコンテンツ -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- 概要セクション -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-chart-line text-blue-500 mr-3"></i>実例から学ぶ外注化成功の秘訣
+                </h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                    7年間の実践で培った外注化ノウハウを、具体的な事例とデータで解説します。成功事例だけでなく失敗例も包み隠さず公開し、あなたの外注化成功をサポートします。
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-4 rounded-lg success-gradient text-white">
+                        <div class="text-3xl font-bold">1,200+</div>
+                        <div class="text-sm opacity-90">販売実績台数</div>
+                    </div>
+                    <div class="text-center p-4 rounded-lg warning-gradient text-white">
+                        <div class="text-3xl font-bold">100万円</div>
+                        <div class="text-sm opacity-90">最高月商</div>
+                    </div>
+                    <div class="text-center p-4 rounded-lg info-gradient text-white">
+                        <div class="text-3xl font-bold">7年間</div>
+                        <div class="text-sm opacity-90">継続実績</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="industry-grid">
-            <!-- EC・物販業界 -->
-            <div class="industry-card ecommerce">
-                <div class="industry-title">🛒 EC・物販業界</div>
-                <div class="industry-subtitle">パソコン転売・アパレル・雑貨販売</div>
+        <!-- ROI実績データ -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                    <i class="fas fa-chart-bar text-green-500 mr-3"></i>外注化ROI実績データ
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">月別外注費用対効果</h3>
+                        <canvas id="roiChart" style="height: 400px;"></canvas>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">時間創出効果</h3>
+                        <canvas id="timeChart" style="height: 400px;"></canvas>
+                    </div>
+                </div>
+                <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                    <h4 class="text-lg font-semibold text-blue-800 mb-3">データからわかること</h4>
+                    <ul class="text-blue-700 space-y-2">
+                        <li><i class="fas fa-check-circle mr-2"></i>外注化開始3ヶ月目から明確なROI改善</li>
+                        <li><i class="fas fa-check-circle mr-2"></i>月40時間の時間創出により新規事業展開が可能に</li>
+                        <li><i class="fas fa-check-circle mr-2"></i>外注費15万円で30万円相当の価値創出を実現</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-                <div class="case-study">
-                    <div class="case-title">【事例1】パソコン転売事業の完全外注化</div>
-                    <p><strong>事業者：</strong>激務サラリーマン（副業）</p>
-                    <p><strong>期間：</strong>6ヶ月で段階的外注化完了</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">85%</div>
-                            <div class="metric-label">作業時間削減</div>
+        <!-- 成功事例 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                <i class="fas fa-trophy text-yellow-500 mr-3"></i>業界別成功事例
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- パソコン転売事例 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover-lift">
+                    <div class="success-gradient text-white p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-bold">パソコン転売業界</h3>
+                        <p class="opacity-90">月商100万円達成事例</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-user-tie text-blue-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-semibold">実践者：かず氏</h4>
+                                <p class="text-sm text-gray-600">激務サラリーマン、家庭持ち</p>
+                            </div>
                         </div>
-                        <div class="metric">
-                            <div class="metric-number">¥45万</div>
-                            <div class="metric-label">月売上向上</div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-semibold">期間：2年間</h4>
+                                <p class="text-sm text-gray-600">外注化開始から完全自動化まで</p>
+                            </div>
                         </div>
-                        <div class="metric">
-                            <div class="metric-number">320%</div>
-                            <div class="metric-label">ROI向上</div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-semibold mb-2">外注化した業務</h5>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• クリーニング（月50台）</li>
+                                <li>• セッティング・検査</li>
+                                <li>• 写真撮影・出品登録</li>
+                                <li>• 梱包・発送（倉庫外注）</li>
+                            </ul>
                         </div>
-                        <div class="metric">
-                            <div class="metric-number">12人</div>
-                            <div class="metric-label">外注チーム</div>
+                        <div class="border-t pt-4">
+                            <h5 class="font-semibold text-green-600 mb-2">成果</h5>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>時間創出：<span class="font-bold">月40時間</span></div>
+                                <div>売上向上：<span class="font-bold">150%</span></div>
+                                <div>外注費：<span class="font-bold">月15万円</span></div>
+                                <div>ROI：<span class="font-bold">200%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ECサイト運営事例 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover-lift">
+                    <div class="warning-gradient text-white p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-bold">ECサイト運営</h3>
+                        <p class="opacity-90">アパレル系月商300万円事例</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-user-tie text-pink-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-semibold">実践者：田中氏（仮名）</h4>
+                                <p class="text-sm text-gray-600">アパレルECサイト経営</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-semibold">期間：1.5年間</h4>
+                                <p class="text-sm text-gray-600">段階的外注化の実施</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-semibold mb-2">外注化した業務</h5>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• 商品撮影（スタジオ外注）</li>
+                                <li>• 画像加工・サイト更新</li>
+                                <li>• 顧客対応（チャット・メール）</li>
+                                <li>• SNS運用・マーケティング</li>
+                            </ul>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h5 class="font-semibold text-green-600 mb-2">成果</h5>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>時間創出：<span class="font-bold">月60時間</span></div>
+                                <div>売上向上：<span class="font-bold">250%</span></div>
+                                <div>外注費：<span class="font-bold">月25万円</span></div>
+                                <div>ROI：<span class="font-bold">300%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 失敗例と対策 -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                    <i class="fas fa-exclamation-triangle text-red-500 mr-3"></i>失敗例から学ぶ重要な教訓
+                </h2>
+                <div class="space-y-6">
+                    <div class="border-l-4 border-red-500 pl-6 py-4 bg-red-50">
+                        <h3 class="text-lg font-semibold text-red-800 mb-2">失敗例①：マニュアル不足による品質低下</h3>
+                        <p class="text-red-700 mb-3">
+                            「口頭での指示だけで外注を開始し、期待した品質が得られず顧客クレームが発生」
+                        </p>
+                        <div class="bg-white p-4 rounded border-l-2 border-green-500">
+                            <h4 class="font-semibold text-green-800 mb-2">対策</h4>
+                            <ul class="text-green-700 text-sm space-y-1">
+                                <li>• 詳細なマニュアル作成と動画説明</li>
+                                <li>• 段階的な品質チェック体制の構築</li>
+                                <li>• 定期的なフィードバックとマニュアル更新</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div class="process-flow">
-                        <h4>外注化プロセス：</h4>
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>商品クリーニング作業（時給1,000円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>写真撮影・画像加工（1商品300円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>商品説明文作成（1件500円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>出品作業・在庫管理（月5万円固定）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">5</div>
-                            <div>梱包・発送業務（1件200円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">6</div>
-                            <div>顧客対応・アフターサービス（月3万円固定）</div>
+                    <div class="border-l-4 border-red-500 pl-6 py-4 bg-red-50">
+                        <h3 class="text-lg font-semibold text-red-800 mb-2">失敗例②：コミュニケーション不足</h3>
+                        <p class="text-red-700 mb-3">
+                            「連絡体制が不明確で作業の重複や漏れが発生、結果的に効率が悪化」
+                        </p>
+                        <div class="bg-white p-4 rounded border-l-2 border-green-500">
+                            <h4 class="font-semibold text-green-800 mb-2">対策</h4>
+                            <ul class="text-green-700 text-sm space-y-1">
+                                <li>• Slack等での専用チャンネル設置</li>
+                                <li>• 定期的な進捗報告システム</li>
+                                <li>• 緊急時の連絡体制整備</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div class="tools-used">
-                        <strong>使用ツール：</strong>
-                        <span class="tool-tag">Chatwork</span>
-                        <span class="tool-tag">Googleスプレッドシート</span>
-                        <span class="tool-tag">Dropbox</span>
-                        <span class="tool-tag">メルカリ</span>
-                        <span class="tool-tag">ヤフオク</span>
-                        <span class="tool-tag">Canva</span>
+                    <div class="border-l-4 border-red-500 pl-6 py-4 bg-red-50">
+                        <h3 class="text-lg font-semibold text-red-800 mb-2">失敗例③：セキュリティ対策不足</h3>
+                        <p class="text-red-700 mb-3">
+                            「リモートアクセス設定の甘さから不要なファイルにアクセスされるリスクが発生」
+                        </p>
+                        <div class="bg-white p-4 rounded border-l-2 border-green-500">
+                            <h4 class="font-semibold text-green-800 mb-2">対策</h4>
+                            <ul class="text-green-700 text-sm space-y-1">
+                                <li>• 専用PC設置と権限制限</li>
+                                <li>• 毎回パスワード変更の徹底</li>
+                                <li>• アクセスログ監視システム導入</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ベストプラクティス -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                    <i class="fas fa-star text-yellow-500 mr-3"></i>規模別ベストプラクティス
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- 小規模事業者 -->
+                    <div class="border-2 border-blue-200 rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-seedling text-blue-500 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-blue-800">小規模事業者</h3>
+                            <p class="text-sm text-blue-600">月商50万円未満</p>
+                        </div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>単発業務から段階的に開始</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>クラウドソーシング活用</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>月2-3万円の外注費で開始</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Googleツール活用で無料システム構築</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="roi-breakdown">
-                        <div class="roi-title">💰 投資対効果分析</div>
-                        <table class="roi-table">
-                            <tr><th>項目</th><th>外注化前</th><th>外注化後</th><th>改善</th></tr>
-                            <tr><td>月間作業時間</td><td>120時間</td><td>18時間</td><td>-102時間</td></tr>
-                            <tr><td>月間売上</td><td>35万円</td><td>80万円</td><td>+45万円</td></tr>
-                            <tr><td>外注費用</td><td>0円</td><td>15万円</td><td>-15万円</td></tr>
-                            <tr><td>実質利益</td><td>20万円</td><td>50万円</td><td>+30万円</td></tr>
-                            <tr><td>時給換算</td><td>1,667円</td><td>2,778円</td><td>+1,111円</td></tr>
-                        </table>
+                    <!-- 中規模事業者 -->
+                    <div class="border-2 border-green-200 rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-tree text-green-500 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-green-800">中規模事業者</h3>
+                            <p class="text-sm text-green-600">月商50-200万円</p>
+                        </div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>専任スタッフの採用</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>業務システムの本格導入</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>月10-20万円の外注投資</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>マネージャー層の設置</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="success-factor">
-                        <strong>成功要因：</strong>
-                        <ul>
-                            <li>段階的な外注化で着実にリスクを管理</li>
-                            <li>詳細なマニュアル作成で品質を担保</li>
-                            <li>固定費と変動費のバランス調整</li>
-                            <li>複数の外注先確保でリスク分散</li>
+                    <!-- 大規模事業者 -->
+                    <div class="border-2 border-purple-200 rounded-xl p-6">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-building text-purple-500 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-purple-800">大規模事業者</h3>
+                            <p class="text-sm text-purple-600">月商200万円以上</p>
+                        </div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>チーム体制の構築</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>専用システム開発</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>月30万円以上の戦略的投資</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>複数拠点・海外展開</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="case-study">
-                    <div class="case-title">【事例2】アパレルECサイトの運営外注化</div>
-                    <p><strong>事業者：</strong>女性起業家（本業）</p>
-                    <p><strong>期間：</strong>1年でフル外注化達成</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">200%</div>
-                            <div class="metric-label">売上成長</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">¥150万</div>
-                            <div class="metric-label">月商達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">8人</div>
-                            <div class="metric-label">外注メンバー</div>
-                        </div>
-                    </div>
-
-                    <div class="expansion-example">
-                        <strong>スケールアップ戦略：</strong>
-                        <p>外注化により創出された時間を新商品開発とマーケティングに投資。Instagram運用も外注化し、フォロワー数を3ヶ月で5倍に拡大。</p>
-                    </div>
+        <!-- 関連リンク -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
+                <h2 class="text-2xl font-bold mb-6">
+                    <i class="fas fa-link mr-3"></i>さらに詳しく学ぶ
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <a href="supplements.html" class="block p-4 glass-effect rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-tools text-2xl mb-3"></i>
+                        <h3 class="font-semibold mb-2">実例補足集</h3>
+                        <p class="text-sm opacity-90">FireStorage、リモートデスクトップなど詳細技術</p>
+                    </a>
+                    <a href="worksheets.html" class="block p-4 glass-effect rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-file-alt text-2xl mb-3"></i>
+                        <h3 class="font-semibold mb-2">ワークシート</h3>
+                        <p class="text-sm opacity-90">実践に使えるテンプレート集</p>
+                    </a>
+                    <a href="roi-calculator.html" class="block p-4 glass-effect rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-calculator text-2xl mb-3"></i>
+                        <h3 class="font-semibold mb-2">ROI計算ツール</h3>
+                        <p class="text-sm opacity-90">投資対効果を数値で確認</p>
+                    </a>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <!-- サービス業界 -->
-            <div class="industry-card service">
-                <div class="industry-title">🔧 サービス業界</div>
-                <div class="industry-subtitle">清掃・修理・メンテナンス</div>
-
-                <div class="case-study">
-                    <div class="case-title">【事例3】ハウスクリーニング事業の地域拡大</div>
-                    <p><strong>事業者：</strong>個人事業主から法人化</p>
-                    <p><strong>期間：</strong>2年で3地域展開達成</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">300%</div>
-                            <div class="metric-label">事業拡大</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">¥200万</div>
-                            <div class="metric-label">月商達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">15人</div>
-                            <div class="metric-label">外注スタッフ</div>
-                        </div>
-                    </div>
-
-                    <div class="process-flow">
-                        <h4>外注化戦略：</h4>
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>電話受付・予約管理（月8万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>現場作業スタッフ（時給1,200円～）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>品質チェック・アフターフォロー（月6万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>マーケティング・チラシ配布（成果報酬）</div>
-                        </div>
-                    </div>
-
-                    <div class="challenge">
-                        <strong>課題と解決策：</strong>
-                        <p>品質のばらつき → 詳細チェックリスト作成、定期研修実施<br>
-                        スケジュール調整の複雑化 → 専用システム導入、管理者配置</p>
-                    </div>
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">外注化戦略マスタープログラム</h3>
+                    <p class="text-gray-300">7年間の実践ノウハウを体系化した完全ガイド</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">関連コンテンツ</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="ai-revolution.html" class="hover:text-white">AI活用ガイド</a></li>
+                        <li><a href="supplements.html" class="hover:text-white">実例補足集</a></li>
+                        <li><a href="worksheets.html" class="hover:text-white">ワークシート</a></li>
+                        <li><a href="faq.html" class="hover:text-white">よくある質問</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">お問い合わせ</h4>
+                    <p class="text-gray-300 mb-2">著者：かず (@BuppanP)</p>
+                    <p class="text-gray-300">パソコン転売歴7年、月収100万円突破</p>
                 </div>
             </div>
-
-            <!-- コンサルティング業界 -->
-            <div class="industry-card consulting">
-                <div class="industry-title">📊 コンサルティング業界</div>
-                <div class="industry-subtitle">経営・マーケティング・IT相談</div>
-
-                <div class="case-study">
-                    <div class="case-title">【事例4】マーケティングコンサル事業の仕組み化</div>
-                    <p><strong>事業者：</strong>元大手企業マーケター</p>
-                    <p><strong>期間：</strong>1.5年で月収100万円達成</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">¥100万</div>
-                            <div class="metric-label">月収達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">70%</div>
-                            <div class="metric-label">作業時間削減</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">25社</div>
-                            <div class="metric-label">同時対応可能</div>
-                        </div>
-                    </div>
-
-                    <div class="process-flow">
-                        <h4>高付加価値業務の外注化：</h4>
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>市場調査・競合分析（1件3万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>資料作成・デザイン（月10万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>データ分析・レポート作成（月8万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>SNS運用・コンテンツ制作（月12万円）</div>
-                        </div>
-                    </div>
-
-                    <div class="tools-used">
-                        <strong>使用ツール：</strong>
-                        <span class="tool-tag">Slack</span>
-                        <span class="tool-tag">Notion</span>
-                        <span class="tool-tag">Figma</span>
-                        <span class="tool-tag">Google Analytics</span>
-                        <span class="tool-tag">Tableau</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- コンテンツ業界 -->
-            <div class="industry-card content">
-                <div class="industry-title">📝 コンテンツ業界</div>
-                <div class="industry-subtitle">ブログ・動画・SNS運用</div>
-
-                <div class="case-study">
-                    <div class="case-title">【事例5】YouTubeチャンネルの収益化加速</div>
-                    <p><strong>事業者：</strong>教育系YouTuber</p>
-                    <p><strong>期間：</strong>8ヶ月で登録者数10倍達成</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">10倍</div>
-                            <div class="metric-label">登録者数増</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">¥80万</div>
-                            <div class="metric-label">月間収益</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">週3本</div>
-                            <div class="metric-label">投稿頻度向上</div>
-                        </div>
-                    </div>
-
-                    <div class="process-flow">
-                        <h4>コンテンツ制作の分業化：</h4>
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>企画・構成案作成（1本5,000円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>動画編集・サムネイル作成（1本8,000円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>SEO対策・タイトル最適化（1本2,000円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>SNS拡散・コミュニティ管理（月5万円）</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 教育業界 -->
-            <div class="industry-card education">
-                <div class="industry-title">🎓 教育業界</div>
-                <div class="industry-subtitle">オンライン講座・コーチング</div>
-
-                <div class="case-study">
-                    <div class="case-title">【事例6】オンライン英語スクールの自動化</div>
-                    <p><strong>事業者：</strong>元英語教師</p>
-                    <p><strong>期間：</strong>1年で生徒数200名突破</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">200名</div>
-                            <div class="metric-label">生徒数達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">¥120万</div>
-                            <div class="metric-label">月収達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">90%</div>
-                            <div class="metric-label">継続率</div>
-                        </div>
-                    </div>
-
-                    <div class="expansion-example">
-                        <strong>システム化の成果：</strong>
-                        <p>レッスン予約、教材配布、進捗管理、宿題チェックまでを自動化。講師は生徒との直接指導に専念でき、1対1の質の高い教育を大規模に提供可能に。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SaaS業界 -->
-            <div class="industry-card saas">
-                <div class="industry-title">💻 SaaS・IT業界</div>
-                <div class="industry-subtitle">アプリ開発・Webサービス</div>
-
-                <div class="case-study">
-                    <div class="case-title">【事例7】業務効率化ツールの開発・運用</div>
-                    <p><strong>事業者：</strong>元エンジニア</p>
-                    <p><strong>期間：</strong>2年でMRR50万円達成</p>
-                    
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-number">¥50万</div>
-                            <div class="metric-label">MRR達成</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">500社</div>
-                            <div class="metric-label">導入企業数</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-number">95%</div>
-                            <div class="metric-label">顧客満足度</div>
-                        </div>
-                    </div>
-
-                    <div class="process-flow">
-                        <h4>技術業務の外注化：</h4>
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>フロントエンド開発（月20万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>QA・テスト業務（月8万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>カスタマーサポート（月12万円）</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>コンテンツマーケティング（月15万円）</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 外注化戦略マスタープログラム. All rights reserved.</p>
             </div>
         </div>
+    </footer>
 
-        <div class="expansion-example" style="margin: 40px 0;">
-            <h3>🚀 次のステップ：あなたの業界に応用する方法</h3>
-            <ol>
-                <li><strong>類似事例の分析：</strong>あなたの業界に最も近い事例を選び、成功要因を抽出</li>
-                <li><strong>業務の棚卸し：</strong>現在の業務を詳細に分析し、外注化可能な部分を特定</li>
-                <li><strong>段階的導入：</strong>リスクの低い業務から順次外注化を開始</li>
-                <li><strong>効果測定：</strong>定期的にROIを計算し、戦略を調整</li>
-                <li><strong>スケールアップ：</strong>成功した仕組みを拡大・改善</li>
-            </ol>
-            <p style="margin-top: 15px;">
-                <a href="worksheets.html" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">ワークシートで分析開始</a>
-                <a href="roi-calculator.html" style="background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">ROI計算ツール</a>
-            </p>
-        </div>
-    </div>
+    <script>
+        // ROIチャート
+        const ctx1 = document.getElementById('roiChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['1ヶ月目', '2ヶ月目', '3ヶ月目', '4ヶ月目', '5ヶ月目', '6ヶ月目'],
+                datasets: [{
+                    label: '外注費用（万円）',
+                    data: [5, 8, 12, 15, 15, 15],
+                    borderColor: 'rgb(239, 68, 68)',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: '創出価値（万円）',
+                    data: [3, 12, 18, 25, 30, 35],
+                    borderColor: 'rgb(34, 197, 94)',
+                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '外注化による費用対効果の推移'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '金額（万円）'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 時間創出チャート
+        const ctx2 = document.getElementById('timeChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['クリーニング', 'セッティング', '撮影', '出品', '梱包', '出荷'],
+                datasets: [{
+                    label: '外注前（時間/月）',
+                    data: [20, 15, 12, 18, 10, 8],
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)'
+                }, {
+                    label: '外注後（時間/月）',
+                    data: [0, 0, 0, 3, 0, 0],
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '業務別時間削減効果'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '時間（時間/月）'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDpenOh%2Fk9Av%2BUPQ3W5RrB7tLf%2B9zY7y5CEXFk9sLlhUjDTx5WqH3ro2nLJ9uwJf%2BXM4wJeRbNQfs5JWLEDYI%2Fl7Mh6lvjJNgj2%2BAWH5Q9DMvR6ee0HTIcC8MG%2BSVnjalpYdWg78d9TRy3KzHHF6XbDVYrcO0X4Hie8GpaugiVenX5%2FjluYEUhGcDx1LvSeY%2BsOmTL8RjuR8yWePQd%2FWtY3CBAnWAkybgeKpi8OZ9IVvQFfk8Ctj9IpDiMtXvvlJTNgQvmRs8C30s6OTY0C35uyJfL%2FdlVyKf8w4eUnBv0dq3tRzdEpUg9eu5idBs4VKmSxGA5Ce9L7VTzCS6N%2BSfwjvEzVSKIUT%2BLLSMciABXotu1EiFaNZMu4XFHsphGjy%2FkeJKS6kSQbkZg7Vcz%2BfENHwrvZCefidpNnYfOyH647qXdD1NIXw5et%2BQaRDpnyV7ybdX2SoqZ94GLS9aDbzbijdfEQ10YcTnYpfhYgJuIZXP";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDpenOh/k9Av+UPQ3W5RrB7tLf+9zY7y5CEXFk9sLlhUjDTx5WqH3ro2nLJ9uwJf+XM4wJeRbNQfs5JWLEDYI/l7Mh6lvjJNgj2+AWH5Q9DMvR6ee0HTIcC8MG+SVnjalpYdWg78d9TRy3KzHHF6XbDVYrcO0X4Hie8GpaugiVenX5/jluYEUhGcDx1LvSeY+sOmTL8RjuR8yWePQd/WtY3CBAnWAkybgeKpi8OZ9IVvQFfk8Ctj9IpDiMtXvvlJTNgQvmRs8C30s6OTY0C35uyJfL/dlVyKf8w4eUnBv0dq3tRzdEpUg9eu5idBs4VKmSxGA5Ce9L7VTzCS6N+SfwjvEzVSKIUT+LLSMciABXotu1EiFaNZMu4XFHsphGjy/keJKS6kSQbkZg7Vcz+fENHwrvZCefidpNnYfOyH647qXdD1NIXw5et+QaRDpnyV7ybdX2SoqZ94GLS9aDbzbijdfEQ10YcTnYpfhYgJuIZXP";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
