@@ -33,10 +33,30 @@
         .print-section {
             page-break-inside: avoid;
         }
-         {
-            .no-print { display: none; }
-            .print-section { page-break-before: always; }
+        /* 事例行（先頭6行）を灰色表示 */
+        .worksheet-table tbody tr:nth-child(-n+6) {
+            color: #9CA3AF;
         }
+        /* 編集可能セルのプレースホルダー */
+        .editable-cell[contenteditable="true"] {
+            min-height: 24px;
+            outline: none;
+        }
+        .editable-cell[contenteditable="true"]:empty::before {
+            content: attr(data-placeholder);
+            color: #9CA3AF;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            header, nav, footer { display: none !important; }
+            .print-section { page-break-inside: avoid; }
+            .worksheet-table th, .worksheet-table td { padding: 6px; }
+            input, textarea, select { border: none !important; background: transparent !important; color: #000 !important; }
+            .editable-cell[contenteditable="true"]:empty::before { content: '' !important; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            #analysis .worksheet-table tbody tr:nth-child(-n+6) { display: none !important; }
+        }
+        @page { size: A4; margin: 12mm; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -105,6 +125,11 @@
                     <i class="fas fa-chart-pie text-blue-600 mr-3"></i>1. 業務分析ワークシート
                 </h2>
                 <p class="text-gray-600 mb-8">現在の業務を詳細に分析し、外注化の対象を特定します。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('analysis')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
                 
                 <div class="overflow-x-auto">
                     <table class="worksheet-table">
@@ -125,10 +150,38 @@
                             <tr><td>梱包・発送</td><td>10</td><td>5</td><td>1</td><td>2</td><td>高</td></tr>
                             <tr><td>顧客対応</td><td>30</td><td>3</td><td>4</td><td>3</td><td>低</td></tr>
                             <tr><td>仕入れ判断</td><td>45</td><td>2</td><td>5</td><td>4</td><td>低</td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：写真撮影"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：15"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：10"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：3"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：3"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="例：中"></td>
+                            </tr>
+                            <tr>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                            </tr>
+                            <tr>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                            </tr>
+                            <tr>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                                <td class="editable-cell" contenteditable="true" data-placeholder="ここに入力"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -158,6 +211,11 @@
                     <i class="fas fa-clipboard-check text-green-600 mr-3"></i>2. 外注化準備度評価
                 </h2>
                 <p class="text-gray-600 mb-8">外注化を始める前の準備状況をチェックします。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('readiness')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
 
                 <div class="space-y-4">
                     <h3 class="text-xl font-bold mb-4">ビジネス基盤（各項目5点満点）</h3>
@@ -237,6 +295,11 @@
                     <i class="fas fa-user-check text-purple-600 mr-3"></i>3. パートナー選定チェックリスト
                 </h2>
                 <p class="text-gray-600 mb-8">信頼できる外注パートナーを選定するための評価項目です。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('selection')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
 
                 <div class="space-y-6">
                     <div class="border border-gray-200 rounded-lg p-6">
@@ -317,6 +380,11 @@
                     <i class="fas fa-calculator text-yellow-600 mr-3"></i>4. コスト効果分析テンプレート
                 </h2>
                 <p class="text-gray-600 mb-8">外注化の投資対効果を詳細に分析します。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('cost')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="border border-gray-200 rounded-lg p-6">
@@ -401,6 +469,11 @@
                     <i class="fas fa-book text-indigo-600 mr-3"></i>5. マニュアル作成フレームワーク
                 </h2>
                 <p class="text-gray-600 mb-8">効果的なマニュアル作成のためのテンプレートです。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('manual')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
 
                 <div class="space-y-8">
                     <div class="border border-gray-200 rounded-lg p-6">
@@ -469,22 +542,22 @@
 
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-bold mb-4">作業手順</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-3">
+                        <div id="manual-steps" class="space-y-4">
+                            <div class="flex items-start space-x-3 step-item">
                                 <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
                                 <div class="flex-1">
                                     <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
                                     <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
                                 </div>
                             </div>
-                            <div class="flex items-start space-x-3">
+                            <div class="flex items-start space-x-3 step-item">
                                 <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
                                 <div class="flex-1">
                                     <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
                                     <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
                                 </div>
                             </div>
-                            <div class="flex items-start space-x-3">
+                            <div class="flex items-start space-x-3 step-item">
                                 <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
                                 <div class="flex-1">
                                     <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
@@ -492,7 +565,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="text-blue-600 hover:text-blue-800 font-medium">+ 手順を追加</button>
+                                <button id="add-step-btn" type="button" class="text-blue-600 hover:text-blue-800 font-medium">+ 手順を追加</button>
                             </div>
                         </div>
                     </div>
@@ -512,6 +585,11 @@
                     <i class="fas fa-tasks text-teal-600 mr-3"></i>6. 進捗管理テンプレート
                 </h2>
                 <p class="text-gray-600 mb-8">外注化プロジェクトの進捗を効果的に管理します。</p>
+                <div class="no-print mb-4">
+                    <button onclick="printSectionById('progress')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <i class="fas fa-file-pdf mr-2"></i>このワークシートを印刷 / PDF
+                    </button>
+                </div>
 
                 <div class="space-y-8">
                     <div class="border border-gray-200 rounded-lg p-6">
@@ -548,8 +626,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>業務分析</td>
-                                        <td>自分</td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：業務分析"></td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：自分/外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -563,8 +641,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>マニュアル作成</td>
-                                        <td>自分</td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：マニュアル作成"></td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：自分/外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -578,8 +656,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>外注先選定</td>
-                                        <td>自分</td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：外注先選定"></td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：自分/外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -593,8 +671,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>トライアル実施</td>
-                                        <td>外注先</td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：トライアル実施"></td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：自分/外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -608,8 +686,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>本格運用開始</td>
-                                        <td>外注先</td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：本格運用開始"></td>
+                                        <td class="editable-cell" contenteditable="true" data-placeholder="例：自分/外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -685,6 +763,30 @@
 
         window.addEventListener('afterprint', function() {
             document.body.classList.remove('print-mode');
+        });
+        
+        function printSectionById(sectionId) {
+            const sections = document.querySelectorAll('main section.print-section');
+            sections.forEach(sec => {
+                if (sec.id !== sectionId) sec.classList.add('no-print');
+            });
+            window.print();
+            sections.forEach(sec => sec.classList.remove('no-print'));
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const addBtn = document.getElementById('add-step-btn');
+            if (addBtn) {
+                addBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const container = document.getElementById('manual-steps');
+                    const current = container.querySelectorAll('.step-item').length + 1;
+                    const div = document.createElement('div');
+                    div.className = 'flex items-start space-x-3 step-item';
+                    div.innerHTML = '\n\t\t\t\t<span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">' + current + '</span>\n\t\t\t\t<div class="flex-1">\n\t\t\t\t\t<input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">\n\t\t\t\t\t<textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>\n\t\t\t\t</div>\n\t\t\t';
+                    container.appendChild(div);
+                });
+            }
         });
     </script>
 </body>
