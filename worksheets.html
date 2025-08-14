@@ -33,9 +33,27 @@
         .print-section {
             page-break-inside: avoid;
         }
-         {
-            .no-print { display: none; }
-            .print-section { page-break-before: always; }
+        /* Placeholder for contenteditable cells */
+        .placeholder-cell[contenteditable="true"]:empty::before {
+            content: attr(data-placeholder);
+            color: #9ca3af;
+        }
+        .placeholder-cell {
+            min-height: 1.5em;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            header, nav, footer { display: none !important; }
+            .print-section { page-break-inside: avoid; }
+            .bg-white, .shadow-lg, .rounded-lg { box-shadow: none !important; }
+            body { font-size: 12px; }
+            .p-8 { padding: 16px !important; }
+            .mb-16 { margin-bottom: 12px !important; }
+            /* Hide placeholder hints on print */
+            .placeholder-cell[contenteditable="true"]:empty::before { content: none !important; }
+            /* Make form fields print cleanly */
+            input, select, textarea { background: transparent !important; border: none !important; }
+            @page { size: A4; margin: 12mm; }
         }
     </style>
 </head>
@@ -101,9 +119,16 @@
         <!-- 1. 業務分析ワークシート -->
         <section id="analysis" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-chart-pie text-blue-600 mr-3"></i>1. 業務分析ワークシート
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-chart-pie text-blue-600 mr-3"></i>1. 業務分析ワークシート
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('analysis')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">現在の業務を詳細に分析し、外注化の対象を特定します。</p>
                 
                 <div class="overflow-x-auto">
@@ -119,16 +144,70 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>商品クリーニング</td><td>30</td><td>10</td><td>2</td><td>4</td><td>高</td></tr>
-                            <tr><td>写真撮影</td><td>15</td><td>10</td><td>3</td><td>3</td><td>中</td></tr>
-                            <tr><td>出品登録</td><td>20</td><td>10</td><td>2</td><td>3</td><td>高</td></tr>
-                            <tr><td>梱包・発送</td><td>10</td><td>5</td><td>1</td><td>2</td><td>高</td></tr>
-                            <tr><td>顧客対応</td><td>30</td><td>3</td><td>4</td><td>3</td><td>低</td></tr>
-                            <tr><td>仕入れ判断</td><td>45</td><td>2</td><td>5</td><td>4</td><td>低</td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="商品クリーニング"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="30"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="10"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="2"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="4"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="高"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="写真撮影"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="15"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="10"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="3"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="3"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="中"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="出品登録"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="20"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="10"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="2"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="3"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="高"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="梱包・発送"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="10"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="5"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="1"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="2"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="高"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="顧客対応"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="30"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="3"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="4"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="3"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="低"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="仕入れ判断"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="45"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="2"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="5"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="4"></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder="低"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                                <td contenteditable="true" class="placeholder-cell" data-placeholder=""></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -137,14 +216,14 @@
                     <h3 class="font-bold mb-4">分析結果サマリー</h3>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <p class="font-semibold mb-2">週間総作業時間: <span class="text-blue-600">_____ 時間</span></p>
-                            <p class="font-semibold mb-2">外注化対象時間: <span class="text-green-600">_____ 時間</span></p>
-                            <p class="font-semibold">時間削減率: <span class="text-purple-600">_____ %</span></p>
+                            <p class="font-semibold mb-2">週間総作業時間: <span class="text-blue-600 placeholder-cell" contenteditable="true" data-placeholder="_____ 時間"></span></p>
+                            <p class="font-semibold mb-2">外注化対象時間: <span class="text-green-600 placeholder-cell" contenteditable="true" data-placeholder="_____ 時間"></span></p>
+                            <p class="font-semibold">時間削減率: <span class="text-purple-600 placeholder-cell" contenteditable="true" data-placeholder="_____ %"></span></p>
                         </div>
                         <div>
-                            <p class="font-semibold mb-2">高優先度業務: <span class="text-red-600">_____ 件</span></p>
-                            <p class="font-semibold mb-2">中優先度業務: <span class="text-yellow-600">_____ 件</span></p>
-                            <p class="font-semibold">低優先度業務: <span class="text-gray-600">_____ 件</span></p>
+                            <p class="font-semibold mb-2">高優先度業務: <span class="text-red-600 placeholder-cell" contenteditable="true" data-placeholder="_____ 件"></span></p>
+                            <p class="font-semibold mb-2">中優先度業務: <span class="text-yellow-600 placeholder-cell" contenteditable="true" data-placeholder="_____ 件"></span></p>
+                            <p class="font-semibold">低優先度業務: <span class="text-gray-600 placeholder-cell" contenteditable="true" data-placeholder="_____ 件"></span></p>
                         </div>
                     </div>
                 </div>
@@ -154,9 +233,16 @@
         <!-- 2. 外注化準備度評価 -->
         <section id="readiness" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-clipboard-check text-green-600 mr-3"></i>2. 外注化準備度評価
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-clipboard-check text-green-600 mr-3"></i>2. 外注化準備度評価
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('readiness')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">外注化を始める前の準備状況をチェックします。</p>
 
                 <div class="space-y-4">
@@ -233,9 +319,16 @@
         <!-- 3. パートナー選定チェックリスト -->
         <section id="selection" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-user-check text-purple-600 mr-3"></i>3. パートナー選定チェックリスト
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-user-check text-purple-600 mr-3"></i>3. パートナー選定チェックリスト
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('selection')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">信頼できる外注パートナーを選定するための評価項目です。</p>
 
                 <div class="space-y-6">
@@ -313,9 +406,16 @@
         <!-- 4. コスト効果分析テンプレート -->
         <section id="cost" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-calculator text-yellow-600 mr-3"></i>4. コスト効果分析テンプレート
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-calculator text-yellow-600 mr-3"></i>4. コスト効果分析テンプレート
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('cost')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">外注化の投資対効果を詳細に分析します。</p>
 
                 <div class="grid md:grid-cols-2 gap-8">
@@ -397,9 +497,16 @@
         <!-- 5. マニュアル作成フレームワーク -->
         <section id="manual" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-book text-indigo-600 mr-3"></i>5. マニュアル作成フレームワーク
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-book text-indigo-600 mr-3"></i>5. マニュアル作成フレームワーク
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('manual')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">効果的なマニュアル作成のためのテンプレートです。</p>
 
                 <div class="space-y-8">
@@ -469,7 +576,7 @@
 
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-bold mb-4">作業手順</h3>
-                        <div class="space-y-4">
+                        <div class="space-y-4" id="manual-steps">
                             <div class="flex items-start space-x-3">
                                 <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
                                 <div class="flex-1">
@@ -492,7 +599,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="text-blue-600 hover:text-blue-800 font-medium">+ 手順を追加</button>
+                                <button type="button" class="text-blue-600 hover:text-blue-800 font-medium" onclick="addManualStep()">+ 手順を追加</button>
                             </div>
                         </div>
                     </div>
@@ -508,9 +615,16 @@
         <!-- 6. 進捗管理テンプレート -->
         <section id="progress" class="mb-16 print-section">
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-tasks text-teal-600 mr-3"></i>6. 進捗管理テンプレート
-                </h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-tasks text-teal-600 mr-3"></i>6. 進捗管理テンプレート
+                    </h2>
+                    <div class="no-print">
+                        <button onclick="printWorksheet('progress')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <i class="fas fa-download mr-2"></i>このワークシートを印刷/DL
+                        </button>
+                    </div>
+                </div>
                 <p class="text-gray-600 mb-8">外注化プロジェクトの進捗を効果的に管理します。</p>
 
                 <div class="space-y-8">
@@ -548,8 +662,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>業務分析</td>
-                                        <td>自分</td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="業務分析"></td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="自分"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -563,8 +677,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>マニュアル作成</td>
-                                        <td>自分</td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="マニュアル作成"></td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="自分"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -578,8 +692,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>外注先選定</td>
-                                        <td>自分</td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="外注先選定"></td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="担当者名"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -593,8 +707,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>トライアル実施</td>
-                                        <td>外注先</td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="トライアル実施"></td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -608,8 +722,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>本格運用開始</td>
-                                        <td>外注先</td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="本格運用開始"></td>
+                                        <td contenteditable="true" class="placeholder-cell" data-placeholder="外注先"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="date" class="w-full p-1 border rounded"></td>
                                         <td><input type="number" max="100" class="w-16 p-1 border rounded text-center">%</td>
@@ -676,6 +790,37 @@
         // 簡単な計算機能
         function calculateROI() {
             // ROI計算ロジックをここに実装
+        }
+
+        // 印刷ユーティリティ（指定セクションのみ印刷）
+        function printWorksheet(sectionId) {
+            const sections = document.querySelectorAll('main section.print-section');
+            sections.forEach(function(section) {
+                if (section.id !== sectionId) {
+                    section.classList.add('no-print');
+                }
+            });
+            window.print();
+            sections.forEach(function(section) {
+                section.classList.remove('no-print');
+            });
+        }
+
+        // マニュアル手順の動的追加
+        function addManualStep() {
+            const container = document.getElementById('manual-steps');
+            if (!container) return;
+            const steps = container.querySelectorAll('.flex.items-start.space-x-3');
+            const nextIndex = steps.length + 1; // include existing ones
+            const step = document.createElement('div');
+            step.className = 'flex items-start space-x-3';
+            step.innerHTML = '<span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">' + nextIndex + '</span>' +
+                '<div class="flex-1">' +
+                '<input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">' +
+                '<textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>' +
+                '</div>';
+            const addBtnRow = container.querySelector('.text-center');
+            container.insertBefore(step, addBtnRow);
         }
 
         // 印刷時のスタイル調整
