@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外注化ワークシート：実装のための実践ツール集</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .worksheet-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .worksheet-table th, .worksheet-table td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+        }
+        .worksheet-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+        .print-section {
+            page-break-inside: avoid;
+        }
+        .editable-placeholder::placeholder {
+            color: #9ca3af;
+            opacity: 1;
+        }
+        
+        /* 印刷用スタイル */
+         {
+            /* 個別印刷時のスタイル - セクションのみ表示 */
+            body.printing-single * {
+                visibility: hidden;
+            }
+            body.printing-single .print-target,
+            body.printing-single .print-target * {
+                visibility: visible;
+            }
+            body.printing-single .print-target {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 10px;
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+            }
+            body.printing-single .no-print {
+                display: none !important;
+            }
+            
+            /* 全体印刷時のスタイル */
+            body:not(.printing-single) .no-print {
+                display: none !important;
+            }
+            body:not(.printing-single) .print-section {
+                page-break-before: always;
+            }
+            body:not(.printing-single) header,
+            body:not(.printing-single) nav {
+                display: none !important;
+            }
+            
+            /* 印刷時のフォントサイズ調整 */
+            @page {
+                margin: 0.5cm;
+                size: A4;
+            }
+            body.printing-single .print-target {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+            body.printing-single .print-target h2 {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            body.printing-single .print-target h3 {
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+            body.printing-single .print-target .worksheet-table th,
+            body.printing-single .print-target .worksheet-table td {
+                padding: 3px;
+                font-size: 8px;
+            }
+            body.printing-single .print-target input,
+            body.printing-single .print-target select,
+            body.printing-single .print-target textarea {
+                font-size: 8px;
+                padding: 1px;
+            }
+        }
+
+        .progress-input {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+        }
+        .progress-input::placeholder {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <header class="gradient-bg text-white py-16 no-print">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fas fa-clipboard-list mr-3"></i>外注化ワークシート
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">実装のための実践ツール集</p>
+                <p class="text-lg opacity-80 max-w-3xl mx-auto">
+                    段階的な外注化実装をサポートする包括的なワークシート集。業務分析から進捗管理まで、
+                    実践的なテンプレートで確実な成果を実現します。
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-white shadow-sm py-4 no-print">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center space-x-6">
+                <a href="#analysis" class="text-blue-600 hover:text-blue-800 font-medium">業務分析</a>
+                <a href="#readiness" class="text-blue-600 hover:text-blue-800 font-medium">準備度評価</a>
+                <a href="#selection" class="text-blue-600 hover:text-blue-800 font-medium">パートナー選定</a>
+                <a href="#cost" class="text-blue-600 hover:text-blue-800 font-medium">コスト分析</a>
+                <a href="#manual" class="text-blue-600 hover:text-blue-800 font-medium">マニュアル作成</a>
+                <a href="#progress" class="text-blue-600 hover:text-blue-800 font-medium">進捗管理</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <section class="mb-16 no-print">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-info-circle text-blue-600 mr-3"></i>ワークシートの使用方法
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-blue-50 rounded-lg">
+                        <i class="fas fa-download text-3xl text-blue-600 mb-4"></i>
+                        <h3 class="font-bold mb-2">1. ダウンロード</h3>
+                        <p class="text-sm text-gray-600">各ワークシートをPDF形式でダウンロードまたは印刷してご利用ください。</p>
+                    </div>
+                    <div class="text-center p-6 bg-green-50 rounded-lg">
+                        <i class="fas fa-edit text-3xl text-green-600 mb-4"></i>
+                        <h3 class="font-bold mb-2">2. 記入・分析</h3>
+                        <p class="text-sm text-gray-600">現状を正確に記入し、客観的な分析を行ってください。</p>
+                    </div>
+                    <div class="text-center p-6 bg-purple-50 rounded-lg">
+                        <i class="fas fa-rocket text-3xl text-purple-600 mb-4"></i>
+                        <h3 class="font-bold mb-2">3. 実装</h3>
+                        <p class="text-sm text-gray-600">分析結果を基に段階的な外注化を実装してください。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analysis" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-chart-pie text-blue-600 mr-3"></i>1. 業務分析ワークシート
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">現在の業務を詳細に分析し、外注化の対象を特定します。</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="worksheet-table" id="task-analysis-table">
+                        <thead>
+                            <tr>
+                                <th class="w-1/5">業務名</th>
+                                <th class="w-1/6">所要時間（分）</th>
+                                <th class="w-1/6">頻度（週）</th>
+                                <th class="w-1/6">難易度<br>（1-5）</th>
+                                <th class="w-1/6">負荷<br>（1-5）</th>
+                                <th class="w-1/5">外注化優先度</th>
+                                <th class="w-auto no-print"><input type="checkbox" onchange="toggleAllOutsource(this)" title="すべて選択/解除">対象</th>
+                            </tr>
+                        </thead>
+                        <tbody id="task-tbody">
+                            <tr>
+                                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="商品クリーニング"></td>
+                                <td><input type="number" value="30" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="10" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="2" class="w-full p-1 border rounded"></td>
+                                <td><input type="number" value="4" class="w-full p-1 border rounded"></td>
+                                <td>
+                                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                                        <option value="">選択</option>
+                                        <option value="高" selected>高</option>
+                                        <option value="中">中</option>
+                                        <option value="低">低</option>
+                                    </select>
+                                </td>
+                                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="写真撮影"></td>
+                                <td><input type="number" value="15" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="10" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="3" class="w-full p-1 border rounded"></td>
+                                <td><input type="number" value="3" class="w-full p-1 border rounded"></td>
+                                <td>
+                                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                                        <option value="">選択</option>
+                                        <option value="高">高</option>
+                                        <option value="中" selected>中</option>
+                                        <option value="低">低</option>
+                                    </select>
+                                </td>
+                                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="出品登録"></td>
+                                <td><input type="number" value="20" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="10" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="2" class="w-full p-1 border rounded"></td>
+                                <td><input type="number" value="3" class="w-full p-1 border rounded"></td>
+                                <td>
+                                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                                        <option value="">選択</option>
+                                        <option value="高" selected>高</option>
+                                        <option value="中">中</option>
+                                        <option value="低">低</option>
+                                    </select>
+                                </td>
+                                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="梱包・発送"></td>
+                                <td><input type="number" value="10" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="5" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="1" class="w-full p-1 border rounded"></td>
+                                <td><input type="number" value="2" class="w-full p-1 border rounded"></td>
+                                <td>
+                                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                                        <option value="">選択</option>
+                                        <option value="高" selected>高</option>
+                                        <option value="中">中</option>
+                                        <option value="低">低</option>
+                                    </select>
+                                </td>
+                                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="顧客対応"></td>
+                                <td><input type="number" value="30" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="3" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                                <td><input type="number" value="4" class="w-full p-1 border rounded"></td>
+                                <td><input type="number" value="3" class="w-full p-1 border rounded"></td>
+                                <td>
+                                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                                        <option value="">選択</option>
+                                        <option value="高">高</option>
+                                        <option value="中">中</option>
+                                        <option value="低" selected>低</option>
+                                    </select>
+                                </td>
+                                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 no-print">
+                    <button onclick="addTaskRow()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold">
+                        <i class="fas fa-plus mr-2"></i>業務名を追加
+                    </button>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                    <h3 class="font-bold mb-4">分析結果サマリー</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="font-semibold mb-2">週間総作業時間: <span id="total-work-time" class="text-blue-600">0 時間</span></p>
+                            <p class="font-semibold mb-2">外注化対象時間: <span id="outsourced-work-time" class="text-green-600">0 時間</span></p>
+                            <p class="font-semibold">時間削減率: <span id="time-reduction-rate" class="text-purple-600">0 %</span></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-2">高優先度業務: <span id="priority-high-count" class="text-red-600">0 件</span></p>
+                            <p class="font-semibold mb-2">中優先度業務: <span id="priority-medium-count" class="text-yellow-600">0 件</span></p>
+                            <p class="font-semibold">低優先度業務: <span id="priority-low-count" class="text-gray-600">0 件</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="readiness" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-clipboard-check text-green-600 mr-3"></i>2. 外注化準備度評価
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">外注化を始める前の準備状況をチェックします。</p>
+
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold mb-4">ビジネス基盤（各項目5点満点）</h3>
+                    <div class="grid gap-4">
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded">
+                            <span>月次売上の安定性</span>
+                            <div class="flex space-x-2">
+                                <span>1</span><input type="radio" name="stability" value="1" onchange="updateReadinessScore()">
+                                <span>2</span><input type="radio" name="stability" value="2" onchange="updateReadinessScore()">
+                                <span>3</span><input type="radio" name="stability" value="3" onchange="updateReadinessScore()">
+                                <span>4</span><input type="radio" name="stability" value="4" onchange="updateReadinessScore()">
+                                <span>5</span><input type="radio" name="stability" value="5" onchange="updateReadinessScore()">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded">
+                            <span>業務プロセスの標準化</span>
+                            <div class="flex space-x-2">
+                                <span>1</span><input type="radio" name="process" value="1" onchange="updateReadinessScore()">
+                                <span>2</span><input type="radio" name="process" value="2" onchange="updateReadinessScore()">
+                                <span>3</span><input type="radio" name="process" value="3" onchange="updateReadinessScore()">
+                                <span>4</span><input type="radio" name="process" value="4" onchange="updateReadinessScore()">
+                                <span>5</span><input type="radio" name="process" value="5" onchange="updateReadinessScore()">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded">
+                            <span>品質管理体制</span>
+                            <div class="flex space-x-2">
+                                <span>1</span><input type="radio" name="quality" value="1" onchange="updateReadinessScore()">
+                                <span>2</span><input type="radio" name="quality" value="2" onchange="updateReadinessScore()">
+                                <span>3</span><input type="radio" name="quality" value="3" onchange="updateReadinessScore()">
+                                <span>4</span><input type="radio" name="quality" value="4" onchange="updateReadinessScore()">
+                                <span>5</span><input type="radio" name="quality" value="5" onchange="updateReadinessScore()">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded">
+                            <span>マニュアル整備状況</span>
+                            <div class="flex space-x-2">
+                                <span>1</span><input type="radio" name="manual" value="1" onchange="updateReadinessScore()">
+                                <span>2</span><input type="radio" name="manual" value="2" onchange="updateReadinessScore()">
+                                <span>3</span><input type="radio" name="manual" value="3" onchange="updateReadinessScore()">
+                                <span>4</span><input type="radio" name="manual" value="4" onchange="updateReadinessScore()">
+                                <span>5</span><input type="radio" name="manual" value="5" onchange="updateReadinessScore()">
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded">
+                            <span>外注費用の予算確保</span>
+                            <div class="flex space-x-2">
+                                <span>1</span><input type="radio" name="budget" value="1" onchange="updateReadinessScore()">
+                                <span>2</span><input type="radio" name="budget" value="2" onchange="updateReadinessScore()">
+                                <span>3</span><input type="radio" name="budget" value="3" onchange="updateReadinessScore()">
+                                <span>4</span><input type="radio" name="budget" value="4" onchange="updateReadinessScore()">
+                                <span>5</span><input type="radio" name="budget" value="5" onchange="updateReadinessScore()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                        <h3 class="font-bold mb-4">評価結果</h3>
+                        <div class="space-y-2">
+                            <p><strong>20-25点:</strong> 外注化開始に最適なタイミングです</p>
+                            <p><strong>15-19点:</strong> 基盤整備を行ってから開始することをお勧めします</p>
+                            <p><strong>10-14点:</strong> ビジネスの安定化を優先してください</p>
+                            <p><strong>5-9点:</strong> 外注化は時期尚早です</p>
+                        </div>
+                        <div class="mt-4 p-4 bg-white rounded border-2 border-dashed border-blue-300">
+                            <p class="font-bold">あなたの合計スコア: <span id="readiness-total-score" class="text-2xl text-blue-600">0 点</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="selection" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-user-check text-purple-600 mr-3"></i>3. パートナー選定チェックリスト
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">信頼できる外注パートナーを選定するための評価項目です。</p>
+
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">基本情報</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">候補者名</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">連絡方法</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">希望時給</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">稼働可能時間</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">評価項目（各5点満点）</h3>
+                        <div class="overflow-x-auto">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>評価項目</th>
+                                        <th>評価点</th>
+                                        <th>コメント</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>コミュニケーション能力</td>
+                                        <td><input type="number" min="1" max="5" class="w-16 p-1 border rounded text-center" onchange="updatePartnerEvaluation()"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>技術スキル・経験</td>
+                                        <td><input type="number" min="1" max="5" class="w-16 p-1 border rounded text-center" onchange="updatePartnerEvaluation()"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>信頼性・責任感</td>
+                                        <td><input type="number" min="1" max="5" class="w-16 p-1 border rounded text-center" onchange="updatePartnerEvaluation()"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>学習意欲・改善姿勢</td>
+                                        <td><input type="number" min="1" max="5" class="w-16 p-1 border rounded text-center" onchange="updatePartnerEvaluation()"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>価格の妥当性</td>
+                                        <td><input type="number" min="1" max="5" class="w-16 p-1 border rounded text-center" onchange="updatePartnerEvaluation()"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 p-4 bg-gray-50 rounded">
+                            <p class="font-bold">総合評価: <span id="partner-total-score" class="text-2xl text-blue-600">0 / 25点</span></p>
+                            <p class="mt-2"><strong>採用判定:</strong> □ 採用 □ 保留 □ 不採用</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cost" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-calculator text-yellow-600 mr-3"></i>4. コスト効果分析テンプレート
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">外注化の投資対効果を詳細に分析します。</p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">コスト（月額）</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>外注費用</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>管理コスト</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>システム利用料</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>その他</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <hr>
+                            <div class="flex justify-between font-bold">
+                                <span>合計コスト</span>
+                                <span id="total-cost" class="text-red-600">¥ 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-green-600">効果（月額）</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>時間価値（時給×削減時間）</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>売上向上効果</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>品質向上効果</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>機会費用効果</span>
+                                <input type="number" class="w-24 p-1 border rounded text-right" oninput="calculateROI()">
+                            </div>
+                            <hr>
+                            <div class="flex justify-between font-bold">
+                                <span>合計効果</span>
+                                <span id="total-benefit" class="text-green-600">¥ 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                    <h3 class="text-xl font-bold mb-4">ROI分析結果</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <p id="net-profit" class="text-2xl font-bold text-blue-600">¥ 0</p>
+                            <p class="text-sm text-gray-600">月間純利益</p>
+                        </div>
+                        <div class="text-center">
+                            <p id="roi-percentage" class="text-2xl font-bold text-purple-600">0％</p>
+                            <p class="text-sm text-gray-600">ROI</p>
+                        </div>
+                        <div class="text-center">
+                            <p id="payback-period" class="text-2xl font-bold text-green-600">0ヶ月</p>
+                            <p class="text-sm text-gray-600">投資回収期間</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="manual" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-book text-indigo-600 mr-3"></i>5. マニュアル作成フレームワーク
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">効果的なマニュアル作成のためのテンプレートです。</p>
+
+                <div class="space-y-8">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">基本情報</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">作業名</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">作成者</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">作成日</label>
+                                <input type="date" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">最終更新日</label>
+                                <input type="date" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">作業概要</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">目的</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-24" placeholder="この作業で何を達成したいのか明確に記載"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">成果物</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-24" placeholder="作業完了時に得られる成果物を具体的に記載"></textarea>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">所要時間</label>
+                                    <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="約●●分">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">難易度</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded">
+                                        <option>初級</option>
+                                        <option>中級</option>
+                                        <option>上級</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">必要なもの</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">ツール・機材</h4>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-32" placeholder="・パソコン&#10;・特定のソフトウェア&#10;・機材など"></textarea>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">情報・データ</h4>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-32" placeholder="・顧客情報&#10;・商品データ&#10;・参考資料など"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">作業手順</h3>
+                        <div id="manual-steps" class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                                <div class="flex-1">
+                                    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
+                                    <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                                <div class="flex-1">
+                                    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
+                                    <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                                <div class="flex-1">
+                                    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
+                                    <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="addManualStep()" class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-semibold no-print">
+                            <i class="fas fa-plus mr-2"></i>手順を追加
+                        </button>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">品質チェックポイント</h3>
+                        <textarea class="w-full p-3 border border-gray-300 rounded h-32" placeholder="・最終確認項目&#10;・品質基準&#10;・よくある間違いとその対処法"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="progress" class="mb-16 print-section">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-tasks text-teal-600 mr-3"></i>6. 進捗管理テンプレート
+                    </h2>
+                    
+                </div>
+                <p class="text-gray-600 mb-8">外注化プロジェクトの進捗を効果的に管理します。</p>
+
+                <div class="space-y-8">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">プロジェクト概要</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">プロジェクト名</label>
+                                <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="外注化実装プロジェクト">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">開始日</label>
+                                <input type="date" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">完了予定日</label>
+                                <input type="date" class="w-full p-2 border border-gray-300 rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">タスク管理</h3>
+                        <div class="overflow-x-auto">
+                            <table class="worksheet-table" id="progress-table">
+                                <thead>
+                                    <tr>
+                                        <th>タスク名</th>
+                                        <th>担当者</th>
+                                        <th>開始日</th>
+                                        <th>完了予定</th>
+                                        <th>進捗率</th>
+                                        <th>ステータス</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="progress-tbody">
+                                    <tr>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="業務分析の実施"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="山田太郎"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                                        <td>
+                                            <select class="w-full p-1 border rounded">
+                                                <option>未着手</option>
+                                                <option>進行中</option>
+                                                <option>完了</option>
+                                                <option>保留</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="マニュアル作成"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="佐藤花子"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                                        <td>
+                                            <select class="w-full p-1 border rounded">
+                                                <option>未着手</option>
+                                                <option>進行中</option>
+                                                <option>完了</option>
+                                                <option>保留</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="外注先選定"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="田中次郎"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                                        <td>
+                                            <select class="w-full p-1 border rounded">
+                                                <option>未着手</option>
+                                                <option>進行中</option>
+                                                <option>完了</option>
+                                                <option>保留</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="トライアル実施"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="鈴木三郎"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                                        <td>
+                                            <select class="w-full p-1 border rounded">
+                                                <option>未着手</option>
+                                                <option>進行中</option>
+                                                <option>完了</option>
+                                                <option>保留</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="本格運用開始"></td>
+                                        <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="高橋四郎"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="date" class="w-full p-1 border rounded"></td>
+                                        <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                                        <td>
+                                            <select class="w-full p-1 border rounded">
+                                                <option>未着手</option>
+                                                <option>進行中</option>
+                                                <option>完了</option>
+                                                <option>保留</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button onclick="addProgressTask()" class="mt-4 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded font-semibold no-print">
+                            <i class="fas fa-plus mr-2"></i>タスクを追加
+                        </button>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">週次レビュー</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">今週の成果</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-24" placeholder="・達成したタスク&#10;・進捗のあった項目&#10;・具体的な成果"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">課題・問題点</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-24" placeholder="・発生した問題&#10;・遅延している項目&#10;・リスク要因"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">来週のアクション</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded h-24" placeholder="・優先して取り組む項目&#10;・改善策の実施&#10;・次週の目標"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center mb-8 no-print">
+            <button onclick="printAllWorksheets()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold text-lg mr-4">
+                <i class="fas fa-print mr-2"></i>ワークシートを印刷
+            </button>
+            <a href="https://braintrain2233-source.github.io/outsourcing/restricted/navigation.html" class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-bold text-lg inline-block">
+                <i class="fas fa-arrow-left mr-2"></i>ナビゲーションに戻る
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12 no-print">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">外注化ワークシート</h3>
+                    <p class="text-gray-300">効率的な外注化実装をサポートする実践的なツール集</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">ワークシート一覧</h4>
+                    <ul class="text-gray-300 space-y-1">
+                        <li>• 業務分析ワークシート</li>
+                        <li>• 外注化準備度評価</li>
+                        <li>• パートナー選定チェックリスト</li>
+                        <li>• コスト効果分析テンプレート</li>
+                        <li>• マニュアル作成フレームワーク</li>
+                        <li>• 進捗管理テンプレート</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3">使用方法</h4>
+                    <ul class="text-gray-300 space-y-1">
+                        <li>1. 必要なワークシートを選択</li>
+                        <li>2. 現状を正確に記入</li>
+                        <li>3. 分析結果を基に実装</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 外注化ワークシート. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 業務分析の集計機能
+        function updateAnalysisSummary() {
+            const rows = document.querySelectorAll('#task-analysis-table tbody tr');
+            let totalTime = 0;
+            let outsourcedTime = 0;
+            let priorityCount = { 高: 0, 中: 0, 低: 0 };
+            
+            rows.forEach(row => {
+                const timeInput = row.querySelector('td:nth-child(2) input');
+                const frequencyInput = row.querySelector('td:nth-child(3) input');
+                const prioritySelect = row.querySelector('td:nth-child(6) select');
+                const outsourceCheck = row.querySelector('.outsource-check');
+                
+                if (timeInput && frequencyInput) {
+                    const time = parseFloat(timeInput.value) || 0;
+                    const frequency = parseFloat(frequencyInput.value) || 0;
+                    const weeklyTime = (time * frequency) / 60; // 時間に変換
+                    
+                    totalTime += weeklyTime;
+                    
+                    if (outsourceCheck && outsourceCheck.checked) {
+                        outsourcedTime += weeklyTime;
+                    }
+                }
+                
+                if (prioritySelect && prioritySelect.value) {
+                    priorityCount[prioritySelect.value]++;
+                }
+            });
+            
+            const reductionRate = totalTime > 0 ? ((outsourcedTime / totalTime) * 100).toFixed(1) : 0;
+            
+            document.getElementById('total-work-time').textContent = totalTime.toFixed(1) + ' 時間';
+            document.getElementById('outsourced-work-time').textContent = outsourcedTime.toFixed(1) + ' 時間';
+            document.getElementById('time-reduction-rate').textContent = reductionRate + ' %';
+            document.getElementById('priority-high-count').textContent = priorityCount['高'] + ' 件';
+            document.getElementById('priority-medium-count').textContent = priorityCount['中'] + ' 件';
+            document.getElementById('priority-low-count').textContent = priorityCount['低'] + ' 件';
+        }
+
+        // 業務行追加機能
+        function addTaskRow() {
+            const tbody = document.getElementById('task-tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="w-full p-1 border rounded editable-placeholder" placeholder="新しい業務"></td>
+                <td><input type="number" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                <td><input type="number" class="w-full p-1 border rounded" oninput="updateAnalysisSummary()"></td>
+                <td><input type="number" class="w-full p-1 border rounded"></td>
+                <td><input type="number" class="w-full p-1 border rounded"></td>
+                <td>
+                    <select class="w-full p-1 border rounded" onchange="updateAnalysisSummary()">
+                        <option value="">選択</option>
+                        <option value="高">高</option>
+                        <option value="中">中</option>
+                        <option value="低">低</option>
+                    </select>
+                </td>
+                <td class="text-center no-print"><input type="checkbox" class="outsource-check" onchange="updateAnalysisSummary()"></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        // 準備度評価の集計
+        function updateReadinessScore() {
+            const categories = ['stability', 'process', 'quality', 'manual', 'budget'];
+            let totalScore = 0;
+            
+            categories.forEach(category => {
+                const selected = document.querySelector(`input[name="${category}"]:checked`);
+                if (selected) {
+                    totalScore += parseInt(selected.value);
+                }
+            });
+            
+            document.getElementById('readiness-total-score').textContent = totalScore + ' 点';
+        }
+
+        // パートナー選定の評価集計
+        function updatePartnerEvaluation() {
+            const inputs = document.querySelectorAll('#selection input[type="number"]');
+            let totalScore = 0;
+            
+            inputs.forEach(input => {
+                totalScore += parseInt(input.value) || 0;
+            });
+            
+            document.getElementById('partner-total-score').textContent = totalScore + ' / 25点';
+        }
+
+        // コスト効果分析
+        function calculateROI() {
+            const costInputs = document.querySelectorAll('#cost .text-red-600').parentNode.parentNode.querySelectorAll('input[type="number"]');
+            const benefitInputs = document.querySelectorAll('#cost .text-green-600').parentNode.parentNode.querySelectorAll('input[type="number"]');
+            
+            let totalCost = 0;
+            let totalBenefit = 0;
+            
+            costInputs.forEach(input => {
+                totalCost += parseFloat(input.value) || 0;
+            });
+            
+            benefitInputs.forEach(input => {
+                totalBenefit += parseFloat(input.value) || 0;
+            });
+            
+            const netProfit = totalBenefit - totalCost;
+            const roi = totalCost > 0 ? ((netProfit / totalCost) * 100).toFixed(1) : 0;
+            const paybackPeriod = netProfit > 0 ? Math.ceil(totalCost / netProfit) : 0;
+            
+            document.getElementById('total-cost').textContent = '¥ ' + totalCost.toLocaleString();
+            document.getElementById('total-benefit').textContent = '¥ ' + totalBenefit.toLocaleString();
+            document.getElementById('net-profit').textContent = '¥ ' + netProfit.toLocaleString();
+            document.getElementById('roi-percentage').textContent = roi + '％';
+            document.getElementById('payback-period').textContent = paybackPeriod + 'ヶ月';
+        }
+
+        // マニュアル手順追加
+        function addManualStep() {
+            const container = document.getElementById('manual-steps');
+            const stepCount = container.children.length + 1;
+            const newStep = document.createElement('div');
+            newStep.className = 'flex items-start space-x-3';
+            newStep.innerHTML = `
+                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">${stepCount}</span>
+                <div class="flex-1">
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="手順のタイトル">
+                    <textarea class="w-full p-2 border border-gray-300 rounded h-16" placeholder="詳細な説明、注意点、画像の説明など"></textarea>
+                </div>
+            `;
+            container.appendChild(newStep);
+        }
+
+        // 進捗管理タスク追加
+        function addProgressTask() {
+            const tbody = document.getElementById('progress-tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="新しいタスク"></td>
+                <td><input type="text" class="w-full p-1 border rounded progress-input" placeholder="担当者名"></td>
+                <td><input type="date" class="w-full p-1 border rounded"></td>
+                <td><input type="date" class="w-full p-1 border rounded"></td>
+                <td><input type="number" min="0" max="100" class="w-full p-1 border rounded text-center">%</td>
+                <td>
+                    <select class="w-full p-1 border rounded">
+                        <option>未着手</option>
+                        <option>進行中</option>
+                        <option>完了</option>
+                        <option>保留</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        // 外注化対象チェックの全選択/解除
+        function toggleAllOutsource(masterCheck) {
+            const checkboxes = document.querySelectorAll('.outsource-check');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = masterCheck.checked;
+            });
+            updateAnalysisSummary();
+        }
+
+        // 個別印刷機能（セクションのみ）
+        function printSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                // 他の要素を非表示にして、該当セクションのみ表示
+                document.body.classList.add('printing-single');
+                section.classList.add('print-target');
+                
+                window.print();
+                
+                // 印刷後にクラスを削除
+                setTimeout(() => {
+                    document.body.classList.remove('printing-single');
+                    section.classList.remove('print-target');
+                }, 100);
+            }
+        }
+
+        // 全ワークシート印刷
+        function printAllWorksheets() {
+            window.print();
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAnalysisSummary();
+            updateReadinessScore();
+            updatePartnerEvaluation();
+            calculateROI();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ：外注化に関するよくある質問</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .answer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .answer-content.show {
+            max-height: 1000px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <i class="fas fa-question-circle mr-3"></i>
+                    FAQ
+                </h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-8">
+                    外注化に関するよくある質問
+                </p>
+                <div class="glass-effect rounded-lg p-6 max-w-4xl mx-auto">
+                    <p class="text-lg">
+                        外注化実装時によく寄せられる質問から上級者の技術的疑問まで、
+                        実際の体験談とトラブル対処法を含めて詳しく回答しています。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-6">
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/navigation.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-home mr-2"></i>ナビゲーション
+                    </a>
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/ai-revolution.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-robot mr-2"></i>AI活用ガイド
+                    </a>
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/examples.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i>実例集
+                    </a>
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/worksheets.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-clipboard-list mr-2"></i>ワークシート
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/roi-calculator.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-calculator mr-2"></i>ROI計算
+                    </a>
+                    <a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-tools mr-2"></i>実例補足
+                    </a>
+                    <span class="text-blue-600 font-semibold">
+                        <i class="fas fa-question-circle mr-2"></i>FAQ
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Quick Search -->
+        <div class="mb-12">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="質問を検索..." 
+                           class="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-full focus:border-blue-500 focus:outline-none shadow-lg">
+                    <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Categories -->
+        <div class="mb-12">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="category-btn px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors" data-category="all">
+                    <i class="fas fa-layer-group mr-2"></i>全て
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="basic">
+                    <i class="fas fa-seedling mr-2"></i>基本・初心者
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="implementation">
+                    <i class="fas fa-cogs mr-2"></i>実装・技術
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="management">
+                    <i class="fas fa-users mr-2"></i>人材・管理
+                </button>
+                <button class="category-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors" data-category="trouble">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>トラブル対処
+                </button>
+            </div>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="space-y-6">
+            <!-- 基本・初心者向け -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="basic">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">初心者</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注化は初心者でも始められますか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>はい、初心者でも十分に始められます。</strong>ただし、以下の条件を満たしていることが重要です：
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                            <li>月10万円以上の安定収入がある（投資余力の確保）</li>
+                            <li>基本的なビジネス活動の流れを理解している</li>
+                            <li>人とのコミュニケーションに抵抗がない</li>
+                        </ul>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">初心者におすすめのスタート方法：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li>まず1つの単純作業から外注化を開始</li>
+                                <li>信頼できる外注先を1人見つける</li>
+                                <li>成功体験を積んでから徐々に拡大</li>
+                            </ol>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/worksheets.html" class="text-blue-600 hover:underline">ワークシート</a>で段階的な実装方法をご確認ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="basic">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">初心者</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注化にはどのくらいの初期投資が必要ですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>月5万円〜15万円程度</strong>から始めることができます。ビジネス規模により変動します：
+                        </p>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">スモールスタート</h4>
+                                <p class="text-gray-700 text-sm">月3〜5万円</p>
+                                <p class="text-gray-600 text-xs">単純作業の一部外注</p>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-yellow-800 mb-2">標準的導入</h4>
+                                <p class="text-gray-700 text-sm">月10〜15万円</p>
+                                <p class="text-gray-600 text-xs">複数工程の外注化</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">本格運用</h4>
+                                <p class="text-gray-700 text-sm">月20万円〜</p>
+                                <p class="text-gray-600 text-xs">管理者含む組織化</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            投資対効果は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/roi-calculator.html" class="text-blue-600 hover:underline">ROI計算ツール</a>で事前に試算できます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 実装・技術系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">技術</span>
+                        <h3 class="text-xl font-semibold text-gray-800">GoogleフォームとSpreadsheetの連携システムが難しく感じます</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>段階的に実装することで、技術的な難しさを解消できます。</strong>
+                        </p>
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">実装の順序：</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">1</span>
+                                    <div>
+                                        <p class="font-medium">サンプルをコピーする</p>
+                                        <p class="text-sm text-gray-600">提供されているURLから自分のGoogleアカウントにコピー</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">2</span>
+                                    <div>
+                                        <p class="font-medium">テストデータで動作確認</p>
+                                        <p class="text-sm text-gray-600">まず1件のテストデータで全体の流れを確認</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">3</span>
+                                    <div>
+                                        <p class="font-medium">少しずつ実データで運用</p>
+                                        <p class="text-sm text-gray-600">慣れてから本格的なデータ入力を開始</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            詳細な設定手順は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="text-blue-600 hover:underline">実例補足集</a>で図解付きで解説しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">技術</span>
+                        <h3 class="text-xl font-semibold text-gray-800">FireStorageでのシステム情報管理の設定方法は？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">FireStorage設定手順：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li>FireStorageアカウントを作成</li>
+                                <li>システム情報送信用のURLを取得</li>
+                                <li>Systeminfoなどのツールを設定</li>
+                                <li>外注さんにシステム情報送信手順を教育</li>
+                                <li>管理用のフォルダ構成を整理</li>
+                            </ol>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">メリット：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>販売後の問い合わせ対応が迅速化</li>
+                                <li>商品の詳細情報をいつでも参照可能</li>
+                                <li>システム構成の記録が残る</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            詳細な設定手順は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="text-blue-600 hover:underline">実例補足集</a>で説明しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 人材・管理系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="management">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">管理</span>
+                        <h3 class="text-xl font-semibold text-gray-800">信頼できる外注先はどうやって見つけるのですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <p class="text-gray-700 mb-4">
+                            <strong>段階的なアプローチで信頼関係を構築します。</strong>
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">推奨の採用方法：</h4>
+                                <ol class="list-decimal list-inside text-gray-700 space-y-1 text-sm">
+                                    <li>知人への直接依頼</li>
+                                    <li>知人からの紹介</li>
+                                    <li>クラウドワークス・ランサーズ</li>
+                                    <li>ココナラなどスキル特化サイト</li>
+                                </ol>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">面接での確認ポイント：</h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm">
+                                    <li>作業に対する興味度</li>
+                                    <li>コミュニケーション能力</li>
+                                    <li>継続性・責任感</li>
+                                    <li>技術的な理解力</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">信頼関係構築のコツ：</h4>
+                            <p class="text-gray-700 text-sm">
+                                最初は小さな作業から始めて、お互いの相性を見極める。
+                                明確な指示と適切な報酬で、長期的な関係を築く。
+                            </p>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            採用の詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/examples.html" class="text-blue-600 hover:underline">実例集</a>で実際の体験談をご覧ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="management">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">管理</span>
+                        <h3 class="text-xl font-semibold text-gray-800">Slackでの作業指示のコツを教えてください</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">効果的なSlack運用方法：</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <h5 class="font-medium text-gray-800">チャンネル構成：</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>#稼働予定日 - 月次シフト管理</li>
+                                        <li>#作業指示 - 日々の作業内容</li>
+                                        <li>#質問相談 - 困った時の相談窓口</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">指示の出し方：</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                                        <li>箇条書きで明確に記載</li>
+                                        <li>期限と優先順位を明示</li>
+                                        <li>完了時の報告形式を指定</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">指示の実例：</h4>
+                            <div class="bg-white p-3 rounded border-l-4 border-green-500 text-gray-700 text-sm">
+                                【本日の作業】<br>
+                                1. パソコン5台のセッティング<br>
+                                2. 写真撮影（各10枚）<br>
+                                3. 外注倉庫への入庫作業<br>
+                                <br>
+                                期限：本日18時まで<br>
+                                報告：完了時に台数と写真枚数を報告
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Slack運用の詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="text-blue-600 hover:underline">実例補足集</a>で実際の画面例を確認できます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- トラブル対処 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注さんが突然連絡が取れなくなりました</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-2">immediate対応（24時間以内）：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                                <li>複数の連絡手段で確認（Slack、メール、電話）</li>
+                                <li>進行中の作業状況を把握</li>
+                                <li>緊急度の高い作業を自分で対応</li>
+                                <li>他の外注さんに応援依頼</li>
+                            </ol>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">予防策：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>複数の外注先を確保（最低2-3人）</li>
+                                <li>緊急連絡先を事前に交換</li>
+                                <li>作業の進捗を日次で確認</li>
+                                <li>重要作業は複数人でバックアップ</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">長期的な対策：</h4>
+                            <p class="text-gray-700 text-sm">
+                                外注先との関係を良好に保つため、定期的なコミュニケーションと
+                                適切な報酬設定を心がける。また、作業の標準化により、
+                                誰でも対応できる体制を構築する。
+                            </p>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            リスク管理の詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/examples.html" class="text-blue-600 hover:underline">実例集</a>で他の体験談もご覧ください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">リモートデスクトップでセキュリティが心配です</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-3">必須のセキュリティ対策：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li><strong>パスワード管理：</strong>毎回異なるパスワードを使用し、作業終了後に変更</li>
+                                <li><strong>専用PC設置：</strong>重要データは別PCに保管し、作業用PCは最小限の情報のみ</li>
+                                <li><strong>監視ログ：</strong>作業時間と操作内容を記録</li>
+                                <li><strong>権限制限：</strong>必要最小限のフォルダ・アプリケーションのみアクセス可能</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">推奨環境設定：</h4>
+                            <div class="space-y-2 text-gray-700 text-sm">
+                                <p><strong>TeamViewer設定：</strong></p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>毎回認証が必要な設定</li>
+                                    <li>ファイル転送機能の制限</li>
+                                    <li>作業時間の自動ログ記録</li>
+                                </ul>
+                                <p><strong>Chrome Remote Desktop：</strong></p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Googleアカウントでの認証</li>
+                                    <li>接続時の通知設定</li>
+                                    <li>セッション履歴の確認</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-green-800 mb-2">不審動作の検知方法：</h4>
+                            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                <li>Windows Event Logの定期確認</li>
+                                <li>不正アクセス検知ソフトの導入</li>
+                                <li>作業時間外のアクセス通知設定</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            セキュリティ設定の詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="text-blue-600 hover:underline">実例補足集</a>で設定手順を解説しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="trouble">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">トラブル</span>
+                        <h3 class="text-xl font-semibold text-gray-800">外注費が予想以上にかかってしまいます</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-red-800 mb-3">コスト増加の主な原因：</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>作業効率の見積もりが甘い</li>
+                                <li>指示が不明確で手戻りが発生</li>
+                                <li>適切な単価設定ができていない</li>
+                                <li>品質基準が曖昧で修正作業が多い</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-3">コスト削減の対策：</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li><strong>時間計測：</strong>実際の作業時間を正確に把握</li>
+                                <li><strong>標準化：</strong>作業手順を統一して効率化</li>
+                                <li><strong>段階的料金：</strong>習熟度に応じた料金体系</li>
+                                <li><strong>成果報酬：</strong>品質向上のインセンティブ設計</li>
+                            </ol>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">見直しのポイント：</h4>
+                            <p class="text-gray-700 text-sm">
+                                月次で「時間コスト」「品質」「外注費」のバランスを見直し。
+                                ROI（投資対効果）が想定を下回る場合は、
+                                作業の自動化や業務フローの改善を検討する。
+                            </p>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            コスト管理は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/roi-calculator.html" class="text-blue-600 hover:underline">ROI計算ツール</a>で定期的に評価することをお勧めします。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI活用系 -->
+            <div class="faq-item bg-white rounded-lg shadow-lg p-6 cursor-pointer" data-category="implementation">
+                <div class="flex items-center justify-between faq-header">
+                    <div class="flex items-center">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4">AI</span>
+                        <h3 class="text-xl font-semibold text-gray-800">AIを外注化にどう活用すればいいですか？</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 transform transition-transform"></i>
+                </div>
+                <div class="answer-content mt-4">
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-purple-800 mb-3">AIの主な活用場面：</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">マニュアル作成</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                        <li>作業手順書の自動生成</li>
+                                        <li>チェックリストの作成</li>
+                                        <li>多言語対応</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800 mb-2">指示書生成</h5>
+                                    <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                        <li>日次作業指示の自動化</li>
+                                        <li>品質基準の明文化</li>
+                                        <li>フィードバック文書作成</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">推奨AIツール：</h4>
+                            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                                <li><strong>ChatGPT:</strong> 汎用的な文書作成・相談</li>
+                                <li><strong>Claude:</strong> 詳細な分析・長文処理</li>
+                                <li><strong>Gemini:</strong> Googleサービスとの連携</li>
+                                <li><strong>Copilot:</strong> Microsoft Office連携</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            AI活用の詳細は<a href="https://braintrain2233-source.github.io/outsourcing/restricted/ai-revolution.html" class="text-blue-600 hover:underline">AI革命ガイド</a>で具体的な活用方法を解説しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">
+                <i class="fas fa-envelope mr-3"></i>
+                その他のご質問
+            </h2>
+            <p class="text-xl mb-6">
+                ここに掲載されていない質問やより詳細な相談は、
+                以下のサポートチャンネルをご利用ください。
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://twitter.com/BuppanP" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    <i class="fab fa-twitter mr-2"></i>Twitter相談
+                </a>
+                <a href="https://lin.ee/ilfIzpl" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    <i class="fab fa-line mr-2"></i>LINE相談
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">外注化戦略</h3>
+                    <p class="text-gray-400">
+                        7年間の実践で構築した外注化ノウハウを完全公開
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">コンテンツ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://braintrain2233-source.github.io/outsourcing/restricted/ai-revolution.html" class="hover:text-white transition-colors">AI活用ガイド</a></li>
+                        <li><a href="https://braintrain2233-source.github.io/outsourcing/restricted/examples.html" class="hover:text-white transition-colors">実例集</a></li>
+                        <li><a href="https://braintrain2233-source.github.io/outsourcing/restricted/worksheets.html" class="hover:text-white transition-colors">ワークシート</a></li>
+                        <li><a href="https://braintrain2233-source.github.io/outsourcing/restricted/supplements.html" class="hover:text-white transition-colors">実例補足集</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">ツール</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://braintrain2233-source.github.io/outsourcing/restricted/roi-calculator.html" class="hover:text-white transition-colors">ROI計算ツール</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">お問い合わせ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://twitter.com/BuppanP" class="hover:text-white transition-colors">Twitter</a></li>
+                        <li><a href="https://lin.ee/ilfIzpl" class="hover:text-white transition-colors">LINE</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 外注化戦略マスタープログラム. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.answer-content');
+                const icon = item.querySelector('.faq-header i');
+                
+                answer.classList.toggle('show');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Category filter functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('bg-blue-600', 'text-white');
+                
+                // Filter FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const content = item.querySelector('.answer-content').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+       
