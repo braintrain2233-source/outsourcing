@@ -1,1677 +1,1303 @@
-
 <!DOCTYPE html>
-
 <html lang="ja">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>【実例補足集】外注化戦略：現場で使える実践技術とセキュリティ対策</title>
-
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-
-<style>
-
-.gradient-bg {
-
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-}
-
-.card-hover {
-
-transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-}
-
-.card-hover:hover {
-
-transform: translateY(-5px);
-
-box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-
-}
-
-.tech-card {
-
-background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-
-border-left: 4px solid #667eea;
-
-}
-
-.warning-card {
-
-background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-
-border-left: 4px solid #e17055;
-
-}
-
-.success-card {
-
-background: linear-gradient(135deg, #a8e6cf 0%, #81c784 100%);
-
-border-left: 4px solid #4caf50;
-
-}
-
-.code-block {
-
-background: #2d3748;
-
-color: #e2e8f0;
-
-font-family: 'Courier New', monospace;
-
-}
-
-.step-number {
-
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-color: white;
-
-width: 32px;
-
-height: 32px;
-
-border-radius: 50%;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-font-weight: bold;
-
-margin-right: 12px;
-
-flex-shrink: 0;
-
-}
-
-.copy-btn {
-
-background: #4a5568;
-
-color: white;
-
-border: none;
-
-padding: 0.5rem 1rem;
-
-border-radius: 0.25rem;
-
-cursor: pointer;
-
-transition: background 0.3s;
-
-}
-
-.copy-btn:hover {
-
-background: #2d3748;
-
-}
-
-{
-
-body { margin: 0; }
-
-.no-print { display: none; }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【実例補足集】外注化戦略：現場で使える実践技術とセキュリティ対策</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .tech-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 4px solid #667eea;
+        }
+        .warning-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-left: 4px solid #e17055;
+        }
+        .success-card {
+            background: linear-gradient(135deg, #a8e6cf 0%, #81c784 100%);
+            border-left: 4px solid #4caf50;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .copy-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #2d3748;
+        }
+        .step-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+        }
+        .step-1 { border-color: #4299e1; }
+        .step-2 { border-color: #48bb78; }
+        .step-3 { border-color: #ed8936; }
+        .checklist-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4299e1;
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
-
 <body class="bg-gray-50">
 
-
-
 <!-- Header -->
-
 <header class="gradient-bg text-white py-16">
-
-<div class="container mx-auto px-6">
-
-<div class="text-center">
-
-<h1 class="text-4xl md:text-6xl font-bold mb-4">
-
-<i class="fas fa-tools mr-3"></i>実例補足集
-
-</h1>
-
-<p class="text-xl md:text-2xl mb-6">外注化戦略：現場で使える実践技術とセキュリティ対策</p>
-
-<div class="bg-white bg-opacity-20 rounded-lg p-4 inline-block">
-
-<p class="text-lg">7年間の実践から生まれた現場の知恵を体系化</p>
-
-</div>
-
-</div>
-
-</div>
-
+    <div class="container mx-auto px-6">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                <i class="fa fa-tools mr-3"></i>実例補足集
+            </h1>
+            <p class="text-xl md:text-2xl mb-6">外注化戦略：現場で使える実践技術とセキュリティ対策</p>
+            <div class="bg-white bg-opacity-20 rounded-lg p-4 inline-block">
+                <p class="text-lg">7年間の実践から生まれた現場の知恵を体系化</p>
+            </div>
+        </div>
+    </div>
 </header>
 
-
-
 <!-- Navigation -->
-
-<nav class="bg-white shadow-lg sticky top-0 z-50 no-print">
-
-<div class="container mx-auto px-6 py-4">
-
-<div class="flex flex-wrap justify-center space-x-2 md:space-x-6">
-
-<a href="#firestorage" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
-
-<i class="fas fa-cloud mr-2"></i>FireStorage管理
-
-</a>
-
-<a href="#remote-desktop" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
-
-<i class="fas fa-desktop mr-2"></i>リモート作業
-
-</a>
-
-<a href="#google-system" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
-
-<i class="fab fa-google mr-2"></i>Googleシステム
-
-</a>
-
-<a href="#automation" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
-
-<i class="fas fa-cogs mr-2"></i>自動化技術
-
-</a>
-
-<a href="#checklist" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
-
-<i class="fas fa-clipboard-check mr-2"></i>チェックリスト
-
-</a>
-
-</div>
-
-</div>
-
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex flex-wrap justify-center space-x-2 md:space-x-6">
+            <a href="#firestorage" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+                <i class="fa fa-cloud mr-2"></i>FireStorage管理
+            </a>
+            <a href="#remote-desktop" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+                <i class="fa fa-desktop mr-2"></i>リモート作業
+            </a>
+            <a href="#automation" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+                <i class="fa fa-cogs mr-2"></i>自動化技術
+            </a>
+            <a href="#google-system" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+                <i class="fab fa-google mr-2"></i>Googleシステム
+            </a>
+            <a href="#implementation" class="px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">
+                <i class="fa fa-clipboard-check mr-2"></i>実装ガイド
+            </a>
+        </div>
+    </div>
 </nav>
 
-
-
 <!-- Main Content -->
-
 <main class="container mx-auto px-6 py-12">
 
-
-
-<!-- FireStorage管理システム -->
-
+<!-- 1. FireStorage管理システム -->
 <section id="firestorage" class="mb-16">
-
-<div class="text-center mb-12">
-
-<h2 class="text-4xl font-bold text-gray-800 mb-4">
-
-<i class="fas fa-cloud-upload-alt text-blue-600 mr-3"></i>FireStorageシステム情報管理
-
-</h2>
-
-<p class="text-xl text-gray-600">中古パソコン販売で威力を発揮するシステム情報の一元管理</p>
-
-</div>
-
-
-
-<!-- 背景説明 -->
-
-<div class="success-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-4 flex items-center">
-
-<i class="fas fa-lightbulb text-green-700 mr-3"></i>なぜFireStorageが重要なのか
-
-</h3>
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div>
-
-<h4 class="font-semibold mb-3">中古パソコン販売での課題</h4>
-
-<ul class="space-y-2 text-sm">
-
-<li class="flex items-start">
-
-<i class="fas fa-question-circle text-orange-600 mr-2 mt-1"></i>
-
-<span>お客様からの詳細な問い合わせ対応（グラボの型番、液晶パネルの仕様など）</span>
-
-</li>
-
-<li class="flex items-start">
-
-<i class="fas fa-search text-blue-600 mr-2 mt-1"></i>
-
-<span>販売後のドライバ提供やサポート対応</span>
-
-</li>
-
-<li class="flex items-start">
-
-<i class="fas fa-clock text-red-600 mr-2 mt-1"></i>
-
-<span>システム情報を毎回調べ直す手間</span>
-
-</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4 class="font-semibold mb-3">FireStorageの優位性</h4>
-
-<ul class="space-y-2 text-sm">
-
-<li class="flex items-start">
-
-<i class="fas fa-key text-green-600 mr-2 mt-1"></i>
-
-<span>ログイン不要で即座にアップロード可能</span>
-
-</li>
-
-<li class="flex items-start">
-
-<i class="fas fa-globe text-blue-600 mr-2 mt-1"></i>
-
-<span>どこからでもアクセス可能な情報管理</span>
-
-</li>
-
-<li class="flex items-start">
-
-<i class="fas fa-mobile-alt text-purple-600 mr-2 mt-1"></i>
-
-<span>スマホからも確認・共有が可能</span>
-
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="grid md:grid-cols-2 gap-8 mb-8">
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-microchip text-green-600 mr-3"></i>システム情報自動送信バッチ
-
-</h3>
-
-<div class="space-y-4">
-
-<div class="code-block p-4 rounded">
-
-<code>
-
-@echo off<br>
-
-systeminfo > %TEMP%\sysinfo_%COMPUTERNAME%.txt<br>
-
-curl -F "file=@%TEMP%\sysinfo_%COMPUTERNAME%.txt" [FireStorageURL]<br>
-
-echo システム情報をFireStorageに送信しました<br>
-
-pause
-
-</code>
-
-</div>
-
-<div class="bg-yellow-50 p-4 rounded">
-
-<h4 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-test-tube text-orange-600 mr-2"></i>テスト方法
-
-</h4>
-
-<ol class="text-sm space-y-1">
-
-<li>1. 上記コードをメモ帳にコピー</li>
-
-<li>2. [FireStorageURL]を実際のアップロードURLに変更</li>
-
-<li>3. 「sysinfo_sender.bat」として保存</li>
-
-<li>4. 右クリック→「管理者として実行」でテスト</li>
-
-<li>5. FireStorageにファイルが送信されたか確認</li>
-
-</ol>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-cogs text-blue-600 mr-3"></i>活用効果
-
-</h3>
-
-<div class="space-y-4">
-
-<div class="bg-white p-4 rounded">
-
-<h4 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-chart-line text-green-600 mr-2"></i>問い合わせ対応の効率化
-
-</h4>
-
-<p class="text-sm text-gray-600">「このパソコンのグラフィックカードは何ですか？」などの質問に即座に回答可能</p>
-
-</div>
-
-<div class="bg-white p-4 rounded">
-
-<h4 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-shield-alt text-blue-600 mr-2"></i>品質保証の強化
-
-</h4>
-
-<p class="text-sm text-gray-600">詳細なシステム情報で商品の信頼性をアピール</p>
-
-</div>
-
-<div class="bg-white p-4 rounded">
-
-<h4 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-users text-purple-600 mr-2"></i>外注作業の標準化
-
-</h4>
-
-<p class="text-sm text-gray-600">システム情報収集を作業手順に組み込み、品質を均一化</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fa fa-cloud-upload-alt text-blue-600 mr-3"></i>FireStorageシステム情報管理
+        </h2>
+        <p class="text-xl text-gray-600">パソコン再生販売で威力を発揮するシステム情報の一元管理</p>
+    </div>
+
+    <div class="success-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4 flex items-center">
+            <i class="fa fa-lightbulb text-green-700 mr-3"></i>なぜFireStorageが重要なのか
+        </h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="font-semibold mb-3">パソコン再生販売での課題</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• お客様からの詳細な問い合わせ対応（グラボの型番、液晶パネルの仕様など）</li>
+                    <li>• 販売後のドライバ提供やサポート対応</li>
+                    <li>• 販売後のクレーム対応時の証拠資料として活用</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-3">FireStorageの強み</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>ログイン不要で外部フォルダに直接送信</strong></li>
+                    <li>• USBで起動してセッティング時に即座に保存</li>
+                    <li>• スマホからも確認・共有が可能</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 実際のマニュアル手順 -->
+    <div class="tech-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fa fa-clipboard-list text-green-600 mr-3"></i>システム情報取得＆FireStorage保管の完全ガイド
+        </h3>
+        
+        <!-- Windows版の手順 -->
+        <div class="bg-white bg-opacity-80 p-6 rounded-lg mb-6">
+            <h4 class="font-semibold mb-4 flex items-center">
+                <i class="fab fa-windows text-blue-600 mr-2"></i>Windows版の手順
+            </h4>
+            <ol class="space-y-4 text-sm">
+                <li class="flex">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">1</span>
+                    <div>
+                        <strong>SystemInfo フリーソフトをダウンロード</strong><br>
+                        <span class="text-gray-600">Vector等のフリーソフトサイトから「SystemInfo」をダウンロード。USBメモリに保存</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">2</span>
+                    <div>
+                        <strong>セッティング対象PCでUSBを起動</strong><br>
+                        <span class="text-gray-600">作業対象のパソコンにUSBを挿入し、SystemInfoソフトを起動</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">3</span>
+                    <div>
+                        <strong>システム情報をファイル出力</strong><br>
+                        <span class="text-gray-600">SystemInfoでシステム情報をテキストファイル形式でUSBに保存（管理番号+機種名.txt）</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">4</span>
+                    <div>
+                        <strong>FireStorageにアップロード</strong><br>
+                        <span class="text-gray-600">USBに保存したファイルをFireStorageの指定URLでアップロード</span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Mac版の手順 -->
+        <div class="bg-white bg-opacity-80 p-6 rounded-lg mb-6">
+            <h4 class="font-semibold mb-4 flex items-center">
+                <i class="fab fa-apple text-gray-800 mr-2"></i>Mac版の手順
+            </h4>
+            <ol class="space-y-4 text-sm">
+                <li class="flex">
+                    <span class="bg-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">1</span>
+                    <div>
+                        <strong>システム情報アプリを起動</strong><br>
+                        <span class="text-gray-600">Macの「システム情報」アプリ（Optionキー+Appleメニュー→「システム情報」）を起動</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">2</span>
+                    <div>
+                        <strong>システムレポートを保存</strong><br>
+                        <span class="text-gray-600">ファイル→「保存」で管理番号+機種名.spxファイルをUSBに保存</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">3</span>
+                    <div>
+                        <strong>デスクトップファイルを削除</strong><br>
+                        <span class="text-gray-600">情報漏洩防止のため、デスクトップ上のファイルは必ず削除</span>
+                    </div>
+                </li>
+                <li class="flex">
+                    <span class="bg-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold">4</span>
+                    <div>
+                        <strong>FireStorageにアップロード</strong><br>
+                        <span class="text-gray-600">USBに保存したファイルをFireStorageでアップロード</span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- FireStorage使用ガイド -->
+        <div class="bg-white bg-opacity-80 p-6 rounded-lg">
+            <h4 class="font-semibold mb-4 flex items-center">
+                <i class="fa fa-cloud text-orange-600 mr-2"></i>FireStorage使用ガイド（初心者向け）
+            </h4>
+            
+            <div class="space-y-6">
+                <div class="border-l-4 border-orange-400 pl-6">
+                    <h5 class="font-semibold mb-3">Step 1: FireStorageアカウント設定</h5>
+                    <ol class="text-sm space-y-2">
+                        <li>1. FireStorage公式サイト（https://firestorage.jp/）にアクセス</li>
+                        <li>2. 「無料会員登録」をクリック</li>
+                        <li>3. メールアドレスとパスワードを設定</li>
+                        <li>4. 登録確認メールから本登録を完了</li>
+                        <li>5. ログイン後、マイページでアップロード用URLを確認</li>
+                    </ol>
+                </div>
+
+                <div class="border-l-4 border-blue-400 pl-6">
+                    <h5 class="font-semibold mb-3">Step 2: ファイルアップロード手順</h5>
+                    <ol class="text-sm space-y-2">
+                        <li>1. 専用アップロードURL（https://firestorage.jp/upload）にアクセス</li>
+                        <li>2. 「ファイル選択」でUSBから対象ファイルを選択</li>
+                        <li>3. <strong class="text-red-600">「違法なファイルではない」に必ずチェック</strong></li>
+                        <li>4. 保存期間を「特に指定しない」に設定</li>
+                        <li>5. 「台帳番号」欄に管理番号を入力（数字のみ）</li>
+                        <li>6. 「アップロード」ボタンをクリック</li>
+                    </ol>
+                </div>
+
+                <div class="border-l-4 border-green-400 pl-6">
+                    <h5 class="font-semibold mb-3">Step 3: アップロード完了後の管理</h5>
+                    <ol class="text-sm space-y-2">
+                        <li>1. アップロード完了後に表示される「ダウンロードURL」をコピー</li>
+                        <li>2. URLを商品管理台帳や顧客管理システムに記録</li>
+                        <li>3. 必要時にURLから即座にシステム情報を確認可能</li>
+                        <li>4. 顧客からの問い合わせ時に詳細情報を即座に提供</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 重要な注意事項 -->
+            <div class="bg-yellow-50 p-4 rounded-lg mt-6 border-l-4 border-yellow-400">
+                <h5 class="font-semibold text-yellow-800 mb-2">重要な注意事項</h5>
+                <ul class="text-sm text-yellow-700 space-y-1">
+                    <li>• <strong>「違法なファイルではない」チェックボックス:</strong> これを忘れるとアップロードできません</li>
+                    <li>• <strong>ファイル名の統一:</strong> 「管理番号_機種名_YYYYMMDD.txt」等の形式で統一推奨</li>
+                    <li>• <strong>ローカルファイル削除:</strong> 作業後は必ずパソコンからファイルを削除</li>
+                    <li>• <strong>URL管理:</strong> ダウンロードURLは確実に記録・管理すること</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FireStorageの強み -->
+    <div class="success-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fa fa-star text-green-700 mr-3"></i>FireStorageを使う3つの強み
+        </h3>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 flex items-center">
+                    <i class="fa fa-key text-blue-600 mr-2"></i>ログイン不要でアクセス
+                </h4>
+                <p class="text-sm">一度URLを取得すれば、ログインなしで即座にファイルにアクセス可能。外注先でもスムーズに情報確認</p>
+            </div>
+            
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 flex items-center">
+                    <i class="fa fa-shield-check text-green-600 mr-2"></i>クレーム対応の証拠保全
+                </h4>
+                <p class="text-sm">「SSD容量が説明と違う」等のクレーム時に、販売時点のシステム情報で事実確認が可能</p>
+            </div>
+            
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 flex items-center">
+                    <i class="fa fa-mobile-alt text-purple-600 mr-2"></i>どこからでも即座確認
+                </h4>
+                <p class="text-sm">スマートフォンからでも顧客対応時に詳細なシステム情報を確認。外出先でも完璧なサポート</p>
+            </div>
+        </div>
+        
+        <div class="bg-white bg-opacity-70 p-6 rounded-lg mt-6">
+            <h4 class="font-semibold mb-3">実際の活用効果</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-sm"><strong>Before（従来方法）:</strong></p>
+                    <ul class="text-xs text-gray-600 mt-2 space-y-1">
+                        <li>• 問い合わせの度にパソコンを確認</li>
+                        <li>• クレーム時に証拠となる情報がない</li>
+                        <li>• 外注先で情報共有が困難</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-sm"><strong>After（FireStorage活用）:</strong></p>
+                    <ul class="text-xs text-gray-600 mt-2 space-y-1">
+                        <li>• URLアクセスで即座に詳細情報確認</li>
+                        <li>• 販売時点の正確な情報で証拠保全</li>
+                        <li>• 外注先でもリアルタイム情報共有</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 他ビジネスへの応用 -->
+    <div class="warning-card p-8 rounded-lg">
+        <h3 class="text-2xl font-bold mb-6">他ビジネスでの活用アイデア</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white bg-opacity-70 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">不動産業</h4>
+                <p class="text-sm">物件詳細情報、設備仕様、修繕履歴の一元管理</p>
+            </div>
+            <div class="bg-white bg-opacity-70 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">中古車販売</h4>
+                <p class="text-sm">車両の整備記録、事故歴、部品交換履歴を保管</p>
+            </div>
+            <div class="bg-white bg-opacity-70 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">設備メンテナンス</h4>
+                <p class="text-sm">機器の点検記録、メンテナンス履歴を一元管理</p>
+            </div>
+            <div class="bg-white bg-opacity-70 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">医療機器管理</h4>
+                <p class="text-sm">機器の校正記録、保守履歴、法的要件への対応</p>
+            </div>
+            <div class="bg-white bg-opacity-70 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">コンサルティング</h4>
+                <p class="text-sm">クライアント分析データ、改善提案書の体系管理</p>
+            </div>
+        </div>
+    </div>
 </section>
 
-
-
-<!-- リモートデスクトップ活用術 -->
-
+<!-- 2. リモートデスクトップ活用術 -->
 <section id="remote-desktop" class="mb-16">
-
-<div class="text-center mb-12">
-
-<h2 class="text-4xl font-bold text-gray-800 mb-4">
-
-<i class="fas fa-desktop text-purple-600 mr-3"></i>リモートデスクトップ活用術
-
-</h2>
-
-<p class="text-xl text-gray-600">情報漏洩を防ぎながら効率的な外注作業を実現</p>
-
-</div>
-
-
-
-<!-- 背景説明 -->
-
-<div class="warning-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-4 flex items-center">
-
-<i class="fas fa-shield-alt text-orange-700 mr-3"></i>なぜリモートデスクトップが必要なのか
-
-</h3>
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div>
-
-<h4 class="font-semibold mb-3">情報漏洩リスクの回避</h4>
-
-<ul class="space-y-2 text-sm">
-
-<li>• 外注さんのローカルPCにデータを残さない</li>
-
-<li>• 重要資料の作成時も安心して依頼可能</li>
-
-<li>• ファイルの持ち出しを完全に制御</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4 class="font-semibold mb-3">作業効率の向上</h4>
-
-<ul class="space-y-2 text-sm">
-
-<li>• リアルタイムでの指導・確認が可能</li>
-
-<li>• 作業手順を画面で直接説明</li>
-
-<li>• 進捗状況をリアルタイムで把握</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- リモートデスクトップ設定 -->
-
-<div class="grid md:grid-cols-2 gap-8 mb-8">
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-tv text-blue-600 mr-3"></i>TeamViewer設定
-
-</h3>
-
-<div class="space-y-4">
-
-<div class="bg-white p-4 rounded">
-
-<h4 class="font-semibold mb-2">ダウンロード・設定</h4>
-
-<p class="text-sm mb-2">公式サイト: <a href="https://www.teamviewer.com/ja/" target="_blank" class="text-blue-600 hover:underline">https://www.teamviewer.com/ja/</a></p>
-
-<ol class="text-sm space-y-1">
-
-<li>1. 個人利用版を両端末にインストール</li>
-
-<li>2. 「無人アクセスのセットアップ」を実行</li>
-
-<li>3. 固定パスワードを設定</li>
-
-<li>4. 外注さんに接続IDとパスワードを共有</li>
-
-</ol>
-
-</div>
-
-<div class="bg-green-50 p-3 rounded">
-
-<p class="text-sm"><i class="fas fa-check-circle text-green-600 mr-2"></i>
-
-<strong>メリット:</strong> 安定した接続と豊富な機能</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fab fa-chrome text-green-600 mr-3"></i>Chrome リモートデスクトップ設定
-
-</h3>
-
-<div class="space-y-4">
-
-<div class="bg-white p-4 rounded">
-
-<h4 class="font-semibold mb-2">設定手順</h4>
-
-<p class="text-sm mb-2">アクセス: <a href="https://remotedesktop.google.com/" target="_blank" class="text-blue-600 hover:underline">https://remotedesktop.google.com/</a></p>
-
-<ol class="text-sm space-y-1">
-
-<li>1. Chrome拡張機能をインストール</li>
-
-<li>2. 「リモートアクセスの設定」を開始</li>
-
-<li>3. PC名とPINを設定</li>
-
-<li>4. 外注さんのGoogleアカウントに共有</li>
-
-</ol>
-
-</div>
-
-<div class="bg-blue-50 p-3 rounded">
-
-<p class="text-sm"><i class="fas fa-info-circle text-blue-600 mr-2"></i>
-
-<strong>メリット:</strong> 無料でGoogleアカウント連携</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- 出品作業専用PC運用システム -->
-
-<div class="tech-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-server text-gray-700 mr-3"></i>出品作業専用PC運用システム
-
-</h3>
-
-<div class="grid md:grid-cols-3 gap-6">
-
-<div>
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-power-off text-green-600 mr-2"></i>稼働環境構築
-
-</h4>
-
-<ul class="text-sm space-y-2">
-
-<li>• スリープ機能を無効化</li>
-
-<li>• ACアダプタ接続で安定稼働</li>
-
-<li>• 不安定時は定期再起動設定</li>
-
-<li>• 外注作業時間中の継続稼働確保</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-wrench text-blue-600 mr-2"></i>保守・メンテナンス
-
-</h4>
-
-<ul class="text-sm space-y-2">
-
-<li>• CPU温度監視ソフトで定期確認</li>
-
-<li>• 動作不調時のハードディスクチェック</li>
-
-<li>• 外注さんからの不調報告時の対応</li>
-
-<li>• 必要最小限のメンテナンス実施</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-eye text-purple-600 mr-2"></i>監視・管理体制
-
-</h4>
-
-<ul class="text-sm space-y-2">
-
-<li>• 外注稼働時のログイン状況確認</li>
-
-<li>• 異常検知時の自動アラート設定</li>
-
-<li>• ファイル外部送信履歴の監視</li>
-
-<li>• TeamViewer接続ログの定期確認</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- セキュリティ対策 -->
-
-<div class="warning-card p-8 rounded-lg">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-shield-alt text-red-700 mr-3"></i>セキュリティ対策
-
-</h3>
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div>
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-key text-red-600 mr-2"></i>アクセス制御
-
-</h4>
-
-<ul class="text-sm space-y-2">
-
-<li>• 作業時間限定のアクセス許可</li>
-
-<li>• 作業用フォルダのみアクセス可能</li>
-
-<li>• 重要ファイルは別PCで管理</li>
-
-<li>• 定期的なパスワード変更</li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-search text-orange-600 mr-2"></i>監視システム
-
-</h4>
-
-<ul class="text-sm space-y-2">
-
-<li>• ファイルアクセス履歴の記録</li>
-
-<li>• 外部デバイス接続検知</li>
-
-<li>• 画面録画による作業記録</li>
-
-<li>• 不正操作時の即座通知</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fa fa-desktop text-purple-600 mr-3"></i>リモートデスクトップ活用術
+        </h2>
+        <p class="text-xl text-gray-600">情報漏洩を防ぎながら効率的な外注作業を実現</p>
+    </div>
+
+    <!-- 実際の活用事例 -->
+    <div class="success-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4 flex items-center">
+            <i class="fa fa-lightbulb text-green-700 mr-3"></i>こんな悩みを解決します
+        </h3>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 text-red-700">外注化でよくある悩み</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• 外注さんにヤフオクやメルカリのアカウント情報を教えたくない</li>
+                    <li>• パスワードを共有するのは情報漏洩リスクが高い</li>
+                    <li>• 重要な資料を見ながら作業してほしいが送れない</li>
+                    <li>• 自分のPCにしかないソフトウェアで作業してもらいたい</li>
+                </ul>
+            </div>
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 text-green-700">リモートデスクトップの解決策</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>パスワード非開示:</strong> ログイン済みの状態で作業依頼</li>
+                    <li>• <strong>完全セキュア:</strong> 外注先PCにデータが残らない</li>
+                    <li>• <strong>資料参照可能:</strong> ローカルの機密資料も安全に利用</li>
+                    <li>• <strong>ソフト共有:</strong> 高価なソフトも外注作業で活用</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 p-6 rounded-lg">
+            <h4 class="font-semibold mb-3">具体的な活用事例</h4>
+            <div class="space-y-4">
+                <div class="border-l-4 border-blue-400 pl-4">
+                    <h5 class="font-semibold text-blue-800">事例1: 出品作業の完全代行</h5>
+                    <p class="text-sm text-gray-700 mt-2">自宅に外注作業用PCを1台準備し、ヤフオク・メルカリにログイン済みの状態にしておく。外注さんはリモートデスクトップでそのPCに接続し、アカウント情報を知らないまま出品作業が可能。パスワード流出リスクゼロ。</p>
+                </div>
+                <div class="border-l-4 border-green-400 pl-4">
+                    <h5 class="font-semibold text-green-800">事例2: 機密資料を参照した作業</h5>
+                    <p class="text-sm text-gray-700 mt-2">顧客情報や取引先データなど、外部に送れない資料を見ながら資料作成。外注さんは自分のPCには何もダウンロードせず、リモート先の画面だけを見て作業。情報は完全に自分のPC内に留まる。</p>
+                </div>
+                <div class="border-l-4 border-purple-400 pl-4">
+                    <h5 class="font-semibold text-purple-800">事例3: 高額ソフトウェアの共有活用</h5>
+                    <p class="text-sm text-gray-700 mt-2">PhotoshopやIllustratorなど高額なソフトウェアを外注さんに使ってもらいたいが、ライセンスを買ってもらうのは難しい。リモートデスクトップなら自分のライセンスで外注さんが作業可能。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4">なぜリモートデスクトップが必要なのか</h3>
+        <p class="text-lg mb-6">外注化で最も重要な課題は「情報セキュリティ」と「アカウント管理」です。リモートデスクトップは、パスワードを教えずに作業を依頼できる革新的な解決策です。</p>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3">情報漏洩リスクの完全排除</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>外注先のローカルPCにデータを一切残さない</strong></li>
+                    <li>• 重要資料の作成時も100%安心して依頼可能</li>
+                    <li>• ファイルの持ち出しを物理的に完全制御</li>
+                </ul>
+            </div>
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3">作業効率の驚異的向上</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>リアルタイムでの指導・確認が瞬時に可能</strong></li>
+                    <li>• 作業手順を画面で直接説明</li>
+                    <li>• 進捗状況をリアルタイムで完全把握</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- リモートデスクトップソリューション比較 -->
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="tech-card p-8 rounded-lg card-hover">
+            <h3 class="text-2xl font-bold mb-6">
+                <i class="fab fa-chrome text-green-600 mr-3"></i>Chrome リモートデスクトップ
+            </h3>
+            
+            <div class="bg-green-50 p-4 rounded-lg mb-4">
+                <h4 class="font-semibold text-green-800 mb-2">推奨度: 最優先</h4>
+                <p class="text-sm text-green-700">完全無料で企業レベルのセキュリティを実現</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded">
+                    <h4 class="font-semibold mb-2">設定手順</h4>
+                    <ol class="text-sm space-y-1">
+                        <li>1. Chrome拡張機能をインストール</li>
+                        <li>2. 「リモートアクセスの設定」を開始</li>
+                        <li>3. PC名と6桁以上のPINを設定</li>
+                        <li>4. 外注者のGoogleアカウントにアクセス権限を付与</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-white p-4 rounded">
+                    <h4 class="font-semibold mb-2">メリット</h4>
+                    <ul class="text-sm space-y-1">
+                        <li>• 完全無料</li>
+                        <li>• 高セキュリティ</li>
+                        <li>• 設定が簡単</li>
+                        <li>• Googleアカウントで権限管理</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-card p-8 rounded-lg card-hover">
+            <h3 class="text-2xl font-bold mb-6">
+                <i class="fa fa-tv text-blue-600 mr-3"></i>TeamViewer（商用版）
+            </h3>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                <h4 class="font-semibold text-blue-800 mb-2">推奨度: 予算次第</h4>
+                <p class="text-sm text-blue-700">高機能だが商用ライセンスが必要</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded">
+                    <h4 class="font-semibold mb-2">料金体系</h4>
+                    <ul class="text-sm space-y-1">
+                        <li>• <strong>個人利用版:</strong> 無料（非商用目的のみ）</li>
+                        <li>• <strong>Business:</strong> 月額6,000円～</li>
+                        <li>• <strong>Premium:</strong> 月額12,000円～</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                    <p class="text-sm"><strong>注意:</strong> 商用利用の場合は必ずライセンスを購入してください</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-
-
-<!-- Googleシステム実装 -->
-
-<section id="google-system" class="mb-16">
-
-<div class="text-center mb-12">
-
-<h2 class="text-4xl font-bold text-gray-800 mb-4">
-
-<i class="fab fa-google text-blue-600 mr-3"></i>Googleシステム完全実装ガイド
-
-</h2>
-
-<p class="text-xl text-gray-600">商品入荷から出品まで一気通貫の自動化システム</p>
-
-</div>
-
-
-
-<!-- 背景説明 -->
-
-<div class="success-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-4 flex items-center">
-
-<i class="fas fa-lightbulb text-green-700 mr-3"></i>パソコン転売での活用背景
-
-</h3>
-
-<p class="mb-4">パソコン転売では商品入荷時にGoogleフォームで商品情報を登録し、Googleスプレッドシートにデータを蓄積。そのデータを元に出品用コメントを自動生成する仕組みを構築しています。</p>
-
-<div class="bg-white bg-opacity-50 p-4 rounded">
-
-<h4 class="font-semibold mb-2">物販ビジネス全般への応用</h4>
-
-<p class="text-sm">商品入荷→検品→出品情報生成の流れは、あらゆる物販ビジネスで活用可能な汎用性の高いシステムです。</p>
-
-</div>
-
-</div>
-
-
-
-<!-- テンプレート -->
-
-<div class="tech-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-link text-green-700 mr-3"></i>実践用テンプレート
-
-</h3>
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div class="bg-white p-6 rounded-lg">
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-clipboard-list text-blue-600 mr-2"></i>商品登録フォーム
-
-</h4>
-
-<div class="bg-gray-100 p-3 rounded mb-3">
-
-<div class="flex items-center justify-between">
-
-<span class="text-xs text-gray-600">フォームテンプレート</span>
-
-<button onclick="copyToClipboard('form-url')" class="copy-btn text-xs px-2 py-1">コピー</button>
-
-</div>
-
-<div id="form-url" class="text-xs break-all mt-2">https://docs.google.com/forms/d/16WMTk8fWdb8cWAH64ObC6YjcLa86UFTzLpUESJ6S8Tc/copy</div>
-
-</div>
-
-</div>
-
-<div class="bg-white p-6 rounded-lg">
-
-<h4 class="font-semibold mb-3 flex items-center">
-
-<i class="fas fa-table text-green-600 mr-2"></i>自動生成スプレッドシート
-
-</h4>
-
-<div class="bg-gray-100 p-3 rounded mb-3">
-
-<div class="flex items-center justify-between">
-
-<span class="text-xs text-gray-600">シートテンプレート</span>
-
-<button onclick="copyToClipboard('sheet-url')" class="copy-btn text-xs px-2 py-1">コピー</button>
-
-</div>
-
-<div id="sheet-url" class="text-xs break-all mt-2">https://docs.google.com/spreadsheets/d/1cvRX1vdtqkmQg8e5A4GD7P5G5M5s1pPjg1ScN_x58DQ/copy</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- 関数説明の変更 -->
-
-<div class="warning-card p-8 rounded-lg mb-8">
-
-<h3 class="text-2xl font-bold mb-4 flex items-center">
-
-<i class="fas fa-function text-orange-700 mr-3"></i>商品説明自動生成機能
-
-</h3>
-
-<p class="mb-4">添付のスプレッドシートには、フォーム入力内容から商品説明文を自動生成する関数が設定済みです。商品名、メーカー、状態などの項目を組み合わせて、統一感のある出品説明を作成できます。</p>
-
-<div class="bg-white bg-opacity-50 p-4 rounded">
-
-<h4 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-book text-blue-600 mr-2"></i>詳細設定手順について
-
-</h4>
-
-<p class="text-sm">関数の詳細な設定方法や応用については、第2弾でご紹介した手順マニュアルを参照してください。ステップバイステップで設定を進められるよう、詳細な解説資料で説明しています。</p>
-
-
-                                    
- <div class="flex items-center justify-center">
-
-
-<a href="https://drive.google.com/file/d/187ysoMirD1Dt5LARKoEqFge4IoaHsyEr/view?usp=drive_link" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    この仕組みの実装例を見てやってみる
-                </a>
-
-
-
-</div>
-
-
-</div>
-
-</div>
-
-
-
-<!-- Googleドライブ写真管理 -->
-
-<div class="tech-card p-8 rounded-lg">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-camera text-purple-600 mr-3"></i>Googleドライブ写真管理システム
-
-</h3>
-
-<div class="space-y-6">
-
-<div class="bg-white bg-opacity-50 p-4 rounded">
-
-<h4 class="font-semibold mb-2">撮影専用スマホ活用法</h4>
-
-<p class="text-sm mb-3">中古スマホを撮影専用端末として活用し、撮影したデータを直接Googleドライブに自動アップロードする体制を構築。これにより、撮影から出品まで効率的な写真管理が可能になります。</p>
-
-</div>
-
-<div class="grid md:grid-cols-2 gap-4">
-
-<div class="bg-white p-4 rounded">
-
-<h5 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-upload text-green-600 mr-2"></i>撮影・アップロード
-
-</h5>
-
-<ul class="text-sm space-y-1">
-
-<li>• 専用スマホで商品写真撮影</li>
-
-<li>• Googleドライブアプリで即座にアップロード</li>
-
-<li>• 商品別フォルダで自動整理</li>
-
-</ul>
-
-</div>
-
-<div class="bg-white p-4 rounded">
-
-<h5 class="font-semibold mb-2 flex items-center">
-
-<i class="fas fa-tasks text-blue-600 mr-2"></i>外注管理での活用
-
-</h5>
-
-<ul class="text-sm space-y-1">
-
-<li>• 外注さんの撮影進捗をリアルタイム確認</li>
-
-<li>• 写真品質のチェックが容易</li>
-
-<li>• 発送業務と写真管理の連携</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- 自動化技術 -->
-
+<!-- 3. 高度な自動化技術 -->
 <section id="automation" class="mb-16">
-
-<div class="text-center mb-12">
-
-<h2 class="text-4xl font-bold text-gray-800 mb-4">
-
-<i class="fas fa-cogs text-indigo-600 mr-3"></i>高度な自動化技術
-
-</h2>
-
-<p class="text-xl text-gray-600">バッチファイル・スクリプトによる業務完全自動化</p>
-
-</div>
-
-
-
-<div class="grid md:grid-cols-2 gap-8 mb-8">
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-file-code text-green-600 mr-3"></i>バッチファイル自動化
-
-</h3>
-
-<div class="space-y-4">
-
-<div class="bg-white bg-opacity-50 p-4 rounded">
-
-<h4 class="font-semibold mb-2">パソコンセッティング業務の効率化</h4>
-
-<p class="text-sm mb-3">超戦略２で実践したパソコンセッティング業務で、複数アプリの同時起動によりセッティング時間を大幅短縮。この技術は他の繰り返し作業にも応用可能です。</p>
-
-</div>
-
-<div class="code-block p-4 rounded text-sm">
-
-<code>
-
-@echo off<br>
-
-echo 出品作業環境を起動中...<br>
-
-start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" "https://auctions.yahoo.co.jp"<br>
-
-timeout 3<br>
-
-start "" "https://drive.google.com"<br>
-
-timeout 2<br>
-
-start "" "C:\Program Files\速売り君\速売り君.exe"<br>
-
-echo 起動完了！出品作業を開始してください。<br>
-
-pause
-
-</code>
-
-</div>
-
-<div class="bg-yellow-50 p-3 rounded">
-
-<p class="text-sm"><i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
-
-<strong>活用例:</strong> ヤフオク、Googleドライブ、出品ソフトを一括起動で作業開始時間を短縮</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-8 rounded-lg card-hover">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-magic text-purple-600 mr-3"></i>Google Apps Script詳細実装
-
-</h3>
-
-<div class="space-y-4">
-
-<h4 class="font-semibold mb-3">ステップ1: スクリプトエディタを開く</h4>
-
-<div class="bg-white p-4 rounded text-sm">
-
-<ol class="space-y-1">
-
-<li>1. Googleスプレッドシートを開く</li>
-
-<li>2. メニューバー「拡張機能」をクリック</li>
-
-<li>3. 「Apps Script」を選択</li>
-
-<li>4. 新しいタブでスクリプトエディタが開く</li>
-
-</ol>
-
-</div>
-
-
-
-<h4 class="font-semibold mb-3">ステップ2: コードを設置</h4>
-
-<div class="code-block p-3 rounded text-xs">
-
-<code>
-
-function onFormSubmit(e) {<br>
-
-&nbsp;&nbsp;// フォーム送信時に実行される関数<br>
-
-&nbsp;&nbsp;var sheet = e.source.getActiveSheet();<br>
-
-&nbsp;&nbsp;var lastRow = sheet.getLastRow();<br>
-
-&nbsp;&nbsp;<br>
-
-&nbsp;&nbsp;// メール通知を送信<br>
-
-&nbsp;&nbsp;GmailApp.sendEmail(<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;"your-email@gmail.com",<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;"新商品登録通知",<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;"商品が登録されました"<br>
-
-&nbsp;&nbsp;);<br>
-
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fa fa-cogs text-orange-600 mr-3"></i>高度な自動化技術
+        </h2>
+        <p class="text-xl text-gray-600">バッチファイルによる業務完全自動化で作業時間を90%削減</p>
+    </div>
+
+    <div class="success-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4 flex items-center">
+            <i class="fa fa-clock text-green-700 mr-3"></i>毎日の「ちょっとした作業」が時間を奪っていませんか？
+        </h3>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 text-red-700">よくある時間の無駄</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>毎回同じアプリを開く作業:</strong> Chrome、Excel、出品ツール...順番に起動で3分</li>
+                    <li>• <strong>外注さんへの説明時間:</strong> 「まずこれを開いて、次にこれを...」と毎回説明</li>
+                    <li>• <strong>起動忘れによるミス:</strong> 必要なソフトを開き忘れて作業が止まる</li>
+                    <li>• <strong>定型作業の繰り返し:</strong> 同じ手順を1日に10回以上繰り返す</li>
+                </ul>
+            </div>
+            <div class="bg-white bg-opacity-70 p-6 rounded-lg">
+                <h4 class="font-semibold mb-3 text-green-700">バッチファイルによる解決</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>• <strong>ワンクリック起動:</strong> 必要なアプリ全てが自動で立ち上がる</li>
+                    <li>• <strong>説明不要:</strong> 外注さんは「このファイルをダブルクリック」だけでOK</li>
+                    <li>• <strong>ミスゼロ:</strong> 設定した通りに必ず起動するので忘れがない</li>
+                    <li>• <strong>時間創出:</strong> 1日30分の節約 = 月15時間の時間創出</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 p-6 rounded-lg">
+            <h4 class="font-semibold mb-3">実際の活用シーン</h4>
+            <div class="space-y-4">
+                <div class="border-l-4 border-blue-400 pl-4">
+                    <h5 class="font-semibold text-blue-800">シーン1: 出品作業開始時</h5>
+                    <p class="text-sm text-gray-700 mt-2">従来: ヤフオクを開いて、Googleドライブを開いて、出品ツールを起動して...（毎回3分）<br>
+                    <strong>→ バッチ実行後: ダブルクリック1回で全て起動（30秒）</strong></p>
+                </div>
+                <div class="border-l-4 border-green-400 pl-4">
+                    <h5 class="font-semibold text-green-800">シーン2: 外注さんへの指示</h5>
+                    <p class="text-sm text-gray-700 mt-2">従来: 「まずChromeでこのURLを開いて、次にこのフォルダを...」と毎回10分説明<br>
+                    <strong>→ バッチ実行後: 「デスクトップの『作業開始』をダブルクリックして」だけ</strong></p>
+                </div>
+                <div class="border-l-4 border-purple-400 pl-4">
+                    <h5 class="font-semibold text-purple-800">シーン3: 複数人での作業標準化</h5>
+                    <p class="text-sm text-gray-700 mt-2">従来: 人によって開くアプリや順番が違い、ミスが頻発<br>
+                    <strong>→ バッチ実行後: 全員が同じ環境で作業開始、品質が均一化</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- バッチファイルサンプル -->
+    <div class="tech-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fa fa-file-code text-green-600 mr-3"></i>出品作業環境自動起動バッチ（リファイン版）
+        </h3>
+        
+        <div class="bg-green-50 p-4 rounded-lg mb-6">
+            <h4 class="font-semibold text-green-800 mb-2">ユーザーが得られるメリット</h4>
+            <ul class="text-sm text-green-700 space-y-1">
+                <li>• <strong>作業時間の短縮:</strong> ブラウザや出品支援ツール、作業フォルダを一括で開く</li>
+                <li>• <strong>作業効率の向上:</strong> 定型作業の自動化で出品作業に集中</li>
+                <li>• <strong>初心者でも簡単運用:</strong> ダブルクリックするだけで環境が整う</li>
+                <li>• <strong>環境依存エラー回避:</strong> Chromeの有無やツールの存在を自動確認</li>
+            </ul>
+        </div>
+
+        <div class="code-block p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="text-white font-semibold">出品作業環境起動.bat</h4>
+                <button class="copy-btn" onclick="copyToClipboard('batch-code')">コピー</button>
+            </div>
+            <pre id="batch-code" class="text-sm overflow-x-auto"><code>@echo off
+chcp 65001 >nul
+title 出品作業環境自動起動システム
+
+echo ===============================================
+echo     出品作業環境自動起動システム
+echo ===============================================
+
+echo [1/4] ブラウザを起動しています...
+
+REM Chromeの起動（複数パターンに対応）
+set "CHROME_FOUND=0"
+set "CHROME_PATH="
+
+if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
+    set "CHROME_FOUND=1"
+)
+if exist "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+    set "CHROME_FOUND=1"
+)
+
+if "%CHROME_FOUND%"=="1" (
+    echo   ✓ Chrome起動: ヤフオク
+    start "" "%CHROME_PATH%" "https://auctions.yahoo.co.jp/sell"
+    timeout /t 3 /nobreak >nul
+    echo   ✓ Chrome起動: Googleドライブ
+    start "" "%CHROME_PATH%" "https://drive.google.com"
+    timeout /t 2 /nobreak >nul
+) else (
+    echo   ⚠ Chromeが見つかりません（既定ブラウザで開きます）
+    start "" "https://auctions.yahoo.co.jp/sell"
+    timeout /t 3 /nobreak >nul
+)
+
+echo [2/4] 出品支援ツールを確認中...
+if exist "C:\Program Files\AppTool\AppTool.exe" (
+    echo   ✓ 出品ツール起動
+    start "" "C:\Program Files\AppTool\AppTool.exe"
+) else (
+    echo   ℹ 出品支援ツールが見つかりませんでした
+)
+
+echo [3/4] 作業フォルダを開いています...
+if exist "%USERPROFILE%\Desktop\出品作業" (
+    start "" explorer "%USERPROFILE%\Desktop\出品作業"
+) else (
+    start "" explorer "%USERPROFILE%\Desktop"
+)
+
+echo [4/4] 起動完了！
+echo ===============================================
+echo        作業環境が整いました。開始してください
+echo ===============================================
+pause</code></pre>
+        </div>
+
+        <div class="bg-white bg-opacity-80 p-6 rounded-lg mt-6">
+            <h4 class="font-semibold mb-4">書き換え方法（カスタマイズガイド）</h4>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border-l-4 border-orange-400 pl-4">
+                    <h5 class="font-semibold mb-2">作業フォルダ変更例</h5>
+                    <div class="bg-gray-100 p-3 rounded text-sm">
+                        <code>if exist "D:\作業フォルダ" (<br>
+                        &nbsp;&nbsp;start "" explorer "D:\作業フォルダ"<br>
+                        )</code>
+                    </div>
+                </div>
+                
+                <div class="border-l-4 border-blue-400 pl-4">
+                    <h5 class="font-semibold mb-2">出品ツールパス変更例</h5>
+                    <div class="bg-gray-100 p-3 rounded text-sm">
+                        <code>if exist "D:\Tools\MyTool.exe" (<br>
+                        &nbsp;&nbsp;start "" "D:\Tools\MyTool.exe"<br>
+                        )</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Googleシステム完全実装ガイド -->
+<section id="google-system" class="mb-16">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fab fa-google text-blue-600 mr-3"></i>Googleシステム完全実装ガイド
+        </h2>
+        <p class="text-xl text-gray-600">商品入荷から出品まで一気通貫の自動化システム</p>
+    </div>
+
+    <div class="success-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4 flex items-center">
+            <i class="fa fa-cogs text-green-700 mr-3"></i>完全自動化システムの全体像
+        </h3>
+        <p class="text-lg mb-6">商品入荷時にGoogleフォームで情報を登録 → Googleスプレッドシートに自動連携 → Apps Scriptで出品説明文を自動生成。このワンストップシステムで、データ入力から出品まで90%の作業が自動化されます。</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-card step-1 mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">1</span>
+            Step 1: Googleフォームとスプレッドシート連携
+        </h3>
+        
+        <div class="bg-yellow-50 p-4 rounded-lg mb-6 border-l-4 border-yellow-400">
+            <p class="text-sm"><strong>初心者の最初の山:</strong> この連携設定が最も重要で、多くの方がつまずくポイントです。丁寧に進めていきましょう。</p>
+        </div>
+        
+        <div class="space-y-6">
+            <!-- 1-1 -->
+            <div class="border-l-4 border-blue-400 pl-6">
+                <h4 class="font-semibold mb-3">1-1. Googleフォームの作成</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. Google Drive（https://drive.google.com/）にアクセス</li>
+                    <li>2. 「新規」→「その他」→「Googleフォーム」を選択</li>
+                    <li>3. フォームタイトルを「商品登録フォーム」に変更</li>
+                    <li>4. 以下の質問項目を作成：
+                        <ul class="ml-4 mt-2 space-y-1">
+                            <li>• 管理番号（短答式テキスト・必須）</li>
+                            <li>• 商品名（短答式テキスト・必須）</li>
+                            <li>• メーカー（プルダウン：Apple, Dell, HP, Lenovo, その他）</li>
+                            <li>• 商品状態（選択式：新品, 美品, 良品, ジャンク）</li>
+                            <li>• 特記事項（段落テキスト）</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- 1-2 -->
+            <div class="border-l-4 border-green-400 pl-6">
+                <h4 class="font-semibold mb-3">1-2. スプレッドシートとの連携</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. フォーム編集画面で「回答」タブをクリック</li>
+                    <li>2. 「スプレッドシートを作成」（緑の表アイコン）をクリック</li>
+                    <li>3. 「新しいスプレッドシートを作成」を選択</li>
+                    <li>4. スプレッドシート名を「商品管理データベース」に設定</li>
+                    <li>5. 「作成」をクリック</li>
+                </ol>
+            </div>
+            
+            <!-- 1-3 -->
+            <div class="border-l-4 border-purple-400 pl-6">
+                <h4 class="font-semibold mb-3">1-3. 連携確認テスト</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. フォームで「プレビュー」（目のアイコン）をクリック</li>
+                    <li>2. テストデータを入力して送信</li>
+                    <li>3. スプレッドシートに自動でデータが反映されるか確認</li>
+                    <li>4. 正常に連携されていればStep2に進む</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card step-2 mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">2</span>
+            Step 2: Google Apps Scriptで自動化システム構築
+        </h3>
+        
+        <div class="bg-green-50 p-4 rounded-lg mb-6">
+            <h4 class="font-semibold text-green-800 mb-2">このシステムのメリット（ユーザー視点）</h4>
+            <ul class="text-sm text-green-700 space-y-1">
+                <li>• <strong>作業自動化:</strong> フォーム入力と連動して自動で商品説明文を生成</li>
+                <li>• <strong>通知機能付き:</strong> 新規商品登録時に自動メール通知</li>
+                <li>• <strong>安全性向上:</strong> メールアドレスをコードに直書きせず安全管理</li>
+                <li>• <strong>拡張性:</strong> 将来的にSlack通知や外部API連携にも対応可能</li>
+            </ul>
+        </div>
+        
+        <div class="space-y-6">
+            <!-- 2-1 -->
+            <div class="border-l-4 border-green-400 pl-6">
+                <h4 class="font-semibold mb-3">2-1. スクリプトエディタを開く</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. 連携済みGoogleスプレッドシートを開く</li>
+                    <li>2. メニューバー「拡張機能」→「Apps Script」を選択</li>
+                    <li>3. 新規プロジェクト作成（「商品管理自動化システム」と命名）</li>
+                    <li>4. デフォルトのCode.gsファイルを以下の安全なコードに置き換え</li>
+                </ol>
+            </div>
+            
+            <!-- 2-2 -->
+            <div class="border-l-4 border-blue-400 pl-6">
+                <h4 class="font-semibold mb-3">2-2. 安全性強化版コード</h4>
+                <div class="code-block p-6 rounded-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="text-white font-semibold">商品管理自動化システム.gs</h5>
+                        <button class="copy-btn" onclick="copyToClipboard('gas-code')">コピー</button>
+                    </div>
+                    <pre id="gas-code" class="text-sm overflow-x-auto"><code>/**
+ * 商品管理自動化システム（安全性強化版）
+ * フォーム送信時の自動処理とメール通知
+ */
+function onFormSubmit(e) {
+  if (!e || !e.values) {
+    Logger.log("フォームデータが存在しません。処理を終了します。");
+    return;
+  }
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var lastRow = sheet.getLastRow();
+    
+    // 送信されたデータを取得
+    var formData = e.values || [];
+    var productData = {
+      timestamp: formData[0] || new Date(),
+      managementNo: formData[1] || '',
+      productName: formData[2] || '',
+      manufacturer: formData[3] || '',
+      condition: formData[4] || '',
+      notes: formData[5] || ''
+    };
+    
+    // 出品説明文の自動生成
+    var description = generateProductDescription(productData);
+    
+    // 生成した説明文をスプレッドシートに書き込み（G列=7列目に固定）
+    var descriptionColumn = 7;
+    sheet.getRange(lastRow, descriptionColumn).setValue(description);
+    
+    // メール通知送信
+    sendNotificationEmail(productData, description);
+    
+  } catch (error) {
+    Logger.log("エラー発生: " + error.toString());
+    sendErrorEmail(error);
+  }
 }
 
-</code>
+/**
+ * 商品説明文自動生成関数
+ */
+function generateProductDescription(data) {
+  var description = '';
+  
+  description += '【商品詳細】\n';
+  description += '━━━━━━━━━━━━━━━━━━━━\n';
+  description += '商品名: ' + data.productName + '\n';
+  description += 'メーカー: ' + data.manufacturer + '\n';
+  
+  description += '\n【商品状態】\n';
+  switch(data.condition) {
+    case '新品':
+      description += '✨ 新品未開封品です。\n';
+      break;
+    case '美品':
+      description += '⭐ 美品です。使用感も少なく、良好な状態です。\n';
+      break;
+    case '良品':
+      description += '👍 良品です。通常使用による軽微な使用感はあります。\n';
+      break;
+    default:
+      description += '状態: ' + data.condition + '\n';
+  }
+  
+  if (data.notes && data.notes.trim() !== '') {
+    description += '\n【特記事項】\n';
+    description += data.notes + '\n';
+  }
+  
+  description += '\n管理番号: ' + data.managementNo + '\n';
+  
+  return description;
+}
 
-</div>
+/**
+ * メール通知送信関数（安全な設定方式）
+ */
+function sendNotificationEmail(productData, description) {
+  try {
+    // スクリプトプロパティから通知先メールアドレスを取得
+    var recipientEmail = PropertiesService.getScriptProperties().getProperty("NOTIFY_EMAIL");
+    if (!recipientEmail) {
+      Logger.log("通知先メールアドレスが設定されていません。");
+      return;
+    }
+    
+    var subject = '新商品登録通知 - ' + productData.productName;
+    var emailBody = '新しい商品が登録されました。\n\n';
+    emailBody += '管理番号: ' + productData.managementNo + '\n';
+    emailBody += '商品名: ' + productData.productName + '\n\n';
+    emailBody += '【自動生成説明文】\n';
+    emailBody += description;
+    
+    GmailApp.sendEmail(recipientEmail, subject, emailBody);
+    Logger.log("通知メールを送信しました: " + recipientEmail);
+    
+  } catch (error) {
+    Logger.log("メール送信エラー: " + error.toString());
+  }
+}
 
+/**
+ * エラーメール送信関数
+ */
+function sendErrorEmail(error) {
+  try {
+    var recipientEmail = PropertiesService.getScriptProperties().getProperty("NOTIFY_EMAIL");
+    if (!recipientEmail) return;
+    
+    GmailApp.sendEmail(
+      recipientEmail,
+      '商品登録処理エラー',
+      'エラーが発生しました: ' + error.toString()
+    );
+    Logger.log("エラーメールを送信しました。");
+  } catch (mailError) {
+    Logger.log("エラーメール送信失敗: " + mailError.toString());
+  }
+}</code></pre>
+                </div>
+            </div>
+            
+            <!-- 2-3 -->
+            <div class="border-l-4 border-purple-400 pl-6">
+                <h4 class="font-semibold mb-3">2-3. スクリプトプロパティ設定</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. スクリプトエディタで「設定」（歯車アイコン）をクリック</li>
+                    <li>2. 「スクリプトプロパティ」セクションで「プロパティを追加」をクリック</li>
+                    <li>3. プロパティを追加：
+                        <ul class="ml-4 mt-2 space-y-1">
+                            <li>• <strong>プロパティ:</strong> NOTIFY_EMAIL</li>
+                            <li>• <strong>値:</strong> your-email@gmail.com（実際のメールアドレス）</li>
+                        </ul>
+                    </li>
+                    <li>4. 「プロパティを保存」をクリック</li>
+                </ol>
+            </div>
+            
+            <!-- 2-4 -->
+            <div class="border-l-4 border-orange-400 pl-6">
+                <h4 class="font-semibold mb-3">2-4. トリガー設定</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. スクリプトエディタで「トリガー」（時計アイコン）をクリック</li>
+                    <li>2. 「トリガーを追加」をクリック</li>
+                    <li>3. 以下を設定：
+                        <ul class="ml-4 mt-2 space-y-1">
+                            <li>• <strong>実行する関数:</strong> onFormSubmit</li>
+                            <li>• <strong>イベントのソース:</strong> フォームから</li>
+                            <li>• <strong>イベントの種類:</strong> フォーム送信時</li>
+                        </ul>
+                    </li>
+                    <li>4. 「保存」をクリックして権限を承認</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 
-
-<h4 class="font-semibold mb-3">ステップ3: トリガー設定</h4>
-
-<div class="bg-white p-4 rounded text-sm">
-
-<ol class="space-y-1">
-
-<li>1. 左メニューの「トリガー」をクリック</li>
-
-<li>2. 「トリガーを追加」ボタンをクリック</li>
-
-<li>3. 関数「onFormSubmit」を選択</li>
-
-<li>4. イベントソース「フォームから」を選択</li>
-
-<li>5. イベントタイプ「フォーム送信時」を選択</li>
-
-<li>6. 「保存」をクリック</li>
-
-</ol>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- 効果測定 -->
-
-<div class="success-card p-8 rounded-lg">
-
-<h3 class="text-2xl font-bold mb-6 flex items-center">
-
-<i class="fas fa-trophy text-yellow-700 mr-3"></i>自動化による効果測定（試算）
-
-</h3>
-
-<div class="mb-4 bg-white bg-opacity-50 p-4 rounded">
-
-<p class="text-sm"><i class="fas fa-info-circle text-blue-600 mr-2"></i>
-
-<strong>注意:</strong> 以下は実践事例に基づく試算値です。実際の効果は業務内容や環境により異なります。導入前の現状把握と段階的な効果測定をお勧めします。</p>
-
-</div>
-
-<div class="grid md:grid-cols-4 gap-6 text-center">
-
-<div class="bg-white p-4 rounded-lg">
-
-<div class="text-3xl font-bold text-blue-600 mb-2">75%</div>
-
-<div class="text-sm text-gray-600">作業時間短縮<br><span class="text-xs">(手作業→自動化)</span></div>
-
-</div>
-
-<div class="bg-white p-4 rounded-lg">
-
-<div class="text-3xl font-bold text-green-600 mb-2">90%</div>
-
-<div class="text-sm text-gray-600">入力ミス削減<br><span class="text-xs">(フォーム活用)</span></div>
-
-</div>
-
-<div class="bg-white p-4 rounded-lg">
-
-<div class="text-3xl font-bold text-purple-600 mb-2">24/7</div>
-
-<div class="text-sm text-gray-600">システム稼働<br><span class="text-xs">(無人処理)</span></div>
-
-</div>
-
-<div class="bg-white p-4 rounded-lg">
-
-<div class="text-3xl font-bold text-red-600 mb-2">300%</div>
-
-<div class="text-sm text-gray-600">処理能力向上<br><span class="text-xs">(複数作業並行)</span></div>
-
-</div>
-
-</div>
-
-</div>
-
+    <!-- Step 3 -->
+    <div class="step-card step-3 mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="bg-orange-600 text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">3</span>
+            Step 3: カスタマイズと運用開始
+        </h3>
+        
+        <div class="space-y-6">
+            <!-- 書き換え方法 -->
+            <div class="border-l-4 border-orange-400 pl-6">
+                <h4 class="font-semibold mb-3">書き換え方法（カスタマイズガイド）</h4>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h5 class="font-semibold mb-2">説明文記載列の変更</h5>
+                        <p class="text-sm text-gray-600 mb-3">現在はG列（7列目）に固定。H列（8列目）に変更する場合：</p>
+                        <div class="bg-gray-100 p-3 rounded text-sm">
+                            <code>var descriptionColumn = 8;</code>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-2">説明文テンプレート変更</h5>
+                        <p class="text-sm text-gray-600 mb-3">特記事項に「※」を追加する場合：</p>
+                        <div class="bg-gray-100 p-3 rounded text-sm">
+                            <code>description += "※" + data.notes + "\n";</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 運用手順 -->
+            <div class="border-l-4 border-green-400 pl-6">
+                <h4 class="font-semibold mb-3">運用手順</h4>
+                <ol class="text-sm space-y-2">
+                    <li>1. Googleフォームに商品情報を入力・送信</li>
+                    <li>2. スプレッドシートに自動でデータが反映される</li>
+                    <li>3. G列に自動生成された商品説明文が出力される</li>
+                    <li>4. 設定したメールアドレスに通知が送信される</li>
+                </ol>
+            </div>
+            
+            <!-- トラブル時の対処 -->
+            <div class="border-l-4 border-red-400 pl-6">
+                <h4 class="font-semibold mb-3">トラブル時の対処</h4>
+                <ul class="text-sm space-y-2">
+                    <li>• <strong>メールが届かない:</strong> スクリプトプロパティのメールアドレス設定を確認</li>
+                    <li>• <strong>説明文が生成されない:</strong> トリガー設定とコードの保存を確認</li>
+                    <li>• <strong>権限エラー:</strong> Gmail API の利用権限を再度承認</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </section>
 
-
-
-<!-- 実践チェックリスト -->
-
-<section id="checklist" class="mb-16">
-
-<div class="text-center mb-12">
-
-<h2 class="text-4xl font-bold text-gray-800 mb-4">
-
-<i class="fas fa-clipboard-check text-green-600 mr-3"></i>段階的実装ロードマップ
-
-</h2>
-
-<p class="text-xl text-gray-600">自分のビジネスに合わせて必要なところから取り組んでください</p>
-
-</div>
-
-
-
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fas fa-rocket text-blue-600 mr-2"></i>基本セットアップ
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">FireStorageアカウント作成</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">システム情報送信バッチ作成</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">テンプレート動作テスト</span>
-
-</label>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fas fa-desktop text-purple-600 mr-2"></i>リモート環境構築
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-purple-600">
-
-<span class="text-sm">TeamViewer設定完了</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-purple-600">
-
-<span class="text-sm">Chrome リモートデスクトップ設定</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-purple-600">
-
-<span class="text-sm">専用PC常時稼働環境構築</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-purple-600">
-
-<span class="text-sm">外注さんとの接続テスト</span>
-
-</label>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fas fa-shield-alt text-red-600 mr-2"></i>セキュリティ対策
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-red-600">
-
-<span class="text-sm">アクセス制限設定</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-red-600">
-
-<span class="text-sm">操作ログ監視開始</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-red-600">
-
-<span class="text-sm">重要データ分離・暗号化</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-red-600">
-
-<span class="text-sm">異常検知システム構築</span>
-
-</label>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fab fa-google text-blue-600 mr-2"></i>Googleシステム連携
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">フォーム・シートテンプレート導入</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">自動生成機能カスタマイズ</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">Googleドライブ写真管理開始</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-blue-600">
-
-<span class="text-sm">外注さんとの運用テスト</span>
-
-</label>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fas fa-cogs text-indigo-600 mr-2"></i>自動化技術導入
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-indigo-600">
-
-<span class="text-sm">バッチファイル作成・テスト</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-indigo-600">
-
-<span class="text-sm">Google Apps Script実装</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-indigo-600">
-
-<span class="text-sm">自動通知システム構築</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-indigo-600">
-
-<span class="text-sm">効果測定・改善サイクル確立</span>
-
-</label>
-
-</div>
-
-</div>
-
-
-
-<div class="tech-card p-6 rounded-lg">
-
-<h3 class="text-lg font-bold mb-4 flex items-center">
-
-<i class="fas fa-chart-line text-green-600 mr-2"></i>運用・最適化
-
-</h3>
-
-<div class="space-y-3">
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-green-600">
-
-<span class="text-sm">定期的な効果測定</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-green-600">
-
-<span class="text-sm">外注さんフィードバック収集</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-green-600">
-
-<span class="text-sm">システム改善・拡張</span>
-
-</label>
-
-<label class="flex items-center space-x-3 cursor-pointer">
-
-<input type="checkbox" class="w-4 h-4 text-green-600">
-
-<span class="text-sm">他業務への応用検討</span>
-
-</label>
-
-</div>
-
-</div>
-
-</div>
-
+<!-- トラブルシューティング -->
+<section id="troubleshooting" class="mb-16">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fa fa-wrench text-red-600 mr-3"></i>トラブルシューティング
+        </h2>
+        <p class="text-xl text-gray-600">よくある問題と解決方法</p>
+    </div>
+    
+    <div class="tech-card p-8 rounded-lg mb-8">
+        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+            <p class="text-sm text-blue-800"><strong>💡 用語解説:</strong> 以下のトラブルシューティングで使用される専門用語について</p>
+            <ul class="text-xs text-blue-700 mt-2 space-y-1">
+                <li>• <strong>curl（カール）:</strong> インターネット経由でファイルをダウンロード・アップロードするコマンドラインツール。Windows 10の1803バージョン以降は標準搭載</li>
+                <li>• <strong>バッチファイル:</strong> 複数のコマンドを順番に実行するためのスクリプトファイル（.bat形式）。Windowsで自動化に使用</li>
+                <li>• <strong>スクリプトプロパティ:</strong> Google Apps Scriptで安全にパスワードやAPIキーなどの機密情報を保存する仕組み</li>
+                <li>• <strong>トリガー:</strong> 特定のイベント（フォーム送信など）をきっかけに自動的にプログラムを実行する設定</li>
+            </ul>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="font-semibold mb-3">バッチファイル関連</h4>
+                <div class="bg-red-50 p-4 rounded border-l-4 border-red-400 mb-4">
+                    <h5 class="font-semibold text-red-800 mb-2">問題: curlコマンドエラー</h5>
+                    <p class="text-sm text-red-700 mb-2"><strong>症状:</strong> 「curl は、内部コマンドまたは外部コマンドとして認識されていません」</p>
+                    <p class="text-sm text-red-700 mb-2"><strong>原因:</strong> curlコマンドがインストールされていない（古いWindowsバージョン）</p>
+                    <p class="text-sm text-red-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• Windows 10を1803以降にアップデート（推奨）</li>
+                        <li>• PowerShellで「curl --version」で確認</li>
+                        <li>• 古いWindowsの場合：「curl for Windows」を手動インストール</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                    <h5 class="font-semibold text-yellow-800 mb-2">問題: バッチファイル実行不可</h5>
+                    <p class="text-sm text-yellow-700 mb-2"><strong>症状:</strong> ダブルクリックしても実行されない、または一瞬で閉じる</p>
+                    <p class="text-sm text-yellow-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• 右クリック→「管理者として実行」を試す</li>
+                        <li>• Windows Defenderの除外設定に追加</li>
+                        <li>• セキュリティソフトでブロックされていないか確認</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-3">Google Apps Script関連</h4>
+                <div class="bg-red-50 p-4 rounded border-l-4 border-red-400 mb-4">
+                    <h5 class="font-semibold text-red-800 mb-2">問題: スクリプト権限エラー</h5>
+                    <p class="text-sm text-red-700 mb-2"><strong>症状:</strong> 「このアプリは確認されていません」と表示される</p>
+                    <p class="text-sm text-red-700 mb-2"><strong>原因:</strong> Googleがスクリプトの実行権限を確認している</p>
+                    <p class="text-sm text-red-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• 「詳細」をクリック→「安全でないページに移動」を選択</li>
+                        <li>• Gmail API アクセス権限を明示的に承認</li>
+                        <li>• 自分が作成したスクリプトであることを確認</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                    <h5 class="font-semibold text-yellow-800 mb-2">問題: メール送信されない</h5>
+                    <p class="text-sm text-yellow-700 mb-2"><strong>症状:</strong> スクリプトは動作するがメールが届かない</p>
+                    <p class="text-sm text-yellow-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• スクリプトプロパティのメールアドレス設定を確認</li>
+                        <li>• スパム・迷惑メールフォルダをチェック</li>
+                        <li>• Gmail APIの利用制限確認（1日100件まで）</li>
+                        <li>• 実行ログでエラーメッセージを確認</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
+            <div>
+                <h4 class="font-semibold mb-3">リモートデスクトップ関連</h4>
+                <div class="bg-red-50 p-4 rounded border-l-4 border-red-400">
+                    <h5 class="font-semibold text-red-800 mb-2">問題: リモートデスクトップ接続が不安定</h5>
+                    <p class="text-sm text-red-700 mb-2"><strong>症状:</strong> 接続が頻繁に切れる、動作が重い</p>
+                    <p class="text-sm text-red-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• インターネット速度確認（上り10Mbps以上推奨）</li>
+                        <li>• ルーター・モデムの再起動</li>
+                        <li>• Chrome リモートデスクトップの画質設定を下げる</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold mb-3">FireStorage関連</h4>
+                <div class="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                    <h5 class="font-semibold text-yellow-800 mb-2">問題: FireStorageアップロード失敗</h5>
+                    <p class="text-sm text-yellow-700 mb-2"><strong>症状:</strong> 「アップロードに失敗しました」エラー</p>
+                    <p class="text-sm text-yellow-700"><strong>解決:</strong></p>
+                    <ul class="text-xs ml-4 mt-1 space-y-1">
+                        <li>• ファイルサイズ確認（無料版は2GBまで）</li>
+                        <li>• 「違法なファイルではない」チェックボックスを確認</li>
+                        <li>• ブラウザのキャッシュをクリアして再試行</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- 5. 段階的実装ロードマップ -->
+<section id="implementation" class="mb-16">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            <i class="fa fa-clipboard-check text-green-600 mr-3"></i>段階的実装ロードマップ
+        </h2>
+        <p class="text-xl text-gray-600">自分のビジネスに合わせて無理なく導入を進めましょう</p>
+    </div>
 
+    <!-- 実装前確認チェックリスト -->
+    <div class="tech-card p-8 rounded-lg mb-8">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fa fa-tasks text-green-600 mr-3"></i>実装前確認チェックリスト
+        </h3>
+        
+        <p class="text-sm text-gray-600 mb-6">以下は本ガイドで紹介した各システムを実装する際に必要となる要件です。該当するシステムを導入する前に確認してください。</p>
+        
+        <div class="space-y-8">
+            <!-- 技術的要件 -->
+            <div class="border-l-4 border-blue-400 pl-6">
+                <h4 class="font-semibold mb-4">技術的要件</h4>
+                <p class="text-sm text-blue-800 mb-3"><strong>対応するシステム:</strong> FireStorage、バッチファイル自動化、Googleシステム</p>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-check-circle text-blue-600 mr-2"></i>Windows 10 1803以降 または curl コマンド利用可能
+                        </h5>
+                        <p class="text-xs text-gray-600">→ FireStorageへのファイルアップロードに必要（Macは不要）</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-check-circle text-blue-600 mr-2"></i>Google アカウント取得済み
+                        </h5>
+                        <p class="text-xs text-gray-600">→ Googleフォーム・スプレッドシート・Apps Scriptの利用に必須</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-check-circle text-blue-600 mr-2"></i>Chrome ブラウザインストール済み
+                        </h5>
+                        <p class="text-xs text-gray-600">→ Chrome リモートデスクトップ、バッチファイル自動起動に使用</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-check-circle text-blue-600 mr-2"></i>安定したインターネット接続環境
+                        </h5>
+                        <p class="text-xs text-gray-600">→ リモートデスクトップ、クラウドサービス全般で必要（上り10Mbps以上推奨）</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- セキュリティ・運用要件 -->
+            <div class="border-l-4 border-green-400 pl-6">
+                <h4 class="font-semibold mb-4">セキュリティ・運用要件</h4>
+                <p class="text-sm text-green-800 mb-3"><strong>対応するシステム:</strong> リモートデスクトップ、全システム共通</p>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-shield-alt text-green-600 mr-2"></i>ウイルス対策ソフトの例外設定確認
+                        </h5>
+                        <p class="text-xs text-gray-600">→ バッチファイル実行、リモートデスクトップ接続がブロックされる場合に必要</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-database text-green-600 mr-2"></i>データバックアップ体制の構築
+                        </h5>
+                        <p class="text-xs text-gray-600">→ Googleスプレッドシート、FireStorage等の重要データの定期バックアップ</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-users text-green-600 mr-2"></i>外注者への操作説明・研修計画
+                        </h5>
+                        <p class="text-xs text-gray-600">→ リモートデスクトップ接続方法、バッチファイル実行手順の説明準備</p>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <h5 class="font-semibold mb-2 flex items-center">
+                            <i class="fa fa-phone text-green-600 mr-2"></i>緊急時連絡体制の確立
+                        </h5>
+                        <p class="text-xs text-gray-600">→ システムトラブル時の連絡方法、サポート窓口の設定</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 </main>
 
-
-
 <!-- Footer -->
-
-<footer class="gradient-bg text-white py-12">
-
-<div class="container mx-auto px-6 text-center">
-
-<div class="mb-8">
-
-<h3 class="text-2xl font-bold mb-4">
-
-<i class="fas fa-lightbulb mr-2"></i>実践で差をつける
-
-</h3>
-
-<p class="text-lg">このガイドで紹介した技術を段階的に導入し、あなたのビジネスを次のレベルへ</p>
-
-</div>
+<footer class="gradient-bg text-white py-16">
+    <div class="container mx-auto px-6 text-center">
+        <h3 class="text-2xl font-bold mb-4">実践から生まれた効率化システム</h3>
+        <p class="text-lg mb-8">このガイドが、あなたのビジネスの自動化と効率化にお役に立てれば幸いです。</p>
 
 
 
-<div class="grid md:grid-cols-3 gap-8 mb-8">
+      <!-- 効果測定指標 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 mb-8">
+            <h4 class="text-2xl font-bold mb-6">実装完了後の効果測定指標</h4>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="bg-white bg-opacity-20 p-6 rounded-lg">
+                    <div class="text-3xl font-bold mb-2">75%</div>
+                    <div class="text-sm font-semibold mb-1">作業時間短縮率</div>
+                    <div class="text-xs opacity-80">目標: 3ヶ月以内達成</div>
+                </div>
+                <div class="bg-white bg-opacity-20 p-6 rounded-lg">
+                    <div class="text-3xl font-bold mb-2">90%</div>
+                    <div class="text-sm font-semibold mb-1">ミス発生率減少</div>
+                    <div class="text-xs opacity-80">目標: 人的エラー最小化</div>
+                </div>
+                <div class="bg-white bg-opacity-20 p-6 rounded-lg">
+                    <div class="text-3xl font-bold mb-2">3倍</div>
+                    <div class="text-sm font-semibold mb-1">処理能力向上</div>
+                    <div class="text-xs opacity-80">目標: 同時間でより多く</div>
+                </div>
+                <div class="bg-white bg-opacity-20 p-6 rounded-lg">
+                    <div class="text-3xl font-bold mb-2">100%</div>
+                    <div class="text-sm font-semibold mb-1">品質の均一化</div>
+                    <div class="text-xs opacity-80">目標: ばらつき完全排除</div>
+                </div>
+            </div>
+        </div>
 
-<div>
+        <!-- ナビゲーションに戻るボタン -->
+        <div class="mb-8">
+            <a href="https://braintrain2233-source.github.io/outsourcing/restricted/navigation.html" 
+               class="inline-flex items-center px-8 py-4 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-xl transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
+                <i class="fa fa-arrow-left mr-3"></i>
+                ナビゲーションに戻る
+            </a>
+        </div>
 
-<i class="fas fa-cloud text-4xl mb-4"></i>
-
-<h4 class="font-semibold mb-2">クラウド活用</h4>
-
-<p class="text-sm">FireStorage・Google連携で情報管理を効率化</p>
-
-</div>
-
-<div>
-
-<i class="fas fa-desktop text-4xl mb-4"></i>
-
-<h4 class="font-semibold mb-2">リモート作業</h4>
-
-<p class="text-sm">安全で効率的な遠隔作業環境を構築</p>
-
-</div>
-
-<div>
-
-<i class="fas fa-cogs text-4xl mb-4"></i>
-
-<h4 class="font-semibold mb-2">完全自動化</h4>
-
-<p class="text-sm">スクリプト・バッチで業務を自動化</p>
-
-</div>
-
-</div>
-
-
-
-<!-- ナビゲーションに戻るボタン -->
-
-<div class="mb-8">
-
-<a href="https://braintrain2233-source.github.io/outsourcing/restricted/navigation.html" 
-
-class="inline-flex items-center px-6 py-3 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-lg transition-all duration-300 font-semibold">
-
-<i class="fas fa-arrow-left mr-2"></i>
-
-ナビゲーションに戻る
-
-</a>
-
-</div>
-
-
-
-<div class="border-t border-white border-opacity-20 pt-8">
-
-<p class="text-sm">
-
-<i class="fas fa-copyright mr-1"></i>
-
-2025 外注化戦略実例補足集 - 7年間の実践ノウハウを体系化
-
-</p>
-
-</div>
-
-</div>
-
+        <div class="border-t border-white border-opacity-20 pt-8">
+            <p class="text-sm">
+                <i class="fa fa-copyright mr-1"></i>
+                2025 外注化戦略実例補足集 - 7年間の実践ノウハウを体系化
+            </p>
+        </div>
+    </div>
 </footer>
 
 
 
+
+
+   </div>
+</footer>
+
 <script>
-
 function copyToClipboard(elementId) {
-
-const element = document.getElementById(elementId);
-
-const text = element.innerText;
-
-navigator.clipboard.writeText(text).then(function() {
-
-// フィードバック表示
-
-const button = element.parentElement.querySelector('.copy-btn');
-
-const originalText = button.innerText;
-
-button.innerText = 'コピー完了!';
-
-button.style.background = '#48bb78';
-
-setTimeout(function() {
-
-button.innerText = originalText;
-
-button.style.background = '#4a5568';
-
-}, 2000);
-
-});
-
+    const element = document.getElementById(elementId);
+    const text = element.textContent;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+            // 成功時の処理
+            const copyBtn = element.parentElement.querySelector('.copy-btn');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'コピー完了！';
+            copyBtn.style.background = '#48bb78';
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.background = '#4a5568';
+            }, 2000);
+        });
+    } else {
+        // フォールバック
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const copyBtn = element.parentElement.querySelector('.copy-btn');
+        copyBtn.textContent = 'コピー完了！';
+        setTimeout(() => {
+            copyBtn.textContent = 'コピー';
+        }, 2000);
+    }
 }
-
-
 
 // スムーズスクロール
-
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-anchor.addEventListener('click', function (e) {
-
-e.preventDefault();
-
-const target = document.querySelector(this.getAttribute('href'));
-
-if (target) {
-
-target.scrollIntoView({
-
-behavior: 'smooth',
-
-block: 'start'
-
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
-
-}
-
-});
-
-});
-
 </script>
 
-
-
 </body>
-
 </html>
-
-
-
